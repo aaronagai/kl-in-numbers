@@ -1474,7 +1474,7 @@ function mountView(v, dir) {
     else {
       // no WebGL: fall back to the drawn seat map
       el.querySelector("#ml")?.remove(); el.querySelector("#zFit")?.remove();
-      const svg = el.querySelector("#canvas > svg"); if (svg) svg.hidden = false;
+      const svg = el.querySelector("#canvas > svg"); if (svg) svg.removeAttribute("hidden");
       renderPanel(); paintMap(); applyZoom(); bindMap(); syncTray();
     }
   }
