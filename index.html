@@ -98,9 +98,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .nav-item.on .ico-o { display: none; }
 .nav-item.on .ico-f { display: block; color: var(--ink); }
 .nav-item .kbd { font-family: var(--f-data); font-size: 11px; color: var(--muted); }
-.swatch { width: 18px; height: 18px; border-radius: 5px; flex: none; border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent); transition: background-color var(--t-mod) var(--ease); }
 .nav-item.picked { font-weight: 400; }
-.nav-item.picked .swatch { box-shadow: 0 0 0 2px var(--side), 0 0 0 3.5px var(--ink); }
 .glide { position: absolute; left: 2px; right: 2px; top: 0; height: 36px; border-radius: 8px; pointer-events: none; z-index: 0; }
 .glide.hl { background: var(--hover); opacity: 0; transition: transform var(--t-mod) var(--ease), opacity var(--x-fast) linear; }
 .glide.hl.show { opacity: 1; transition: transform var(--t-mod) var(--ease), opacity var(--t-fast) linear; }
@@ -291,6 +289,61 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .months i.wet { background: var(--amber); }
 .months span { font-family: var(--f-data); font-size: 10px; color: var(--muted); }
 .months b { font-family: var(--f-data); font-size: 10px; font-weight: 400; }
+.scope { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin: -6px 0 18px; padding: 8px 8px 8px 8px; border-radius: 12px; background: var(--accent-soft); animation: scope-in var(--t-slow) var(--ease); }
+.scope-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 4px 3px 10px; border-radius: 999px; background: var(--accent); color: var(--on-accent, #fff); font-size: 13px; }
+.scope-chip .k { opacity: .75; }
+.scope-chip b { font-weight: 500; }
+.scope-chip .x { display: grid; place-items: center; width: 22px; height: 22px; border: 0; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; transition: background-color var(--t-fast) linear; }
+.scope-chip .x:hover { background: rgba(255, 255, 255, .2); }
+.scope-chip .x .ico { width: 14px; height: 14px; color: inherit; }
+.scope-note { font-size: 13px; color: var(--ink-3, var(--muted)); flex: 1; min-width: 180px; }
+.scope-all { font: inherit; font-size: 13px; color: var(--accent); background: var(--sheet, transparent); border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent); border-radius: 999px; padding: 4px 12px; cursor: pointer; transition: background-color var(--t-fast) linear; }
+.scope-all:hover { background: var(--accent); color: var(--on-accent, #fff); }
+@keyframes scope-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .scope { animation: none; } }
+.area-select.filtered select { background: var(--accent-soft); border-color: color-mix(in oklab, var(--accent) 45%, transparent); color: var(--accent); }
+.area-select.filtered .ico { color: var(--accent); }
+.mock-flag { font-size: 10px; line-height: 1; padding: 3px 6px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); white-space: nowrap; flex: none; }
+.chip.mock { background: var(--warn-soft); color: var(--warn); }
+.page-h > .chips { display: flex; gap: 6px; flex-wrap: wrap; justify-self: start; }
+.chip.real { background: var(--accent-soft); color: var(--accent); }
+.rev-hero-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; padding: 12px 0 8px; }
+.rev-hero-text { display: grid; gap: 14px; max-width: 420px; }
+.rev-lead { font-size: 20px; margin: 0; line-height: 1.4; color: var(--ink); text-wrap: pretty; }
+.rev-lead b { font-weight: 500; color: var(--accent); }
+.rev-cap { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+.rev-key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted); }
+.rev-key i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.rev-key i.once { background: var(--neutral-soft); box-shadow: inset 0 0 0 1px var(--line); }
+.rev-key i.again { background: var(--accent); }
+.donuts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rev-donut { margin: 0; text-align: center; }
+.donut { width: 100%; max-width: 168px; height: auto; display: block; margin: 0 auto 10px; }
+.donut .d-once { stroke: var(--neutral-soft); }
+.donut .d-again { stroke: var(--accent); animation: donut-in var(--t-slow) var(--ease) both; }
+.donut .d-big { font-family: var(--f-num); font-size: 24px; fill: var(--ink); dominant-baseline: middle; font-variant-numeric: tabular-nums; }
+.rev-donut figcaption { display: grid; gap: 2px; font-size: 12px; color: var(--muted); }
+.rev-donut figcaption b { font-weight: 400; color: var(--ink); font-size: 13px; }
+@keyframes donut-in { from { stroke-dasharray: 0 var(--c); } }
+@media (prefers-reduced-motion: reduce) { .donut .d-again { animation: none; } }
+.rev-times { grid-template-columns: repeat(5, 1fr); height: 170px; gap: 12px; margin-top: 8px; }
+.rev-gaps { display: grid; gap: 6px; margin-top: 8px; }
+.rev-gaps .cat-row { grid-template-columns: 110px minmax(0, 1fr) 44px; }
+@media (max-width: 860px) { .rev-hero-body { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
+.outs { display: grid; gap: 10px; }
+.rev-why { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 48px; align-items: start; padding-top: 8px; }
+.rev-why .outs { gap: 16px; }
+.rev-reasons { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; font-size: 13px; color: var(--ink-3); line-height: 1.6; max-width: 62ch; }
+.rev-reasons b { font-weight: 500; color: var(--ink); }
+@media (max-width: 860px) { .rev-why { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
+.out-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 13px; }
+.out-row .bar-track { grid-column: 1 / -1; display: block; background: var(--neutral-soft); border-radius: 3px; }
+.out-row .bar-fill { background: var(--accent); }
+.out-row .bv { font-family: var(--f-data); font-size: 12px; font-variant-numeric: tabular-nums; text-align: right; }
+.out-row .bv small { color: var(--muted); font-size: 11px; margin-left: 8px; }
+.out-row.muted { color: var(--muted); }
+.out-row.muted .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
+@media (max-width: 860px) { .rev { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
 .stack { display: flex; height: 24px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
 .stack div { min-width: 3px; }
 .stack-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 14px; font-size: 12px; margin-bottom: 14px; }
@@ -514,7 +567,7 @@ td:first-child { color: var(--ink); }
     <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b>KL in Numbers</b></div>
     <nav class="nav" id="nav"></nav>
     <div class="side-foot">
-      <div class="proto"><b>Prototype</b><span>All figures are sample data for illustration, not official statistics.</span></div>
+      <div class="proto"><b>Prototype</b><span>All figures are sample data for illustration, except Homelessness, which uses real JKM records.</span></div>
     </div>
   </aside>
   <div class="scrim" id="scrim"></div>
@@ -554,7 +607,6 @@ const SEATS = [
 ];
 const SERIES = {
   ppr:         [5200, 4900, 4700, 4400, 4100, 3800, 3400, 3100],
-  homeless:    [669, null, null, null, null, 640, 605, 570],
   complaints:  [6100, 5400, 6900, 7400, 7600, 7300, 7200, 7070],
   resolveDays: [8.2, 7.9, 7.1, 6.6, 6.0, 5.6, 5.2, 4.9],
   flood:       [168, 151, 190, 176, 201, 183, 162, 144],
@@ -564,13 +616,17 @@ const SERIES = {
   pop:         [1952000, 1982112, 1985000, 1991000, 2001000, 2010000, 2019000, 2027000],
   income:      [9100, 8800, 9000, 9500, 9800, 10100, 10300, 10500],
 };
+/* Real data: JKM WPKL rescue-operation records, 2023–2025, reduced to totals by a script outside this repo.
+   No names, ID numbers or individual records are published. Spots are [name, lon, lat, pick-ups]. */
+const JKM = {"pickups":1720,"people":1358,"repeaters":210,"repPickups":572,"threePlus":78,"maxTimes":9,"medianGap":66,"gaps":[["Within a month",115],["1–3 months",102],["3–6 months",65],["6–12 months",44],["Over a year",36]],"times":[1148,132,44,15,6,13],"jkmMissed":212,"returns":362,"years":[2023,2024,2025],"yearPickups":[686,349,685],"yearPeople":[580,274,582],"yearBefore":[106,115,141],"seats":{"P.114":{"total":4,"years":[2,1,1],"before":0,"people":4},"P.115":{"total":9,"years":[7,1,1],"before":1,"people":9},"P.116":{"total":8,"years":[4,1,3],"before":1,"people":8},"P.117":{"total":64,"years":[56,8,0],"before":9,"people":60},"P.118":{"total":7,"years":[2,5,0],"before":1,"people":7},"P.119":{"total":755,"years":[100,176,479],"before":167,"people":650},"P.120":{"total":746,"years":[472,130,144],"before":163,"people":623},"P.121":{"total":43,"years":[18,21,4],"before":10,"people":42},"P.122":{"total":19,"years":[14,5,0],"before":1,"people":18},"P.123":{"total":15,"years":[9,1,5],"before":4,"people":15},"P.124":{"total":3,"years":[2,0,1],"before":1,"people":3}},"noSeat":47,"idPeople":974,"idRepeat":197,"noIdPeople":384,"noIdRepeat":13,"jkmPriorOnce":141,"late2025":120,"outcomes":[["Released",706,175],["Not recorded",476,124],["Referred to JWP",114,12],["Handed to Immigration",110,4],["Placed in NGO care",62,18],["Referred to YKN",35,3],["Referred to Health Ministry (KKM)",34,2],["Handed to a protector",33,1],["Detained at Rumah Seri Kenangan (elderly home)",29,1],["Detained at Desa Bina Diri (rehab centre)",27,4],["Referred to PKG",21,8],["Referred to MKN",19,0],["Returned to family",18,3],["Referred to AADK (drugs)",17,2],["Other",10,3],["Referred to hospital",9,2]],"spots":[["Chow Kit",101.69821,3.1636,143,"P.119"],["Jalan TAR",101.69599,3.15601,121,"P.120"],["Masjid India",101.6966,3.1515,67,"P.120"],["Masjid Jamek",101.69581,3.14901,24,"P.120"],["Kota Raya and Lebuh Pudu",101.6983,3.1464,71,"P.120"],["Pasar Seni",101.6953,3.14259,29,"P.119"],["Dang Wangi",101.7006,3.1572,56,"P.120"],["Kampung Baru",101.704,3.16299,82,"P.119"],["Bukit Bintang",101.71081,3.1466,258,"P.120"],["Pudu",101.706,3.1395,27,"P.119"],["Masjid KLCC",101.7133,3.155,10,"P.120"],["Brickfields",101.6865,3.134,13,"P.121"],["Bangsar",101.671,3.13,29,"P.121"],["TTDI",101.6295,3.1395,40,"P.117"],["Jalan Kuching",101.687,3.174,22,"P.117"],["Sri Sentosa",101.6795,3.0935,11,"P.122"]],"unplaced":717};
+SEATS.forEach(s => { s.homeless = JKM.seats[s.code].total; });
 const SUM_KEYS = ["pop", "ppr", "homeless", "complaints", "flood", "budget"];
-const KL_OVERRIDE = { budget: 3200 };
+const KL_OVERRIDE = { budget: 3200, homeless: JKM.pickups };
 const PER_CAP = ["ppr", "homeless", "complaints", "flood", "budget"];
 
 const TOPICS = [
   { id: "housing",     label: "Housing",        icon: "housing",     key: "ppr",         metric: "PPR waiting list",        unit: "households", lower: true,  fmt: v => int(v) },
-  { id: "homeless",    label: "Homelessness",   icon: "homeless",    key: "homeless",    metric: "People sleeping rough",   unit: "on count night", lower: true, fmt: v => int(v) },
+  { id: "homeless",    label: "Homelessness",   icon: "homeless",    key: "homeless",    metric: "Pick-ups in JKM operations", unit: "2023–25", lower: null, real: true, fmt: v => int(v) },
   { id: "services",    label: "City services",  icon: "services",    key: "resolveDays", metric: "Days to fix a complaint", unit: "median", lower: true,  fmt: v => tr("{n} days", { n: v.toFixed(1) }) },
   { id: "floods",      label: "Floods",         icon: "floods",      key: "flood",       metric: "Flash flood incidents",   unit: "last 12 months", lower: true, fmt: v => int(v) },
   { id: "mobility",    label: "Getting around", icon: "mobility",    key: "transit",     metric: "Near frequent transit",   unit: "of residents", lower: false, fmt: v => Math.round(v) + "%" },
@@ -581,7 +637,7 @@ const TOPICS = [
 
 const LAYERS = [
   { key: "ppr",         topic: "housing",     label: "PPR waiting list",      perCap: true,  fmt: v => v.toFixed(1), unit: "households waiting per 10,000 residents", desc: "How many households are waiting for a DBKL PPR flat, scaled to the number of residents so large and small seats compare fairly." },
-  { key: "homeless",    topic: "homeless",    label: "People sleeping rough", perCap: false, fmt: v => int(v), unit: "people on count night", desc: "People found sleeping rough on the yearly count night. Most are in the city centre, near shelters and soup kitchens." },
+  { key: "homeless",    topic: "homeless",    label: "Homeless pick-ups", perCap: false, fmt: v => int(v), unit: "pick-ups in JKM operations, 2023–25", desc: "People picked up in JKM WPKL operations against begging and rough sleeping, 2023 to 2025. This is real data. It counts where operations ran, so it shows where JKM looks as well as where people are." },
   { key: "resolveDays", topic: "services",    label: "Days to fix a complaint", perCap: false, fmt: v => v.toFixed(1), unit: "median working days", desc: "Half of all complaints to DBKL in this area are closed within this many working days." },
   { key: "flood",       topic: "floods",      label: "Flash floods",          perCap: false, fmt: v => int(v), unit: "incidents in the last 12 months", desc: "Flash flood incidents logged by DBKL and JPS in the last 12 months." },
   { key: "transit",     topic: "mobility",    label: "Near frequent transit", perCap: false, fmt: v => v + "%", unit: "% of residents within 400 m", desc: "Share of residents within 400 m of a rail station or a bus that comes at least every 15 minutes." },
@@ -591,7 +647,7 @@ const LAYERS = [
 
 const SOURCES = {
   housing:     ["DBKL Housing Management Department", "Monthly", "Sep 2026"],
-  homeless:    ["JKM and DBKL yearly street count", "Yearly", "Mar 2026"],
+  homeless:    ["JKM WPKL rescue-operation records", "Yearly", "Dec 2025"],
   services:    ["DBKL complaints system", "Monthly", "Sep 2026"],
   floods:      ["DBKL and JPS incident log", "Monthly", "Sep 2026"],
   mobility:    ["Prasarana GTFS feeds and DOSM", "Quarterly", "Jun 2026"],
@@ -619,10 +675,10 @@ const BIN_MIX = [14, 32, 52, 72, 92];
 const BM = {
   "KL in Numbers": "KL Dalam Angka", "Overview": "Ringkasan", "Map": "Peta", "About this data": "Mengenai data ini",
   "Topics": "Topik", "Areas": "Kawasan", "All of Kuala Lumpur": "Seluruh Kuala Lumpur", "All of KL": "Seluruh KL",
-  "Prototype": "Prototaip", "All figures are sample data for illustration, not official statistics.": "Semua angka ialah data contoh untuk ilustrasi, bukan statistik rasmi.",
+  "Prototype": "Prototaip",
   "Open navigation": "Buka navigasi", "Area": "Kawasan", "Language": "Bahasa",
   "Housing": "Perumahan", "Homelessness": "Gelandangan", "City services": "Perkhidmatan bandar", "Floods": "Banjir",
-  "Getting around": "Pengangkutan", "Environment": "Alam sekitar", "City budget": "Belanjawan bandar", "People": "Penduduk",
+  "Getting around": "Pengangkutan", "Environment": "Alam sekitar", "City budget": "Belanjawan bandar",
   "PPR waiting list": "Senarai menunggu PPR", "households": "isi rumah", "People sleeping rough": "Orang tidur di jalanan", "on count night": "pada malam bancian",
   "Days to fix a complaint": "Hari untuk selesaikan aduan", "median": "median", "Flash flood incidents": "Kejadian banjir kilat", "last 12 months": "12 bulan lalu",
   "Near frequent transit": "Dekat pengangkutan awam kerap", "of residents": "daripada penduduk", "Green space": "Kawasan hijau", "per person": "setiap orang",
@@ -641,7 +697,7 @@ const BM = {
   "DBKL Housing Management Department": "Jabatan Pengurusan Perumahan DBKL", "JKM and DBKL yearly street count": "Bancian jalanan tahunan JKM dan DBKL",
   "DBKL complaints system": "Sistem aduan DBKL", "DBKL and JPS incident log": "Log kejadian DBKL dan JPS", "Prasarana GTFS feeds and DOSM": "Suapan GTFS Prasarana dan DOSM",
   "DBKL Landscape Department and DOE": "Jabatan Landskap DBKL dan JAS", "DBKL annual budget": "Belanjawan tahunan DBKL", "DOSM population estimates": "Anggaran penduduk DOSM",
-  "Monthly": "Bulanan", "Yearly": "Tahunan", "Quarterly": "Suku tahunan", "Mar 2026": "Mac 2026",
+  "Monthly": "Bulanan", "Quarterly": "Suku tahunan", "Mar 2026": "Mac 2026",
   "In progress": "Dalam pelaksanaan", "Fixed": "Selesai", "Open": "Belum dimulakan",
   "Jalan Kepong near Kepong Baru": "Jalan Kepong berhampiran Kepong Baru", "Jalan Kuching underpass": "Laluan bawah Jalan Kuching",
   "Dato Onn roundabout": "Bulatan Dato Onn", "Kampung Baru riverside": "Tebing sungai Kampung Baru", "Sultan Iskandar Highway": "Lebuhraya Sultan Iskandar",
@@ -733,7 +789,6 @@ const BM = {
   "Kuala Lumpur, by parliamentary seat": "Kuala Lumpur, mengikut kerusi parlimen",
   "Pick a measure to colour the map. Select any area for its full picture.": "Pilih ukuran untuk mewarnakan peta. Pilih mana-mana kawasan untuk gambaran penuh.",
   "Show less": "Tunjuk kurang", "Show more": "Tunjuk lagi",
-  "Boundaries: DOSM electoral boundaries for KL's 11 parliamentary seats. Figures: sample data.": "Sempadan: sempadan pilihan raya DOSM bagi 11 kerusi parlimen KL. Angka: data contoh.",
   "Colour the map by": "Warnakan peta mengikut", "{a} to {b}": "{a} hingga {b}", "Parliamentary seat": "Kerusi parlimen",
   "{n} residents, {p}% of KL": "{n} penduduk, {p}% daripada KL", "Close": "Tutup", "See every topic for {area}": "Lihat semua topik untuk {area}",
   "{n} days": "{n} hari",
@@ -742,6 +797,102 @@ const BM = {
   "Heat shows where people were counted on the last count night. Hover over a hotspot to see its count.": "Haba menunjukkan lokasi orang dibanci pada malam bancian terakhir. Halakan tetikus pada kawasan panas untuk melihat bilangannya.",
   "Fewer people": "Kurang orang", "More people": "Lebih ramai orang", "{n} people": "{n} orang",
   "Biggest hotspots": "Kawasan panas terbesar", "Hotspots in {area}": "Kawasan panas di {area}",
+  "Pick-ups in JKM operations": "Pengambilan dalam operasi JKM",
+  "2023–25": "2023–25",
+  "Real data": "Data sebenar", "under 1%": "kurang 1%", "Dec 2025": "Dis 2025",
+  "Homeless pick-ups": "Pengambilan gelandangan",
+  "pick-ups in JKM operations, 2023–25": "pengambilan dalam operasi JKM, 2023–25",
+  "People picked up in JKM WPKL operations against begging and rough sleeping, 2023 to 2025. This is real data. It counts where operations ran, so it shows where JKM looks as well as where people are.": "Orang yang diambil dalam operasi JKM WPKL terhadap pengemis dan gelandangan, 2023 hingga 2025. Ini data sebenar. Ia mengira lokasi operasi dijalankan, jadi ia menunjukkan tempat JKM mencari, bukan sahaja tempat orang berada.",
+  "JKM WPKL rescue-operation records": "Rekod operasi menyelamat JKM WPKL",
+  "Are we picking up the same people again and again?": "Adakah kita menyelamatkan orang yang sama berulang kali?",
+  "JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from 2023 to 2025. <strong>{r} people</strong> were picked up more than once, and they account for a third of all pick-ups.": "Operasi JKM di KL membuat <strong>{n} pengambilan</strong> melibatkan <strong>{p} orang</strong> dari 2023 hingga 2025. <strong>{r} orang</strong> diambil lebih daripada sekali, dan mereka mewakili satu pertiga daripada semua pengambilan.",
+  "JKM operations made <strong>{n} pick-ups</strong> in {area} from 2023 to 2025, {p} of KL's total.": "Operasi JKM membuat <strong>{n} pengambilan</strong> di {area} dari 2023 hingga 2025, {p} daripada jumlah KL.",
+  "{b} were of someone JKM had already picked up before.": "{b} melibatkan orang yang pernah diambil JKM sebelum ini.",
+  "That's too few to say how many were repeats.": "Jumlah ini terlalu kecil untuk menentukan berapa yang berulang.",
+  "Pick-ups": "Pengambilan",
+  "2023 to 2025": "2023 hingga 2025",
+  "Different people": "Individu berbeza",
+  "matched across operations": "dipadankan merentas operasi",
+  "Picked up more than once": "Diambil lebih daripada sekali",
+  "{n} people, at least": "sekurang-kurangnya {n} orang",
+  "of {n} pick-ups": "daripada {n} pengambilan",
+  "Already picked up before": "Pernah diambil sebelum ini",
+  "of pick-ups here": "daripada pengambilan di sini",
+  "too few to say": "terlalu sedikit untuk dinilai",
+  "Pick-ups each year": "Pengambilan setiap tahun",
+  "{area}. Each year's operations targeted different groups, so changes say more about the operations than the street.": "{area}. Operasi setiap tahun menyasarkan kumpulan berbeza, jadi perubahan lebih mencerminkan operasi daripada keadaan di jalanan.",
+  "Pick-ups 2023 to 2025 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.": "Pengambilan 2023 hingga 2025 di setiap kerusi. {n} pengambilan tiada kerusi direkodkan. Pilih kawasan untuk melihatnya.",
+  "People": "Orang",
+  "{a} of {b} people were picked up more than once": "{a} daripada {b} orang diambil lebih daripada sekali",
+  "{a} of {b} pick-ups were of those {r} people": "{a} daripada {b} pengambilan melibatkan {r} orang tersebut",
+  "Picked up again and again": "Diambil berulang kali",
+  "Kuala Lumpur, 2023 to 2025. People are matched across operations by ID number, then by name and birth year.": "Kuala Lumpur, 2023 hingga 2025. Individu dipadankan merentas operasi melalui nombor pengenalan, kemudian nama dan tahun lahir.",
+  "Times each person was picked up": "Bilangan kali setiap orang diambil",
+  "{n} people were picked up once. The most for one person was {m} times.": "{n} orang diambil sekali. Paling banyak bagi seorang ialah {m} kali.",
+  "Time until the next pick-up": "Tempoh sebelum pengambilan seterusnya",
+  "Within a month": "Dalam sebulan",
+  "1–3 months": "1–3 bulan",
+  "3–6 months": "3–6 bulan",
+  "6–12 months": "6–12 bulan",
+  "Over a year": "Lebih setahun",
+  "Half came back within {d} days.": "Separuh kembali dalam {d} hari.",
+  "JKM's own records marked {a} of these {b} returns as the person's first pick-up. Missing ID numbers and spelling differences hide more, so all of these numbers are a minimum.": "Rekod JKM sendiri menandakan {a} daripada {b} pengambilan berulang ini sebagai kali pertama. Nombor pengenalan yang tiada dan ejaan yang berbeza menyembunyikan lebih banyak lagi, jadi semua angka ini ialah angka minimum.",
+  "What happened after a pick-up, and who came back": "Apa yang berlaku selepas pengambilan, dan siapa yang kembali",
+  "Share of pick-ups followed by another pick-up of the same person, by what JKM did that time. Kuala Lumpur, 2023 to 2025.": "Peratus pengambilan yang diikuti pengambilan lain bagi orang yang sama, mengikut tindakan JKM pada kali itu. Kuala Lumpur, 2023 hingga 2025.",
+  "{a} of {n}": "{a} daripada {n}",
+  "* Usually deportation, so a low return rate here doesn't mean it worked. Pick-ups late in 2025 have had less time to be followed by another.": "* Biasanya pengusiran, jadi kadar kembali yang rendah di sini tidak bermakna ia berjaya. Pengambilan lewat 2025 mempunyai masa yang lebih singkat untuk diikuti pengambilan lain.",
+  "Released": "Dilepaskan",
+  "Not recorded": "Tidak direkodkan",
+  "Referred to JWP": "Dirujuk ke JWP",
+  "Handed to Immigration": "Diserahkan kepada Imigresen",
+  "Placed in NGO care": "Ditempatkan di pusat jagaan NGO",
+  "Referred to YKN": "Dirujuk ke YKN",
+  "Referred to Health Ministry (KKM)": "Dirujuk ke KKM",
+  "Handed to a protector": "Diserahkan kepada Pelindung",
+  "Detained at Rumah Seri Kenangan (elderly home)": "Ditahan di Rumah Seri Kenangan",
+  "Detained at Desa Bina Diri (rehab centre)": "Ditahan di Desa Bina Diri",
+  "Referred to PKG": "Dirujuk ke PKG",
+  "Referred to MKN": "Dirujuk ke MKN",
+  "Returned to family": "Dikembalikan kepada keluarga",
+  "Referred to AADK (drugs)": "Dirujuk ke AADK",
+  "Referred to hospital": "Dirujuk ke hospital",
+  "Where people are picked up": "Lokasi orang diambil",
+  "Heat shows where JKM operations picked people up, 2023 to 2025. {n} pick-ups recorded only as \"Kuala Lumpur\" or at small sites aren't shown. Hover over a hotspot to see its count.": "Haba menunjukkan lokasi operasi JKM mengambil orang, 2023 hingga 2025. {n} pengambilan yang direkodkan hanya sebagai \"Kuala Lumpur\" atau di lokasi kecil tidak ditunjukkan. Halakan tetikus pada kawasan panas untuk melihat jumlahnya.",
+  "Fewer pick-ups": "Kurang pengambilan",
+  "More pick-ups": "Lebih banyak pengambilan",
+  "{n} pick-ups": "{n} pengambilan",
+  "Homeless pick-up hotspots": "Kawasan panas pengambilan gelandangan",
+  "Sized by number of pick-ups": "Saiz mengikut bilangan pengambilan",
+  "Pick-ups in JKM operations, repeat pick-ups, what happened after (real data)": "Pengambilan dalam operasi JKM, pengambilan berulang, tindakan selepasnya (data sebenar)",
+  "JKM WPKL": "JKM WPKL",
+  "Yearly": "Tahunan",
+  "Every figure on it is sample data made up to show the design, except the Homelessness topic. That uses real JKM WPKL operation records from 2023 to 2025, reduced to totals so no one can be identified.": "Setiap angka di dalamnya ialah data contoh yang direka untuk menunjukkan reka bentuk, kecuali topik Gelandangan. Topik itu menggunakan rekod operasi sebenar JKM WPKL dari 2023 hingga 2025, diringkaskan kepada jumlah supaya tiada sesiapa dapat dikenal pasti.",
+  "An ID number on every JKM pick-up record, and an honest first-time or repeat field, so repeat pick-ups can be counted properly.": "Nombor pengenalan pada setiap rekod pengambilan JKM, dan medan kali pertama atau berulang yang tepat, supaya pengambilan berulang dapat dikira dengan betul.",
+  "All figures are sample data for illustration, except Homelessness, which uses real JKM records.": "Semua angka ialah data contoh untuk ilustrasi, kecuali Gelandangan, yang menggunakan rekod sebenar JKM.",
+  "Boundaries: DOSM electoral boundaries for KL's 11 parliamentary seats. Figures: sample data, except homeless pick-ups (JKM WPKL).": "Sempadan: sempadan pilihan raya DOSM bagi 11 kerusi parlimen KL. Angka: data contoh, kecuali pengambilan gelandangan (JKM WPKL).",
+  "Clear area filter": "Kosongkan penapis kawasan",
+  "Every figure on this page is for {area} only.": "Setiap angka di halaman ini hanya untuk {area}.",
+  "Show all of KL": "Tunjukkan seluruh KL",
+  "Mock data": "Data olok-olok", "Made-up figures to show the design": "Angka rekaan untuk menunjukkan reka bentuk",
+  "<b>{p}</b> of people were picked up more than once, but they make up <b>{q}</b> of all pick-ups.": "<b>{p}</b> daripada individu diambil lebih daripada sekali, tetapi mereka mewakili <b>{q}</b> daripada semua pengambilan.",
+  "Picked up once": "Diambil sekali",
+  "The {r} people picked up more than once were picked up {n} times between them, about {e} times each.": "{r} orang yang diambil lebih daripada sekali telah diambil sebanyak {n} kali secara keseluruhan, kira-kira {e} kali setiap seorang.",
+  "of people": "daripada individu",
+  "of pick-ups": "daripada pengambilan",
+  "{a} of {b} people": "{a} daripada {b} orang",
+  "{a} of {b} pick-ups": "{a} daripada {b} pengambilan",
+  "The real number is likely higher: among people with an ID number on record, <strong>1 in 5</strong> was picked up again.": "Jumlah sebenar mungkin lebih tinggi: dalam kalangan individu yang mempunyai nombor pengenalan dalam rekod, <strong>1 daripada 5</strong> diambil semula.",
+  "{n} people confirmed. Likely about 1 in 5.": "{n} orang disahkan. Mungkin kira-kira 1 daripada 5.",
+  "ID number on record": "Nombor pengenalan direkodkan",
+  "No ID number recorded": "Tiada nombor pengenalan direkodkan",
+  "The real share is likely closer to 1 in 5": "Peratus sebenar mungkin lebih hampir kepada 1 daripada 5",
+  "Share of people picked up more than once, by whether JKM recorded an ID number": "Peratus individu yang diambil lebih daripada sekali, mengikut sama ada JKM merekodkan nombor pengenalan",
+  "<b>Missing ID numbers.</b> {n} people had no ID number recorded, mostly non-citizens. They can only be matched by name, which is spelled differently each time, so their returns go unseen. If they came back as often as everyone else, about {e} more people would be repeats.": "<b>Nombor pengenalan tiada.</b> {n} orang tiada nombor pengenalan direkodkan, kebanyakannya bukan warganegara. Mereka hanya boleh dipadankan melalui nama, yang dieja berbeza setiap kali, jadi pengambilan semula mereka tidak kelihatan. Jika mereka kembali sekerap orang lain, kira-kira {e} lagi orang akan dikira berulang.",
+  "<b>Pick-ups before 2023.</b> JKM's own records say {n} people seen only once here had been picked up before, most likely before 2023, which this data doesn't cover.": "<b>Pengambilan sebelum 2023.</b> Rekod JKM sendiri menyatakan {n} orang yang dilihat sekali sahaja di sini pernah diambil sebelum ini, kemungkinan besar sebelum 2023, yang tidak diliputi data ini.",
+  "<b>JKM's first-time field.</b> JKM marked {a} of the {b} returns found here as the person's first pick-up, so its own count of repeats is too low as well.": "<b>Medan kali pertama JKM.</b> JKM menandakan {a} daripada {b} pengambilan berulang yang ditemui di sini sebagai kali pertama, jadi kiraan berulang JKM sendiri juga terlalu rendah.",
+  "People picked up more than once. {n} people were picked up once. The most for one person was {m} times.": "Individu yang diambil lebih daripada sekali. {n} orang diambil sekali. Paling banyak bagi seorang ialah {m} kali.",
+  "Gap between one pick-up and the next for the same person. Half came back within {d} days.": "Jarak antara satu pengambilan dengan yang seterusnya bagi orang yang sama. Separuh kembali dalam {d} hari.",
+  "Share of people picked up more than once, by whether JKM recorded an ID number. Missing records hide repeats, so 15% is a minimum.": "Peratus individu yang diambil lebih daripada sekali, mengikut sama ada JKM merekodkan nombor pengenalan. Rekod yang tiada menyembunyikan pengambilan berulang, jadi 15% ialah angka minimum.",
 };
 const MISSING = new Set();
 function tr(s, v) {
@@ -772,6 +923,7 @@ function klValue(key) {
 }
 function val(key, where = state.area) { return where === "KL" ? klValue(key) : seatBy(where)[key]; }
 function series(key, where = state.area) {
+  if (key === "homeless") return where === "KL" ? JKM.yearPickups : JKM.seats[where].years;
   const base = SERIES[key];
   if (where === "KL") return base;
   const ratio = val(key, where) / base[base.length - 1];
@@ -782,6 +934,7 @@ function pctChange(a, b) { return (b - a) / a * 100; }
 function lastTwo(arr) { const v = arr.filter(x => x != null); return [v[v.length - 2], v[v.length - 1]]; }
 function comparable(key, where) { const v = val(key, where); return PER_CAP.includes(key) ? v / val("pop", where) * 1e4 : v; }
 function status(t, where = state.area) {
+  if (t.real) return { cls: "real", text: tr("Real data") };
   if (t.lower == null) {
     if (where !== "KL") { const share = val(t.key, where) / (t.key === "budget" ? SEATS.reduce((a, s) => a + s.budget, 0) : klValue(t.key)) * 100; return { cls: "neutral", text: tr("{n}% of KL", { n: share.toFixed(0) }) }; }
     const [a, b] = lastTwo(SERIES[t.key]); const ch = pctChange(a, b);
@@ -831,25 +984,16 @@ function renderNav() {
     item(`data-view="map"`, twin("map"), tr("Map")) +
     item(`data-view="about"`, twin("info"), tr("About this data")) +
     `<div class="nav-h">${tr("Topics")}</div>` +
-    TOPICS.map(t => item(`data-view="${t.id}"`, twin(t.icon), tr(t.label))).join("") +
-    `<div class="nav-h">${tr("Areas")}</div>` +
-    item(`data-area="KL"`, `<span class="swatch" data-sw="KL"></span>`, tr("All of Kuala Lumpur")) +
-    SEATS.map(s => item(`data-area="${s.code}"`, `<span class="swatch" data-sw="${s.code}"></span>`, s.name, `<span class="kbd">${s.code.slice(2)}</span>`)).join("");
+    TOPICS.map(t => item(`data-view="${t.id}"`, twin(t.icon), tr(t.label), t.real ? "" : `<span class="mock-flag" title="${tr("Made-up figures to show the design")}">${tr("Mock data")}</span>`)).join("");
   if (!nav.dataset.fluid) { fluid(nav, ".nav-item"); nav.dataset.fluid = "1"; }
 }
 function syncNav(animate = true) {
   const nav = document.getElementById("nav");
   nav.querySelectorAll("[data-view]").forEach(b => { const on = b.dataset.view === state.view; b.classList.toggle("on", on); b.setAttribute("aria-current", on ? "page" : "false"); });
-  nav.querySelectorAll("[data-area]").forEach(b => b.classList.toggle("picked", b.dataset.area === state.area));
   const act = nav.querySelector(".glide.act"), cur = nav.querySelector(`[data-view="${state.view}"]`);
   if (!animate) act.style.transition = "none";
   act.style.transform = `translateY(${cur.offsetTop}px)`;
   if (!animate) { void act.offsetWidth; act.style.transition = ""; }
-  const L = LAYERS.find(l => l.key === state.layer), b = bins(L);
-  nav.querySelectorAll("[data-sw]").forEach(sw => {
-    const c = sw.dataset.sw;
-    sw.style.background = c === "KL" ? `linear-gradient(135deg, ${binColor(0)}, ${binColor(4)})` : binColor(b.binOf(layerVal(L, seatBy(c))));
-  });
 }
 
 /* ---------- top bar ---------- */
@@ -858,6 +1002,7 @@ function renderTopbar() {
   const title = tr(state.view === "overview" ? "Overview" : state.view === "map" ? "Map" : state.view === "about" ? "About this data" : t.label);
   document.getElementById("crumb").innerHTML = `<span class="dim">${tr("KL in Numbers")}</span><span class="sep">/</span><span>${title}</span>`;
   document.getElementById("areaSel").value = state.area;
+  document.querySelector(".area-select").classList.toggle("filtered", state.area !== "KL");
   document.querySelector(".area-select").hidden = state.view === "overview";
 }
 
@@ -876,7 +1021,7 @@ function shortNum(v) {
   if (Math.abs(v) >= 1e3) return (v / 1e3).toFixed(1).replace(/\.0$/, "") + "k";
   return Number.isInteger(v) ? String(v) : v.toFixed(1);
 }
-function lineChart(vals, { fmt = shortNum, zero = false, gapLabel = tr("Not measured") } = {}) {
+function lineChart(vals, { fmt = shortNum, zero = false, gapLabel = tr("Not measured"), years = YEARS } = {}) {
   const W = 560, H = 230, pl = 46, pr = 18, pt = 20, pb = 30;
   const nums = vals.filter(v => v != null);
   let lo = Math.min(...nums), hi = Math.max(...nums);
@@ -885,7 +1030,7 @@ function lineChart(vals, { fmt = shortNum, zero = false, gapLabel = tr("Not meas
   const x = i => pl + i * (W - pl - pr) / (vals.length - 1), y = v => pt + (1 - (v - y0) / (y1 - y0)) * (H - pt - pb);
   let o = "";
   ticks.forEach(t => { o += `<line class="grid" x1="${pl}" x2="${W - pr}" y1="${y(t)}" y2="${y(t)}"/><text class="ax" x="${pl - 8}" y="${y(t) + 4}" text-anchor="end">${fmt(t)}</text>`; });
-  YEARS.forEach((yr, i) => { o += `<text class="ax" x="${x(i)}" y="${H - 8}" text-anchor="middle">${yr}</text>`; });
+  years.forEach((yr, i) => { o += `<text class="ax" x="${x(i)}" y="${H - 8}" text-anchor="middle">${yr}</text>`; });
   const runs = []; let cur = [];
   vals.forEach((v, i) => { if (v == null) { if (cur.length) runs.push(cur); cur = []; } else cur.push(i); });
   if (cur.length) runs.push(cur);
@@ -919,7 +1064,66 @@ function catRows(rows, fmt, keyPrefix) {
   return rows.map(([k, v]) => { const s = (v / max).toFixed(4); return `<div class="cat-row"><span>${tr(k)}</span><span class="bar-track"><span class="bar-fill" data-k="${keyPrefix}-${k}" data-s="${s}" style="transform:scaleX(${s})"></span></span><span class="bv">${fmt(v)}</span></div>`; }).join("");
 }
 
+/* ---------- homelessness: repeat pick-ups and what happened after ---------- */
+function revolvingPanel() {
+  const shares = [[tr("of people"), JKM.repeaters, JKM.people, tr("{a} of {b} people", { a: int(JKM.repeaters), b: int(JKM.people) })],
+    [tr("of pick-ups"), JKM.repPickups, JKM.pickups, tr("{a} of {b} pick-ups", { a: int(JKM.repPickups), b: int(JKM.pickups) })]];
+  // donut: blue arc = picked up more than once, starting at 12 o'clock, with a 2px gap either side
+  const donut = (a, b, i) => {
+    const R = 46, C = 2 * Math.PI * R, gap = 2, arc = a / b * C;
+    return `<svg class="donut" viewBox="0 0 120 120" role="img" aria-label="${Math.round(a / b * 100)}%">
+      <g transform="rotate(-90 60 60)" fill="none" stroke-width="14">
+        <circle class="d-once" cx="60" cy="60" r="${R}" stroke-dasharray="${C - arc - gap * 2} ${C}" stroke-dashoffset="${-(arc + gap)}"><title>${tr("Picked up once")}: ${int(b - a)}</title></circle>
+        <circle class="d-again" cx="60" cy="60" r="${R}" stroke-dasharray="${arc} ${C}" style="--c:${C.toFixed(1)};--arc:${arc.toFixed(1)}"><title>${tr("Picked up more than once")}: ${int(a)}</title></circle>
+      </g>
+      <text class="d-big" x="60" y="62" text-anchor="middle">${Math.round(a / b * 100)}%</text>
+    </svg>`;
+  };
+  const times = JKM.times.slice(1), tmax = Math.max(...times);
+  return `<div class="panel wide rev-hero"><h3>${tr("Picked up again and again")}</h3><p class="sub">${tr("Kuala Lumpur, 2023 to 2025. People are matched across operations by ID number, then by name and birth year.")}</p>
+    <div class="rev-hero-body">
+      <div class="rev-hero-text">
+        <p class="rev-lead">${tr("<b>{p}</b> of people were picked up more than once, but they make up <b>{q}</b> of all pick-ups.", { p: Math.round(JKM.repeaters / JKM.people * 100) + "%", q: Math.round(JKM.repPickups / JKM.pickups * 100) + "%" })}</p>
+        <p class="rev-cap">${tr("The {r} people picked up more than once were picked up {n} times between them, about {e} times each.", { r: int(JKM.repeaters), n: int(JKM.repPickups), e: Math.round(JKM.repPickups / JKM.repeaters) })}</p>
+        <div class="rev-key"><span><i class="once"></i>${tr("Picked up once")}</span><span><i class="again"></i>${tr("Picked up more than once")}</span></div>
+      </div>
+      <div class="donuts">${shares.map(([k, a, b, note], i) => `<figure class="rev-donut">${donut(a, b, i)}<figcaption><b>${k}</b><span>${note}</span></figcaption></figure>`).join("")}</div>
+    </div></div>` +
+    panel(tr("Times each person was picked up"), tr("People picked up more than once. {n} people were picked up once. The most for one person was {m} times.", { n: int(JKM.times[0]), m: JKM.maxTimes }),
+      `<div class="months rev-times">${times.map((v, i) => `<div><b>${int(v)}</b><i style="height:${v / tmax * 100}%"></i><span>${i === 4 ? "6+" : i + 2}</span></div>`).join("")}</div>`) +
+    panel(tr("Time until the next pick-up"), tr("Gap between one pick-up and the next for the same person. Half came back within {d} days.", { d: JKM.medianGap }),
+      `<div class="rev-gaps">${catRows(JKM.gaps, v => int(v), "gap")}</div>`) +
+    undercount();
+}
+function undercount() {
+  const rows = [[tr("ID number on record"), JKM.idRepeat, JKM.idPeople], [tr("No ID number recorded"), JKM.noIdRepeat, JKM.noIdPeople]];
+  const max = Math.max(...rows.map(r => r[1] / r[2]));
+  return `<div class="panel wide"><h3>${tr("The real share is likely closer to 1 in 5")}</h3><p class="sub">${tr("Share of people picked up more than once, by whether JKM recorded an ID number. Missing records hide repeats, so 15% is a minimum.")}</p>
+    <div class="rev-why"><div>
+      <div class="outs">${rows.map(([k, a, b], i) => { const sc = (a / b / max).toFixed(4); return `<div class="out-row${i ? " muted" : ""}"><span class="nm">${k}</span><span class="bv">${Math.round(a / b * 100)}%<small>${tr("{a} of {n}", { a: int(a), n: int(b) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="why-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span></span></div>`; }).join("")}</div></div>
+    <ul class="rev-reasons">
+      <li>${tr("<b>Missing ID numbers.</b> {n} people had no ID number recorded, mostly non-citizens. They can only be matched by name, which is spelled differently each time, so their returns go unseen. If they came back as often as everyone else, about {e} more people would be repeats.", { n: int(JKM.noIdPeople), e: Math.round(JKM.noIdPeople * JKM.idRepeat / JKM.idPeople - JKM.noIdRepeat) })}</li>
+      <li>${tr("<b>Pick-ups before 2023.</b> JKM's own records say {n} people seen only once here had been picked up before, most likely before 2023, which this data doesn't cover.", { n: int(JKM.jkmPriorOnce) })}</li>
+      <li>${tr("<b>JKM's first-time field.</b> JKM marked {a} of the {b} returns found here as the person's first pick-up, so its own count of repeats is too low as well.", { a: int(JKM.jkmMissed), b: int(JKM.returns) })}</li>
+    </ul>
+  </div></div>`;
+}
+function outcomePanel() {
+  const rows = JKM.outcomes.filter(o => o[1] >= 15 && o[0] !== "Other"), max = Math.max(...rows.map(o => o[2] / o[1]));
+  return panel(tr("What happened after a pick-up, and who came back"), tr("Share of pick-ups followed by another pick-up of the same person, by what JKM did that time. Kuala Lumpur, 2023 to 2025."),
+    `<div class="outs">${rows.map(([k, n, a]) => { const sc = (a / n / max).toFixed(4); return `<div class="out-row${k === "Not recorded" ? " muted" : ""}"><span class="nm">${tr(k)}${k === "Handed to Immigration" ? "*" : ""}</span><span class="bv">${Math.round(a / n * 100)}%<small>${tr("{a} of {n}", { a: int(a), n: int(n) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="out-${k}" data-s="${sc}" style="transform:scaleX(${sc})"></span></span></div>`; }).join("")}</div>
+    <p class="rev-cap">${tr("* Usually deportation, so a low return rate here doesn't mean it worked. Pick-ups late in 2025 have had less time to be followed by another.")}</p>`);
+}
+
 /* ---------- topic pages ---------- */
+function scopeBar() {
+  if (state.area === "KL") return "";
+  return `<div class="scope" role="status">
+    <span class="scope-chip"><span class="k">${tr("Area")}</span><b>${esc(areaLabel())}</b><button type="button" class="x" data-area="KL" aria-label="${tr("Clear area filter")}">${icon("close", "sm")}</button></span>
+    <span class="scope-note">${tr("Every figure on this page is for {area} only.", { area: esc(areaLabel()) })}</span>
+    <button type="button" class="scope-all" data-area="KL">${tr("Show all of KL")}</button>
+  </div>`;
+}
 function panel(title, sub, body) { return `<div class="panel"><h3>${title}</h3><p class="sub">${sub}</p>${body}</div>`; }
 function inArea() { return state.area === "KL" ? tr("in KL") : tr("in {area}", { area: areaLabel() }); }
 function vsKL(key, unitWord) {
@@ -938,12 +1142,16 @@ const RENDER = {
       charts: [panel(tr("Waiting list over time"), tr("{area}, households waiting at year end", { area: areaLabel() }), lineChart(series("ppr"), { zero: true })), panel(tr("Waiting list by area"), tr("Households waiting. Select an area to view it."), seatBars("ppr"))] };
   },
   homeless() {
-    const n = val("homeless"), share = n / klValue("homeless") * 100;
-    return { q: tr("How many people are sleeping rough, and is there room for them?"),
-      summary: state.area === "KL" ? tr("<strong>{n} people</strong> were found sleeping rough in KL on the last count night. KL did not run a count between 2020 and 2023, so that period is missing.", { n: int(n) }) : tr("<strong>{n} people</strong> were found sleeping rough in {area} on the last count night, {p}% of KL's total.", { n: int(n), area: areaLabel(), p: share.toFixed(0) }),
-      stats: state.area === "KL" ? [[tr("Sleeping rough"), int(n), tr("on count night")], [tr("Shelter beds"), "1,100", tr("across 3 transit centres")], [tr("Beds in use"), "82%", tr("average this year")]]
-        : [[tr("Sleeping rough"), int(n), tr("on count night")], [tr("Share of KL total"), share.toFixed(0) + "%", tr("of {n} people", { n: int(klValue("homeless")) })], [tr("Per 10,000 residents"), (n / val("pop") * 1e4).toFixed(1), "KL: " + (klValue("homeless") / klValue("pop") * 1e4).toFixed(1)]],
-      charts: [heatPanel(), panel(tr("People sleeping rough"), tr("{area}, yearly count", { area: areaLabel() }), lineChart(series("homeless"), { zero: true, gapLabel: tr("No count 2020–23") })), panel(tr("By area"), tr("People counted on count night. Select an area to view it."), seatBars("homeless"))] };
+    const n = val("homeless"), pct = (a, b) => a && a / b < 0.005 ? tr("under 1%") : Math.round(a / b * 100) + "%";
+    const seat = state.area !== "KL" && JKM.seats[state.area], enough = seat && seat.total >= 50;
+    return { q: tr("Are we picking up the same people again and again?"),
+      summary: !seat ? tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from 2023 to 2025. <strong>{r} people</strong> were picked up more than once, and they account for a third of all pick-ups.", { n: int(n), p: int(JKM.people), r: int(JKM.repeaters) }) + " " + tr("The real number is likely higher: among people with an ID number on record, <strong>1 in 5</strong> was picked up again.")
+        : tr("JKM operations made <strong>{n} pick-ups</strong> in {area} from 2023 to 2025, {p} of KL's total.", { n: int(n), area: areaLabel(), p: pct(n, JKM.pickups) }) + " " + (enough ? tr("{b} were of someone JKM had already picked up before.", { b: pct(seat.before, seat.total) }) : tr("That's too few to say how many were repeats.")),
+      stats: !seat ? [[tr("Pick-ups"), int(n), tr("2023 to 2025")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), pct(JKM.repeaters, JKM.people), tr("{n} people confirmed. Likely about 1 in 5.", { n: int(JKM.repeaters) })]]
+        : [[tr("Pick-ups"), int(n), tr("2023 to 2025")], [tr("Share of KL total"), pct(n, JKM.pickups), tr("of {n} pick-ups", { n: int(JKM.pickups) })], [tr("Already picked up before"), enough ? pct(seat.before, seat.total) : "–", enough ? tr("of pick-ups here") : tr("too few to say")]],
+      charts: [heatPanel(), revolvingPanel(), outcomePanel(),
+        panel(tr("Pick-ups each year"), tr("{area}. Each year's operations targeted different groups, so changes say more about the operations than the street.", { area: areaLabel() }), lineChart(series("homeless"), { zero: true, years: JKM.years, fmt: v => int(v) })),
+        `<div class="panel wide"><h3>${tr("By area")}</h3><p class="sub">${tr("Pick-ups 2023 to 2025 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.", { n: int(JKM.noSeat) })}</p>${seatBars("homeless")}</div>`] };
   },
   services() {
     const c = val("complaints"), d = val("resolveDays"), within = Math.max(55, Math.min(97, 120 - d * 9));
@@ -1004,27 +1212,28 @@ function topicHTML(id) {
   const t = TOPICS.find(x => x.id === id), r = RENDER[id](), st = status(t);
   const i = TOPICS.indexOf(t), prev = TOPICS[i - 1], next = TOPICS[i + 1];
   const [src, freq, upd] = SOURCES[id];
-  return `<div class="page">
-    <div class="page-h"><div><div class="eyebrow">${icon(t.icon, "sm")}${esc(areaLabel())}</div><h1>${tr(t.label)}</h1><p class="q">${r.q}</p></div><span class="chip ${st.cls}">${st.text}</span></div>
+  return `<div class="page">${scopeBar()}
+    <div class="page-h"><div><div class="eyebrow">${icon(t.icon, "sm")}${esc(areaLabel())}</div><h1>${tr(t.label)}</h1><p class="q">${r.q}</p></div><span class="chips">${t.real ? "" : `<span class="chip mock">${tr("Mock data")}</span>`}<span class="chip ${st.cls}">${st.text}</span></span></div>
     <p class="summary">${r.summary}</p>
     <div class="stats">${r.stats.map(([k, v, s], j) => `<div class="stat"><span class="k">${k}</span><span class="v" data-n="${id}-${j}">${v}</span><span class="s">${s || ""}</span></div>`).join("")}</div>
     <div class="charts">${r.charts.join("")}</div>
-    <div class="source"><span>${tr("Source:")} <b>${tr(src)}</b></span><span>${tr("Updated:")} <b>${tr(freq)}</b></span><span>${tr("Last update:")} <b>${tr(upd)}</b></span><span>${tr("Sample data")}</span></div>
+    <div class="source"><span>${tr("Source:")} <b>${tr(src)}</b></span><span>${tr("Updated:")} <b>${tr(freq)}</b></span><span>${tr("Last update:")} <b>${tr(upd)}</b></span><span>${tr(t.real ? "Real data" : "Mock data")}</span></div>
     <div class="pager">${prev ? `<button type="button" data-go="${prev.id}"><small>${tr("Previous")}</small><span>${tr(prev.label)}</span></button>` : ""}${next ? `<button type="button" data-go="${next.id}"><small>${tr("Next")}</small><span>${tr(next.label)}</span></button>` : `<button type="button" data-go="map"><small>${tr("Back to")}</small><span>${tr("Map")}</span></button>`}</div>
   </div>`;
 }
 
 function aboutHTML() {
-  const rows = [["Housing", "PPR waiting list, rent, rent-to-income", "DBKL Housing Management", "Monthly"], ["Homelessness", "People sleeping rough, shelter beds and use", "JKM, DBKL", "Yearly count"], ["City services", "Complaints, days to fix, share fixed in 5 days", "DBKL complaints system", "Monthly"], ["Floods", "Incidents, hotspots and project status", "DBKL, JPS", "Monthly"], ["Getting around", "Transit coverage, bus waits, rail trips", "Prasarana, DOSM", "Quarterly"], ["Environment", "Green space per person, air quality days", "DBKL Landscape, DOE", "Yearly / daily"], ["City budget", "Spending by category and area, income sources", "DBKL", "Yearly"], ["People", "Population, income, age", "DOSM", "Yearly"]];
+  const rows = [["Housing", "PPR waiting list, rent, rent-to-income", "DBKL Housing Management", "Monthly"], ["Homelessness", "Pick-ups in JKM operations, repeat pick-ups, what happened after (real data)", "JKM WPKL", "Yearly"], ["City services", "Complaints, days to fix, share fixed in 5 days", "DBKL complaints system", "Monthly"], ["Floods", "Incidents, hotspots and project status", "DBKL, JPS", "Monthly"], ["Getting around", "Transit coverage, bus waits, rail trips", "Prasarana, DOSM", "Quarterly"], ["Environment", "Green space per person, air quality days", "DBKL Landscape, DOE", "Yearly / daily"], ["City budget", "Spending by category and area, income sources", "DBKL", "Yearly"], ["People", "Population, income, age", "DOSM", "Yearly"]];
   return `<div class="page about">
     <div class="page-h"><div><div class="eyebrow">${icon("info", "sm")}${tr("About this data")}</div><h1>${tr("How KL in Numbers works")}</h1><p class="q">${tr("A public page anyone can open, with no login, showing how Kuala Lumpur is doing.")}</p></div></div>
     <p>${tr("Each number on this site would come from the agency that collects it, with its source and the date it was last updated shown beside it. Every area page follows KL's 11 parliamentary seats, so residents and their representatives can see their own part of the city.")}</p>
-    <p><strong>${tr("This is a prototype.")}</strong> ${tr("Every figure on it is sample data made up to show the design. None of it is an official statistic.")}</p>
+    <p><strong>${tr("This is a prototype.")}</strong> ${tr("Every figure on it is sample data made up to show the design, except the Homelessness topic. That uses real JKM WPKL operation records from 2023 to 2025, reduced to totals so no one can be identified.")}</p>
     <h2>${tr("What each topic covers")}</h2>
     <div class="tbl-wrap"><table><thead><tr><th>${tr("Topic")}</th><th>${tr("Measures")}</th><th>${tr("Would come from")}</th><th>${tr("Updated")}</th></tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${tr(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
     <h2>${tr("What agencies would need to publish")}</h2>
     <ul class="asks">
       <li>${tr("A yearly count of people sleeping rough in KL, run on one night with a fixed method.")}</li>
+      <li>${tr("An ID number on every JKM pick-up record, and an honest first-time or repeat field, so repeat pick-ups can be counted properly.")}</li>
       <li>${tr("DBKL complaint figures each month: how many, what type, and how long each took to fix.")}</li>
       <li>${tr("One PPR waiting-list figure, defined the same way every time and published quarterly.")}</li>
       <li>${tr("DBKL's budget, tabled on time, with spending broken down by area where it can be.")}</li>
@@ -1083,7 +1292,8 @@ function overviewInner() {
 }
 
 /* ---------- thermal heat map (look inspired by bencho.dev's Heat map block) ---------- */
-const SPOTS = [["Chow Kit", 578.7, 557.6, 60, "P.120"], ["Masjid Jamek", 562.0, 659.3, 45, "P.120"], ["Pasar Seni", 558.5, 683.1, 35, "P.120"], ["Pudu Sentral", 590.5, 683.1, 30, "P.120"], ["Medan Tuanku", 580.7, 589.6, 20, "P.120"], ["Bukit Bintang", 666.4, 676.1, 12, "P.120"], ["Brickfields", 497.2, 763.9, 7, "P.120"], ["Jalan TAR", 563.3, 610.5, 5, "P.120"], ["Kampung Baru", 619.0, 561.8, 60, "P.119"], ["Titiwangsa", 724.6, 548.0, 36, "P.119"], ["Sentul", 528.5, 415.4, 38, "P.115"], ["Bangsar", 389.3, 791.8, 31, "P.121"], ["Cheras", 779.1, 833.6, 57, "P.123"], ["Kepong", 145.7, 234.1, 12, "P.114"], ["Jalan Klang Lama", 438.0, 966.1, 44, "P.122"], ["Wangsa Maju", 848.7, 269.0, 21, "P.116"], ["Segambut", 347.6, 387.5, 25, "P.117"], ["Setiawangsa", 834.8, 457.2, 14, "P.118"], ["Bandar Tun Razak", 730.4, 1035.8, 18, "P.124"]];
+const SPOTS = JKM.spots.map(([name, lon, lat, n]) => [name, 6960.7786 * lon + 0.111261 * lat - 707320.355, -0.212075 * lon - 6971.29923 * lat + 22633.5383, n, null]);
+{ const cx = document.createElement("canvas").getContext("2d"); SPOTS.forEach(p => { p[4] = (SEATS.find(s => cx.isPointInPath(new Path2D(GEO.seats[s.code].d), p[1], p[2])) || seatBy("P.120")).code; }); }
 const HEAT_PAD = 40;
 function thermal(t) {
   const S = [[0, [70, 92, 235]], [0.35, [72, 190, 250]], [0.6, [255, 214, 72]], [0.82, [255, 122, 140]], [1, [236, 52, 96]]];
@@ -1143,11 +1353,11 @@ function hydrate(root, animate = true) {
 function heatPanel() {
   const inSeat = state.area !== "KL";
   const list = SPOTS.filter(p => !inSeat || p[4] === state.area).sort((a, b) => b[3] - a[3]).slice(0, inSeat ? 6 : 8), max = Math.max(...SPOTS.map(p => p[3]));
-  return `<div class="panel wide"><h3>${tr("Where people sleep rough")}</h3><p class="sub">${tr("Heat shows where people were counted on the last count night. Hover over a hotspot to see its count.")}</p>
+  return `<div class="panel wide"><h3>${tr("Where people are picked up")}</h3><p class="sub">${tr("Heat shows where JKM operations picked people up, 2023 to 2025. {n} pick-ups recorded only as \"Kuala Lumpur\" or at small sites aren't shown. Hover over a hotspot to see its count.", { n: int(JKM.unplaced) })}</p>
     <div class="heat">
-      <div class="heat-cv"><canvas data-heat data-area="${state.area}" aria-label="${tr("Where people sleep rough")}" role="img"></canvas><span class="heat-ring"></span><div class="heat-tip"></div></div>
+      <div class="heat-cv"><canvas data-heat data-area="${state.area}" aria-label="${tr("Where people are picked up")}" role="img"></canvas><span class="heat-ring"></span><div class="heat-tip"></div></div>
       <div class="heat-side">
-        <div class="heat-legend"><span>${tr("Fewer people")}</span><i></i><span>${tr("More people")}</span></div>
+        <div class="heat-legend"><span>${tr("Fewer pick-ups")}</span><i></i><span>${tr("More pick-ups")}</span></div>
         <div class="layer-h">${inSeat ? tr("Hotspots in {area}", { area: areaLabel() }) : tr("Biggest hotspots")}</div>
         <ol class="heat-list">${list.map(p => `<li><span class="hn">${esc(p[0])}<small>${esc(seatBy(p[4]).name)}</small></span><span class="hb"><i style="transform:scaleX(${(p[3] / max).toFixed(3)})"></i></span><span class="hv">${int(p[3])}</span></li>`).join("")}</ol>
       </div>
@@ -1165,7 +1375,7 @@ document.addEventListener("pointermove", e => {
   const px = (best[1] + HEAT_PAD) / W * r.width, py = (best[2] + HEAT_PAD) / W * r.width;
   const ring = wrap.querySelector(".heat-ring"), tip = wrap.querySelector(".heat-tip");
   ring.style.transform = `translate(${px}px, ${py}px)`;
-  tip.innerHTML = `<b>${esc(best[0])}</b><span>${tr("{n} people", { n: int(best[3]) })} · ${esc(seatBy(best[4]).name)}</span>`;
+  tip.innerHTML = `<b>${esc(best[0])}</b><span>${tr("{n} pick-ups", { n: int(best[3]) })} · ${esc(seatBy(best[4]).name)}</span>`;
   tip.style.left = Math.min(px + 14, r.width - tip.offsetWidth) + "px"; tip.style.top = Math.max(0, py - tip.offsetHeight - 12) + "px";
   wrap.classList.add("hot");
 });
@@ -1224,7 +1434,7 @@ function mlLabelData() {
 }
 function mlPointData(kind) {
   if (kind === "flood") return { type: "FeatureCollection", features: HOTSPOTS.map(h => ({ type: "Feature", properties: { name: h[0], status: h[2], seat: MLD.flood[h[0]][2] }, geometry: { type: "Point", coordinates: MLD.flood[h[0]].slice(0, 2) } })) };
-  return { type: "FeatureCollection", features: SPOTS.map(p => ({ type: "Feature", properties: { name: p[0], count: p[3], seat: p[4] }, geometry: { type: "Point", coordinates: MLD.homeless[p[0]] } })) };
+  return { type: "FeatureCollection", features: SPOTS.map((p, i) => ({ type: "Feature", properties: { name: p[0], count: p[3], seat: p[4] }, geometry: { type: "Point", coordinates: JKM.spots[i].slice(1, 3) } })) };
 }
 function mlPaint() {
   if (!ML || !ML.getLayer("seats-fill")) return;
@@ -1270,7 +1480,7 @@ function mlInit(el) {
     ML.addSource("spots-flood", { type: "geojson", data: mlPointData("flood") });
     ML.addLayer({ id: "spots-flood", type: "circle", source: "spots-flood", paint: { "circle-radius": 6, "circle-color": ["match", ["get", "status"], "Fixed", "#15803d", "In progress", "#e0a12e", "#e8552a"], "circle-stroke-color": "#ffffff", "circle-stroke-width": 1.5 } });
     ML.addSource("spots-homeless", { type: "geojson", data: mlPointData("homeless") });
-    ML.addLayer({ id: "spots-homeless", type: "circle", source: "spots-homeless", paint: { "circle-radius": ["interpolate", ["linear"], ["sqrt", ["get", "count"]], 2, 4, 8, 14], "circle-color": "#ec3460", "circle-opacity": 0.72, "circle-stroke-color": "#ffffff", "circle-stroke-width": 1.2 } });
+    ML.addLayer({ id: "spots-homeless", type: "circle", source: "spots-homeless", paint: { "circle-radius": ["interpolate", ["linear"], ["sqrt", ["get", "count"]], 3, 4, 16, 16], "circle-color": "#ec3460", "circle-opacity": 0.72, "circle-stroke-color": "#ffffff", "circle-stroke-width": 1.2 } });
     mlPaint();
     // stop zooming out far enough to see past KL
     ML.setMinZoom(Math.max(9, ML.getZoom() - 0.5));
@@ -1283,7 +1493,7 @@ function mlInit(el) {
     const pts = ML.queryRenderedFeatures(e.point, { layers: ["spots-flood", "spots-homeless"].filter(id => ML.getLayoutProperty(id, "visibility") !== "none") });
     if (pts.length) {
       const p = pts[0].properties; ML.getCanvas().style.cursor = "default";
-      return showTip(e, p.status ? `<b>${esc(tr(p.name))}</b><span>${tr(p.status)} · ${esc(seatBy(p.seat)?.name || "")}</span>` : `<b>${esc(p.name)}</b><span>${tr("{n} people", { n: int(p.count) })} · ${esc(seatBy(p.seat)?.name || "")}</span>`);
+      return showTip(e, p.status ? `<b>${esc(tr(p.name))}</b><span>${tr(p.status)} · ${esc(seatBy(p.seat)?.name || "")}</span>` : `<b>${esc(p.name)}</b><span>${tr("{n} pick-ups", { n: int(p.count) })} · ${esc(seatBy(p.seat)?.name || "")}</span>`);
     }
     const f = ML.queryRenderedFeatures(e.point, { layers: ["seats-fill"] })[0];
     if (!f) { tip.classList.remove("show"); ML.setFilter("seats-hover", ["==", ["get", "code"], ""]); ML.getCanvas().style.cursor = ""; return; }
@@ -1340,15 +1550,15 @@ function panelBody() {
   return `<div><div class="mp-title">${tr("Kuala Lumpur, by parliamentary seat")}</div>
       <p class="mp-desc">${tr("Pick a measure to colour the map. Select any area for its full picture.")}</p>
       <button type="button" class="more" id="moreBtn" aria-expanded="${state.moreOpen}">${tr(state.moreOpen ? "Show less" : "Show more")}</button>
-      <div class="more-body${state.moreOpen ? " open" : ""}"><div><p>${tr(L.desc)}</p><p>${tr("Boundaries: DOSM electoral boundaries for KL's 11 parliamentary seats. Figures: sample data.")}</p></div></div></div>
+      <div class="more-body${state.moreOpen ? " open" : ""}"><div><p>${tr(L.desc)}</p><p>${tr("Boundaries: DOSM electoral boundaries for KL's 11 parliamentary seats. Figures: sample data, except homeless pick-ups (JKM WPKL).")}</p></div></div></div>
     <div><div class="layer-h">${tr("Colour the map by")}</div>
       <div class="layers" data-fluid>${LAYERS.map(l => `<button type="button" class="layer" data-layer="${l.key}" aria-pressed="${l.key === state.layer}">${icon(TOPICS.find(t => t.id === l.topic).icon)}${tr(l.label)}</button>`).join("")}</div></div>
     ${mlUsable() ? `<div><div class="layer-h">${tr("Points on the map")}</div>
       <div class="pts">
         <button type="button" class="pt" data-point="flood" aria-pressed="${state.points.flood}"><span class="box"></span>${tr("Flood hotspots")}</button>
         <div class="pt-key"><span><i style="background:#15803d"></i>${tr("Fixed")}</span><span><i style="background:#e0a12e"></i>${tr("In progress")}</span><span><i style="background:#e8552a"></i>${tr("Open")}</span></div>
-        <button type="button" class="pt" data-point="homeless" aria-pressed="${state.points.homeless}"><span class="box"></span>${tr("People sleeping rough")}</button>
-        <div class="pt-key"><span><i style="background:#ec3460;opacity:.75"></i>${tr("Sized by number of people")}</span></div>
+        <button type="button" class="pt" data-point="homeless" aria-pressed="${state.points.homeless}"><span class="box"></span>${tr("Homeless pick-up hotspots")}</button>
+        <div class="pt-key"><span><i style="background:#ec3460;opacity:.75"></i>${tr("Sized by number of pick-ups")}</span></div>
       </div></div>` : ""}
     <div><div class="layer-h">${tr(L.unit)}</div>
       <div class="legend">${[4, 3, 2, 1, 0].map(i => `<div><i style="background:${binColor(i)}"></i><span>${tr("{a} to {b}", { a: L.fmt(b.edges[i]), b: L.fmt(b.edges[i + 1]) })}</span></div>`).join("")}</div></div>`;
@@ -1492,14 +1702,18 @@ function go(v) {
   if (v === state.view) { closeNav(); return; }
   const dir = VIEW_ORDER.indexOf(v) >= VIEW_ORDER.indexOf(state.view) ? 1 : -1;
   state.view = v; closeNav();
-  try { history.replaceState(null, "", "#" + v); } catch (e) {}
+  syncHash();
   mountView(v, dir); renderTopbar(); syncNav();
+}
+function syncHash() {
+  const scoped = state.area !== "KL" && state.view !== "overview" && state.view !== "about";
+  try { history.replaceState(null, "", "#" + state.view + (scoped ? "/" + state.area.replace("P.", "P") : "")); } catch (e) {}
 }
 function setArea(code) {
   if (code === state.area) code = state.view === "map" ? "KL" : code;
   const prev = snapshot();
   state.area = code;
-  try { localStorage.setItem("klin-area", code); } catch (e) {}
+  syncHash();
   renderTopbar(); syncNav();
   if (state.view === "map") { paintMap(); zoomTo(code); syncTray(); if (state.tab === "list") renderPanel(); }
   else if (state.view !== "about") {
@@ -1515,7 +1729,7 @@ function applyStatic() {
   document.title = tr("KL in Numbers");
   document.querySelector(".brand b").textContent = tr("KL in Numbers");
   document.querySelector(".proto b").textContent = tr("Prototype");
-  document.querySelector(".proto span").textContent = tr("All figures are sample data for illustration, not official statistics.");
+  document.querySelector(".proto span").textContent = tr("All figures are sample data for illustration, except Homelessness, which uses real JKM records.");
   document.getElementById("menuBtn").setAttribute("aria-label", tr("Open navigation"));
   document.getElementById("areaSel").setAttribute("aria-label", tr("Area"));
   document.getElementById("lang").setAttribute("aria-label", tr("Language"));
@@ -1559,7 +1773,7 @@ function closeNav() { document.getElementById("app").classList.remove("nav-open"
   document.addEventListener("click", e => {
     const t = e.target;
     const v = t.closest("[data-view]"); if (v) return go(v.dataset.view);
-    const a = t.closest("[data-area]"); if (a) { closeNav(); if (state.view === "about" || state.view === "overview") go("map"); return setArea(a.dataset.area); }
+    const a = t.closest("[data-area]"); if (a) { closeNav(); if ((state.view === "about" || state.view === "overview")) go("map"); return setArea(a.dataset.area); }
     const g = t.closest("[data-go]"); if (g) { if (g.classList.contains("bc") && state.area !== "KL") setArea("KL"); return go(g.dataset.go); }
     const p = t.closest("[data-pick]"); if (p) { if (p.closest("svg")?.dataset.dragged) return; return setArea(p.dataset.pick === state.area && state.view === "map" ? "KL" : p.dataset.pick); }
     const L = t.closest("[data-layer]"); if (L) { const prev = snapshot(); state.layer = L.dataset.layer; renderPanel(); paintMap(); syncNav(); continuity(prev); return; }
@@ -1569,9 +1783,10 @@ function closeNav() { document.getElementById("app").classList.remove("nav-open"
     if (t.closest("#trayClose")) return setArea("KL");
   });
 
-  try { const saved = localStorage.getItem("klin-area"); if (saved && (saved === "KL" || seatBy(saved))) state.area = saved; } catch (e) {}
+  try { localStorage.removeItem("klin-area"); } catch (e) {}
   try { const l = localStorage.getItem("klin-lang"); if (l === "bm" || l === "en") state.lang = l; } catch (e) {}
-  const h = location.hash.slice(1); if (VIEW_ORDER.includes(h)) state.view = h;
+  const [hv, ha] = location.hash.slice(1).split("/"); if (VIEW_ORDER.includes(hv)) state.view = hv;
+  const hs = ha && seatBy(ha.replace(/^P\.?/, "P.")); if (hs) state.area = hs.code;
   applyStatic(); renderNav(); renderTopbar(); mountView(state.view, 1); syncNav(false);
   window.addEventListener("resize", () => { syncNav(false); applyStatic(); if (document.getElementById("tabInd")) { renderPanel(); applyZoom(); } });
 })();
