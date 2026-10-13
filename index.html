@@ -351,6 +351,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .out-row .bv small { color: var(--muted); font-size: 11px; margin-left: 8px; }
 .out-row.muted { color: var(--muted); }
 .outs + .rev-cap { margin-top: 14px; }
+.outs.hov .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
+.outs.hov .out-row:hover .bar-fill { background: var(--accent); }
 .out-row.muted .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
 @media (max-width: 860px) { .rev { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
 .stack { display: flex; height: 24px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
@@ -945,7 +947,7 @@ const BM = {
   "{t} people were picked up three times or more. Half of repeat pick-ups came within {d} days of the last one.": "{t} orang diambil tiga kali atau lebih. Separuh pengambilan berulang berlaku dalam {d} hari selepas pengambilan sebelumnya.",
   "2023 is lower partly because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.": "2023 lebih rendah sebahagiannya kerana tiada data 2022. Dalam {o} operasi KL Strike Force sejak 2025, {a} pengambilan melibatkan orang yang pernah diambil, meningkat kepada {b} pada 2026.",
   "Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).": "Peratus individu dalam setiap kumpulan yang diambil lebih daripada sekali dalam tempoh ini. Garis putus-putus ialah semua individu ({p}).",
-  "A person can be in more than one group. Paler bars rest on fewer than 30 repeat cases, so read them with care.": "Seorang individu boleh tergolong dalam lebih daripada satu kumpulan. Bar yang lebih pudar berdasarkan kurang daripada 30 kes berulang, jadi tafsir dengan berhati-hati.",
+  "A person can be in more than one group. Shares based on fewer than 30 repeat cases should be read with care.": "Seorang individu boleh tergolong dalam lebih daripada satu kumpulan. Peratus berdasarkan kurang daripada 30 kes berulang perlu ditafsir dengan berhati-hati.",
   "<b>Released is the most common outcome:</b> {a} of {b} pick-ups ({p}), and more than a quarter of those released were picked up again.": "<b>Dilepaskan ialah tindakan paling lazim:</b> {a} daripada {b} pengambilan ({p}), dan lebih satu perempat daripada mereka yang dilepaskan diambil semula.",
   "* Usually deportation, so a low return rate here doesn't mean it worked.": "* Biasanya pengusiran, jadi kadar kembali yang rendah di sini tidak bermakna ia berkesan.",
   "JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. At least <strong>{c} people ({cp})</strong> were picked up more than once.": "Operasi JKM di KL membuat <strong>{n} pengambilan</strong> melibatkan <strong>{p} orang</strong> dari Januari 2023 hingga September 2026. Sekurang-kurangnya <strong>{c} orang ({cp})</strong> diambil lebih daripada sekali.",
@@ -1127,7 +1129,7 @@ const JKM_YEARS = JKM.years.map(y => y === 2026 ? "2026*" : y);
 const pc = (a, b) => Math.round(a / b * 100) + "%";
 function outRows(rows, key, opts = {}) {
   const max = opts.max || Math.max(...rows.map(r => r[1] / r[2]));
-  return `<div class="outs">${rows.map(([k, a, b, muted], i) => { const sc = (a / b / max).toFixed(4); return `<div class="out-row${muted ? " muted" : ""}"><span class="nm">${k}</span><span class="bv">${pc(a, b)}<small>${tr("{a} of {n}", { a: int(a), n: int(b) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="${key}-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span>${opts.ref ? `<span class="ref" style="left:${(opts.ref / max * 100).toFixed(2)}%"></span>` : ""}</span></div>`; }).join("")}</div>`;
+  return `<div class="outs${opts.cls ? " " + opts.cls : ""}">${rows.map(([k, a, b, muted], i) => { const sc = (a / b / max).toFixed(4); return `<div class="out-row${muted ? " muted" : ""}"><span class="nm">${k}</span><span class="bv">${pc(a, b)}<small>${tr("{a} of {n}", { a: int(a), n: int(b) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="${key}-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span>${opts.ref ? `<span class="ref" style="left:${(opts.ref / max * 100).toFixed(2)}%"></span>` : ""}</span></div>`; }).join("")}</div>`;
 }
 function revolvingPanel() {
   const shares = [[tr("of people"), JKM.combined, JKM.people, tr("{a} of {b} people", { a: int(JKM.combined), b: int(JKM.people) })],
@@ -1166,10 +1168,10 @@ function risingPanel() {
     `<p class="rev-cap">${tr("2023 is lower partly because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.", { o: sf[4], a: pc(sf[0], sf[1]), b: pc(sf[2], sf[3]) })}</p>`);
 }
 function groupsPanel() {
-  const all = JKM.repeaters / JKM.people, rows = JKM.groups.map(([k, n, a]) => [tr(k), a, n, a < 30]);
+  const all = JKM.repeaters / JKM.people, rows = JKM.groups.map(([k, n, a]) => [tr(k), a, n]).sort((x, y) => y[1] / y[2] - x[1] / x[2]);
   return `<div class="panel wide"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).", { p: Math.round(all * 100) + "%" })}</p>
-    ${outRows(rows, "grp", { ref: all })}
-    <p class="rev-cap">${tr("A person can be in more than one group. Paler bars rest on fewer than 30 repeat cases, so read them with care.")}</p>
+    ${outRows(rows, "grp", { ref: all, cls: "hov" })}
+    <p class="rev-cap">${tr("A person can be in more than one group. Shares based on fewer than 30 repeat cases should be read with care.")}</p>
   </div>`;
 }
 function outcomePanel() {
