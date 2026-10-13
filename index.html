@@ -1110,7 +1110,7 @@ const JKM_YEARS = JKM.years.map(y => y === 2026 ? "2026*" : y);
 const pc = (a, b) => Math.round(a / b * 100) + "%";
 function outRows(rows, key, opts = {}) {
   const max = opts.max || Math.max(...rows.map(r => r[1] / r[2]));
-  return `<div class="outs${opts.cls ? " " + opts.cls : ""}">${rows.map(([k, a, b, muted], i) => { const sc = (a / b / max).toFixed(4); return `<div class="out-row${muted ? " muted" : ""}"><span class="nm">${k}</span><span class="bv">${pc(a, b)}<small>${tr("{a} of {n}", { a: int(a), n: int(b) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="${key}-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span>${opts.ref ? `<span class="ref" style="left:${(opts.ref / max * 100).toFixed(2)}%"></span>` : ""}</span></div>`; }).join("")}</div>`;
+  return `<div class="outs${opts.cls ? " " + opts.cls : ""}">${rows.map(([k, a, b, muted], i) => { const sc = (a / b / max).toFixed(4); return `<div class="out-row${muted ? " muted" : ""}"><span class="nm">${k}</span><span class="bv">${opts.unit ? `${tr(opts.unit, { n: int(a) })}<small>(${pc(a, b)})</small>` : `${pc(a, b)}<small>${tr("{a} of {n}", { a: int(a), n: int(b) })}</small>`}</span><span class="bar-track"><span class="bar-fill" data-k="${key}-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span>${opts.ref ? `<span class="ref" style="left:${(opts.ref / max * 100).toFixed(2)}%"></span>` : ""}</span></div>`; }).join("")}</div>`;
 }
 function revolvingPanel() {
   const shares = [[tr("of people"), JKM.combined, JKM.people, tr("{a} of {b} people", { a: int(JKM.combined), b: int(JKM.people) })],
@@ -1145,13 +1145,13 @@ function revolvingPanel() {
 function risingPanel() {
   const sf = JKM.klsf;
   return panel(tr("More of each operation is people picked up before"), tr("Share of pick-ups of someone already picked up in an earlier operation."),
-    outRows(JKM.yearBefore.map((a, i) => [JKM_YEARS[i], a, JKM.yearPickups[i]]), "before", { max: 0.4 }) +
+    outRows(JKM.yearBefore.map((a, i) => [JKM_YEARS[i], a, JKM.yearPickups[i]]), "before", { max: 0.4, unit: "{n} pick-ups" }) +
     `<p class="rev-cap">${tr("2023 is lower partly because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.", { o: sf[4], a: pc(sf[0], sf[1]), b: pc(sf[2], sf[3]) })}</p>`);
 }
 function groupsPanel() {
   const all = JKM.repeaters / JKM.people, rows = JKM.groups.map(([k, n, a]) => [tr(k), a, n]).sort((x, y) => y[1] / y[2] - x[1] / x[2]);
   return `<div class="panel wide"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).", { p: Math.round(all * 100) + "%" })}</p>
-    ${outRows(rows, "grp", { ref: all, cls: "hov" })}
+    ${outRows(rows, "grp", { ref: all, cls: "hov", unit: "{n} people" })}
     <p class="rev-cap">${tr("A person can be in more than one group. Shares based on fewer than 30 repeat cases should be read with care.")}</p>
   </div>`;
 }
