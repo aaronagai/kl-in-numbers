@@ -348,8 +348,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .outs.hov .out-row:hover .bar-fill, .outs.hov .out-row.on .bar-fill { background: var(--accent); }
 .vrow { all: unset; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 13px; cursor: pointer; border-radius: 4px; }
 .vrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.imag-hint { margin-left: 10px; font-size: 12px; color: var(--accent); opacity: .75; transition: opacity var(--t-fast) var(--ease); }
-.vrow:hover .imag-hint, .vrow.on .imag-hint { opacity: 1; }
+.imag-hint { margin-left: 10px; font-size: 12px; color: var(--accent); opacity: 0; transition: opacity var(--t-fast) var(--ease); }
+.vrow:hover .imag-hint, .vrow:focus-visible .imag-hint, .vrow.on .imag-hint { opacity: 1; }
+@media (hover: none) { .imag-hint { opacity: .75; } }
 .vuln-grid { display: grid; align-items: start; grid-template-columns: minmax(0, 1fr) minmax(0, 0fr); column-gap: 0; transition: grid-template-columns 360ms var(--ease), column-gap 360ms var(--ease); }
 .vuln.split .vuln-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
 .vuln-story { min-width: 0; overflow: hidden; }
@@ -357,14 +358,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .vuln.split .story-in { opacity: 1; transform: none; transition-duration: 320ms; transition-delay: 120ms; }
 .story-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .story-h .eyebrow { font-family: var(--f-data); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
-.story-lead { margin: 0 0 18px; font-size: 18px; line-height: 1.45; color: var(--ink-3); max-width: 34ch; text-wrap: pretty; }
+.story-lead { margin: 0 0 22px; font-size: 20px; line-height: 1.45; color: var(--ink-3); max-width: 34ch; text-wrap: pretty; }
 .story-lead b { color: var(--ink); font-weight: 500; }
-.people { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px 8px; max-width: 320px; }
+.people { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 10px; max-width: 420px; }
 .people svg { width: 100%; height: auto; fill: var(--neutral-soft); stroke: var(--line); stroke-width: 1; }
 .people svg.on { fill: var(--accent); stroke: none; }
-.vuln.split .people svg.on { animation: pp-in 240ms var(--ease) both; animation-delay: calc(200ms + var(--i) * 8ms); }
+.vuln.split .people svg.on { animation: pp-in 240ms var(--ease) both; animation-delay: calc(200ms + var(--i) * 60ms); }
 @keyframes pp-in { from { fill: var(--neutral-soft); transform: scale(.8); } }
-.story-cap { margin: 16px 0 0; font-size: 14px; color: var(--ink-3); }
 @media (max-width: 860px) { .vuln-grid, .vuln.split .vuln-grid { grid-template-columns: minmax(0, 1fr); column-gap: 0; } .vuln-story { display: none; } .vuln.split .vuln-story { display: block; margin-top: 24px; } }
 @media (prefers-reduced-motion: reduce) { .vuln-grid, .story-in { transition: none; } .vuln.split .people svg.on { animation: none; } }
 .out-row.muted .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
@@ -946,7 +946,7 @@ const BM = {
   "At least <b>1 in 4</b> people was picked up more than once, and repeat cases make up more than <b>a third</b> of all pick-ups.": "Sekurang-kurangnya <b>1 daripada 4</b> orang diambil lebih daripada sekali, dan kes berulang menyumbang lebih <b>satu pertiga</b> daripada semua pengambilan.",
   "{t} people were picked up three times or more. Half of repeat pick-ups came within {d} days of the last one.": "{t} orang diambil tiga kali atau lebih. Separuh pengambilan berulang berlaku dalam {d} hari selepas pengambilan sebelumnya.",
   "2023 is lower partly because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.": "2023 lebih rendah sebahagiannya kerana tiada data 2022. Dalam {o} operasi KL Strike Force sejak 2025, {a} pengambilan melibatkan orang yang pernah diambil, meningkat kepada {b} pada 2026.",
-  "Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).": "Peratus individu dalam setiap kumpulan yang diambil lebih daripada sekali dalam tempoh ini. Garis putus-putus ialah semua individu ({p}).",
+  "Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}). Select a group to imagine it.": "Peratus individu dalam setiap kumpulan yang diambil lebih daripada sekali dalam tempoh ini. Garis putus-putus ialah semua individu ({p}). Pilih kumpulan untuk membayangkannya.",
   "<b>Released is the most common outcome:</b> {a} of {b} pick-ups ({p}), and more than a quarter of those released were picked up again.": "<b>Dilepaskan ialah tindakan paling lazim:</b> {a} daripada {b} pengambilan ({p}), dan lebih satu perempat daripada mereka yang dilepaskan diambil semula.",
   "* Usually deportation, so a low return rate here doesn't mean it worked.": "* Biasanya pengusiran, jadi kadar kembali yang rendah di sini tidak bermakna ia berkesan.",
   "JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. At least <strong>{c} people ({cp})</strong> were picked up more than once.": "Operasi JKM di KL membuat <strong>{n} pengambilan</strong> melibatkan <strong>{p} orang</strong> dari Januari 2023 hingga September 2026. Sekurang-kurangnya <strong>{c} orang ({cp})</strong> diambil lebih daripada sekali.",
@@ -955,8 +955,15 @@ const BM = {
   "{n} times": "{n} kali",
   "Times each action was taken after a pick-up from 2023 to 2025, and in brackets the share of those picked up again by September 2026.": "Bilangan kali setiap tindakan diambil selepas pengambilan dari 2023 hingga 2025, dan dalam kurungan peratus mereka yang diambil semula sehingga September 2026.",
   "Imagine this": "Bayangkan",
-  "Imagine <b>100 UNHCR card holders</b> picked up by JKM. <b>{n}</b> of them are picked up again.": "Bayangkan <b>100 pemegang kad UNHCR</b> diambil oleh JKM. <b>{n}</b> daripada mereka diambil semula.",
-  "That's almost half, about four football teams.": "Itu hampir separuh, kira-kira empat pasukan bola sepak.",
+  "Imagine encountering 10 people on the streets. Four hold UNHCR cards.": "Bayangkan anda bertemu 10 orang di jalanan. Empat daripadanya memegang kad UNHCR.",
+  "Four in every 10 people we repeatedly encountered had disabilities. Imagine navigating the streets without the support your disability requires.": "Empat daripada setiap 10 orang yang kami temui berulang kali ialah OKU. Bayangkan menempuh jalanan tanpa sokongan yang diperlukan oleh kecacatan anda.",
+  "One in three were unwell or living with an illness. Imagine being sick without a home to recover in.": "Satu daripada tiga tidak sihat atau menghidap penyakit. Bayangkan jatuh sakit tanpa rumah untuk pulih.",
+  "Nearly three in 10 had mental health problems. Imagine trying to find peace when you have nowhere safe to rest.": "Hampir tiga daripada 10 mempunyai masalah kesihatan mental. Bayangkan mencari ketenangan apabila tiada tempat selamat untuk berehat.",
+  "More than one in five were aged 60 or older. Imagine spending your retirement years on the streets.": "Lebih satu daripada lima berumur 60 tahun ke atas. Bayangkan menghabiskan usia persaraan di jalanan.",
+  "Nearly one in five had a history of drug use. Imagine trying to rebuild your life without a stable place to start.": "Hampir satu daripada lima mempunyai sejarah penggunaan dadah. Bayangkan cuba membina semula hidup tanpa tempat yang stabil untuk bermula.",
+  "Nearly one in five were women. Imagine facing the streets without the privacy and security of a home.": "Hampir satu daripada lima ialah wanita. Bayangkan berdepan jalanan tanpa privasi dan keselamatan sebuah rumah.",
+  "One in six were non-citizens. Imagine being in a city where you may have fewer support networks to turn to.": "Satu daripada enam bukan warganegara. Bayangkan berada di bandar yang mungkin kurang rangkaian sokongan untuk anda bergantung.",
+  "Four children. Four young lives. Each one deserves a childhood that doesn't begin on the streets.": "Empat kanak-kanak. Empat nyawa muda. Setiap seorang berhak mendapat zaman kanak-kanak yang tidak bermula di jalanan.",
 };
 const MISSING = new Set();
 function tr(s, v) {
@@ -1172,7 +1179,17 @@ function risingPanel() {
     `<p class="rev-cap">${tr("2023 is lower partly because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.", { o: sf[4], a: pc(sf[0], sf[1]), b: pc(sf[2], sf[3]) })}</p>`);
 }
 // "Imagine this": a group's share shown as 100 people. Only groups with a story can be opened.
-const STORIES = { "UNHCR card holders": { lead: "Imagine <b>100 UNHCR card holders</b> picked up by JKM. <b>{n}</b> of them are picked up again.", cap: "That's almost half, about four football teams." } };
+const STORIES = {
+  "UNHCR card holders": { lead: "Imagine encountering 10 people on the streets. Four hold UNHCR cards." },
+  "People with disabilities (OKU)": { lead: "Four in every 10 people we repeatedly encountered had disabilities. Imagine navigating the streets without the support your disability requires." },
+  "Unwell or other illness": { lead: "One in three were unwell or living with an illness. Imagine being sick without a home to recover in." },
+  "Mental health problems": { lead: "Nearly three in 10 had mental health problems. Imagine trying to find peace when you have nowhere safe to rest." },
+  "Aged 60 and over": { lead: "More than one in five were aged 60 or older. Imagine spending your retirement years on the streets." },
+  "Drug users (current or past)": { lead: "Nearly one in five had a history of drug use. Imagine trying to rebuild your life without a stable place to start." },
+  "Women": { lead: "Nearly one in five were women. Imagine facing the streets without the privacy and security of a home." },
+  "Non-citizens": { lead: "One in six were non-citizens. Imagine being in a city where you may have fewer support networks to turn to." },
+  "Children (under 18)": { lead: "Four children. Four young lives. Each one deserves a childhood that doesn't begin on the streets.", count: 4 }
+};
 let imagined = null;
 function groupsPanel() {
   const all = JKM.repeaters / JKM.people, max = Math.max(...JKM.groups.map(g => g[2] / g[1]));
@@ -1182,18 +1199,17 @@ function groupsPanel() {
     const inner = `<span class="nm">${tr(k)}${story ? `<span class="imag-hint">${tr("Imagine this")} →</span>` : ""}</span><span class="bv">${tr("{n} people", { n: int(a) })}<small>(${pc(a, n)})</small></span><span class="bar-track"><span class="bar-fill" data-k="grp-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span><span class="ref" style="left:${(all / max * 100).toFixed(2)}%"></span></span>`;
     return story ? `<button type="button" class="out-row vrow${on ? " on" : ""}" data-imagine="${esc(k)}" aria-expanded="${on}" aria-controls="vuln-story">${inner}</button>` : `<div class="out-row">${inner}</div>`;
   };
-  return `<div class="panel wide vuln${imagined ? " split" : ""}"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).", { p: Math.round(all * 100) + "%" })}</p>
+  return `<div class="panel wide vuln${imagined ? " split" : ""}"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}). Select a group to imagine it.", { p: Math.round(all * 100) + "%" })}</p>
     <div class="vuln-grid"><div class="outs hov vuln-chart">${rows.map(row).join("")}</div><aside class="vuln-story" id="vuln-story" aria-live="polite">${imagined ? storyHTML(imagined) : ""}</aside></div>
   </div>`;
 }
 function storyHTML(k) {
-  const [, n, a] = JKM.groups.find(g => g[0] === k), hits = Math.round(a / n * 100), st = STORIES[k];
+  const [, n, a] = JKM.groups.find(g => g[0] === k), st = STORIES[k], total = st.count || 10, hits = st.count || Math.round(a / n * 10);
   const fig = (on, i) => `<svg class="pp${on ? " on" : ""}" style="--i:${i}" viewBox="0 0 20 32" aria-hidden="true"><circle cx="10" cy="6.5" r="5"/><path d="M1.5 30v-9.5A7.5 7.5 0 0 1 9 13h2a7.5 7.5 0 0 1 7.5 7.5V30a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 30z"/></svg>`;
   return `<div class="story-in">
     <div class="story-h"><span class="eyebrow">${tr("Imagine this")}</span><button type="button" class="x" data-imagine-close aria-label="${tr("Close")}">${icon("close", "sm")}</button></div>
-    <p class="story-lead">${tr(st.lead, { n: hits })}</p>
-    <div class="people" role="img" aria-label="${tr("{a} of {b}", { a: hits, b: 100 })}">${Array.from({ length: 100 }, (_, i) => fig(i < hits, i < hits ? i : 0)).join("")}</div>
-    <p class="story-cap">${tr(st.cap)}</p>
+    <p class="story-lead">${tr(st.lead)}</p>
+    <div class="people" role="img" aria-label="${tr("{a} of {b}", { a: hits, b: total })}">${Array.from({ length: total }, (_, i) => fig(i < hits, i < hits ? i : 0)).join("")}</div>
   </div>`;
 }
 function imagine(k) {
