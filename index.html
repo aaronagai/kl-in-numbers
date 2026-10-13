@@ -358,9 +358,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .out-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 13px; }
 .out-row .bar-track { grid-column: 1 / -1; display: block; background: var(--neutral-soft); border-radius: 3px; }
 .out-row .bar-fill { background: var(--accent); }
+.fixes { margin: 4px 0 0; padding: 0; list-style: none; counter-reset: f; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.fixes li { counter-increment: f; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 14px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; }
+.fixes li::before { content: counter(f); font-family: var(--f-data); font-size: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.fixes b { font-weight: 500; color: var(--ink); }
+.fixes p { margin: 4px 0 0; color: var(--ink-3); line-height: 1.55; }
+.fixes span { font-family: var(--f-data); font-size: 11px; color: var(--muted); white-space: nowrap; padding-top: 3px; }
+@media (max-width: 860px) { .fixes { grid-template-columns: minmax(0, 1fr); } .fixes li { grid-template-columns: 28px minmax(0, 1fr); } .fixes span { grid-column: 2; padding: 0; } }
 .out-row .bv { font-family: var(--f-data); font-size: 12px; font-variant-numeric: tabular-nums; text-align: right; }
 .out-row .bv small { color: var(--muted); font-size: 11px; margin-left: 8px; }
 .out-row.muted { color: var(--muted); }
+.outs + .rev-cap { margin-top: 14px; }
 .out-row.muted .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
 @media (max-width: 860px) { .rev { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
 .stack { display: flex; height: 24px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
@@ -635,9 +643,10 @@ const SERIES = {
   pop:         [1952000, 1982112, 1985000, 1991000, 2001000, 2010000, 2019000, 2027000],
   income:      [9100, 8800, 9000, 9500, 9800, 10100, 10300, 10500],
 };
-/* Real data: JKM WPKL rescue-operation records, 2023–2025, reduced to totals by a script outside this repo.
+/* Real data: JKM WPKL rescue-operation records, January 2023 to September 2026, reduced to totals by a script outside this repo.
+   Figures match the analysis workbook and the 14 October 2026 briefing (Pembentangan Analisis Operasi Gelandangan).
    No names, ID numbers or individual records are published. Spots are [name, lon, lat, pick-ups]. */
-const JKM = {"pickups":1720,"people":1358,"repeaters":210,"repPickups":572,"threePlus":78,"maxTimes":9,"medianGap":66,"gaps":[["Within a month",115],["1–3 months",102],["3–6 months",65],["6–12 months",44],["Over a year",36]],"times":[1148,132,44,15,6,13],"jkmMissed":212,"returns":362,"years":[2023,2024,2025],"yearPickups":[686,349,685],"yearPeople":[580,274,582],"yearBefore":[106,115,141],"seats":{"P.114":{"total":4,"years":[2,1,1],"before":0,"people":4},"P.115":{"total":9,"years":[7,1,1],"before":1,"people":9},"P.116":{"total":8,"years":[4,1,3],"before":1,"people":8},"P.117":{"total":64,"years":[56,8,0],"before":9,"people":60},"P.118":{"total":7,"years":[2,5,0],"before":1,"people":7},"P.119":{"total":755,"years":[100,176,479],"before":167,"people":650},"P.120":{"total":746,"years":[472,130,144],"before":163,"people":623},"P.121":{"total":43,"years":[18,21,4],"before":10,"people":42},"P.122":{"total":19,"years":[14,5,0],"before":1,"people":18},"P.123":{"total":15,"years":[9,1,5],"before":4,"people":15},"P.124":{"total":3,"years":[2,0,1],"before":1,"people":3}},"noSeat":47,"idPeople":974,"idRepeat":197,"noIdPeople":384,"noIdRepeat":13,"jkmPriorOnce":141,"late2025":120,"outcomes":[["Released",706,175],["Not recorded",476,124],["Referred to JWP",114,12],["Handed to Immigration",110,4],["Placed in NGO care",62,18],["Referred to YKN",35,3],["Referred to Health Ministry (KKM)",34,2],["Handed to a protector",33,1],["Detained at Rumah Seri Kenangan (elderly home)",29,1],["Detained at Desa Bina Diri (rehab centre)",27,4],["Referred to PKG",21,8],["Referred to MKN",19,0],["Returned to family",18,3],["Referred to AADK (drugs)",17,2],["Other",10,3],["Referred to hospital",9,2]],"spots":[["Chow Kit",101.69821,3.1636,143,"P.119"],["Jalan TAR",101.69599,3.15601,121,"P.120"],["Masjid India",101.6966,3.1515,67,"P.120"],["Masjid Jamek",101.69581,3.14901,24,"P.120"],["Kota Raya and Lebuh Pudu",101.6983,3.1464,71,"P.120"],["Pasar Seni",101.6953,3.14259,29,"P.119"],["Dang Wangi",101.7006,3.1572,56,"P.120"],["Kampung Baru",101.704,3.16299,82,"P.119"],["Bukit Bintang",101.71081,3.1466,258,"P.120"],["Pudu",101.706,3.1395,27,"P.119"],["Masjid KLCC",101.7133,3.155,10,"P.120"],["Brickfields",101.6865,3.134,13,"P.121"],["Bangsar",101.671,3.13,29,"P.121"],["TTDI",101.6295,3.1395,40,"P.117"],["Jalan Kuching",101.687,3.174,22,"P.117"],["Sri Sentosa",101.6795,3.0935,11,"P.122"]],"unplaced":717};
+const JKM = {"pickups":2021,"people":1575,"repeaters":268,"repPickups":711,"threePlus":92,"maxTimes":9,"jkmPeople":262,"combined":410,"returns":443,"jkmMissed":289,"medianGap":96,"gaps":[["Within a month",116],["1–3 months",103],["3–6 months",80],["6–12 months",75],["Over a year",69]],"times":[1307,176,54,16,8,14],"years":[2023,2024,2025,2026],"yearPickups":[687,350,685,299],"yearCitizens":[201,83,479,251],"yearPeople":[580,275,582,284],"yearBefore":[106,115,141,81],"yearMissed":[49,58,105,77],"recentJkm":35,"recentFound":160,"klsf":[195,847,69,226,14],"seats":{"P.114":{"total":11,"years":[2,1,1,7],"before":0,"people":11},"P.115":{"total":10,"years":[7,1,1,1],"before":1,"people":10},"P.116":{"total":11,"years":[4,1,3,3],"before":1,"people":11},"P.117":{"total":65,"years":[56,8,0,1],"before":9,"people":61},"P.118":{"total":7,"years":[2,5,0,0],"before":1,"people":7},"P.119":{"total":769,"years":[100,176,479,14],"before":168,"people":663},"P.120":{"total":998,"years":[473,131,144,250],"before":237,"people":837},"P.121":{"total":58,"years":[18,21,4,15],"before":15,"people":57},"P.122":{"total":19,"years":[14,5,0,0],"before":1,"people":18},"P.123":{"total":17,"years":[9,1,5,2],"before":5,"people":17},"P.124":{"total":9,"years":[2,0,1,6],"before":1,"people":9}},"noSeat":47,"idPeople":1188,"idRepeat":257,"noIdPeople":387,"noIdRepeat":11,"jkmOnly":142,"id2026":0.896,"cityOnly":713,"cityOnly2025":602,"spots":[["Bukit Bintang",101.71081,3.1466,394,"P.120"],["Masjid India",101.6966,3.1515,76,"P.120"],["Masjid Jamek",101.69581,3.14901,24,"P.120"],["Chow Kit",101.69821,3.1636,184,"P.119"],["Jalan TAR",101.69599,3.15601,114,"P.120"],["Kota Raya and Lebuh Pudu",101.6983,3.1464,70,"P.120"],["Pasar Seni",101.6953,3.14259,34,"P.119"],["Dang Wangi",101.7006,3.1572,56,"P.120"],["Kampung Baru",101.704,3.16299,54,"P.119"],["Pudu",101.706,3.1395,29,"P.119"],["Masjid KLCC",101.7133,3.155,10,"P.120"],["Brickfields",101.6865,3.134,19,"P.121"],["Bangsar",101.671,3.13,37,"P.121"],["TTDI",101.6295,3.1395,40,"P.117"],["Jalan Kuching",101.687,3.174,46,"P.117"],["Sri Sentosa",101.6795,3.0935,11,"P.122"]],"unplaced":823,"outcomes":[["Released",707,192],["Not recorded",478,130],["Referred to JWP",114,23],["Handed to Immigration",110,12],["Placed in NGO care",62,27],["Referred to KKM, hospital or clinic",46,14],["Referred to YKN (Anjung Singgah)",35,5],["Handed to a protector",33,1],["Rumah Seri Kenangan (court order)",29,5],["Desa Bina Diri (court order)",27,4],["DBKL homeless centre (PKG)",22,9],["Referred to MKN",19,2],["Returned to family",18,3],["Referred to AADK (drugs)",17,3],["Other",4,0]],"released":831,"notRecorded":488,"groups":[["UNHCR card holders",58,25],["People with disabilities (OKU)",62,25],["Unwell or other illness",154,51],["Mental health problems",63,18],["Aged 60 and over",385,85],["Drug users (current or past)",44,8],["Women",530,95],["Non-citizens",766,126],["Children (under 18)",157,4]]};
 SEATS.forEach(s => { s.homeless = JKM.seats[s.code].total; });
 const SUM_KEYS = ["pop", "ppr", "homeless", "complaints", "flood", "budget"];
 const KL_OVERRIDE = { budget: 3200, homeless: JKM.pickups };
@@ -645,7 +654,7 @@ const PER_CAP = ["ppr", "homeless", "complaints", "flood", "budget"];
 
 const TOPICS = [
   { id: "housing",     label: "Housing",        icon: "housing",     key: "ppr",         metric: "PPR waiting list",        unit: "households", lower: true,  fmt: v => int(v) },
-  { id: "homeless",    label: "Homelessness",   icon: "homeless",    key: "homeless",    metric: "Pick-ups in JKM operations", unit: "2023–25", lower: null, real: true, fmt: v => int(v) },
+  { id: "homeless",    label: "Homelessness",   icon: "homeless",    key: "homeless",    metric: "Pick-ups in JKM operations", unit: "2023–Sep 2026", lower: null, real: true, fmt: v => int(v) },
   { id: "services",    label: "City services",  icon: "services",    key: "resolveDays", metric: "Days to fix a complaint", unit: "median", lower: true,  fmt: v => tr("{n} days", { n: v.toFixed(1) }) },
   { id: "floods",      label: "Floods",         icon: "floods",      key: "flood",       metric: "Flash flood incidents",   unit: "last 12 months", lower: true, fmt: v => int(v) },
   { id: "mobility",    label: "Getting around", icon: "mobility",    key: "transit",     metric: "Near frequent transit",   unit: "of residents", lower: false, fmt: v => Math.round(v) + "%" },
@@ -656,7 +665,7 @@ const TOPICS = [
 
 const LAYERS = [
   { key: "ppr",         topic: "housing",     label: "PPR waiting list",      perCap: true,  fmt: v => v.toFixed(1), unit: "households waiting per 10,000 residents", desc: "How many households are waiting for a DBKL PPR flat, scaled to the number of residents so large and small seats compare fairly." },
-  { key: "homeless",    topic: "homeless",    label: "Homeless pick-ups", perCap: false, fmt: v => int(v), unit: "pick-ups in JKM operations, 2023–25", desc: "People picked up in JKM WPKL operations against begging and rough sleeping, 2023 to 2025. This is real data. It counts where operations ran, so it shows where JKM looks as well as where people are." },
+  { key: "homeless",    topic: "homeless",    label: "Homeless pick-ups", perCap: false, fmt: v => int(v), unit: "pick-ups in JKM operations, 2023–Sep 2026", desc: "People picked up in JKM WPKL operations against begging and rough sleeping, January 2023 to September 2026. This is real data. It counts where operations ran, so it shows where JKM looks as well as where people are." },
   { key: "resolveDays", topic: "services",    label: "Days to fix a complaint", perCap: false, fmt: v => v.toFixed(1), unit: "median working days", desc: "Half of all complaints to DBKL in this area are closed within this many working days." },
   { key: "flood",       topic: "floods",      label: "Flash floods",          perCap: false, fmt: v => int(v), unit: "incidents in the last 12 months", desc: "Flash flood incidents logged by DBKL and JPS in the last 12 months." },
   { key: "transit",     topic: "mobility",    label: "Near frequent transit", perCap: false, fmt: v => v + "%", unit: "% of residents within 400 m", desc: "Share of residents within 400 m of a rail station or a bus that comes at least every 15 minutes." },
@@ -666,7 +675,7 @@ const LAYERS = [
 
 const SOURCES = {
   housing:     ["DBKL Housing Management Department", "Monthly", "Sep 2026"],
-  homeless:    ["JKM WPKL rescue-operation records", "Yearly", "Dec 2025"],
+  homeless:    ["JKM WPKL rescue-operation records", "Yearly", "Sep 2026"],
   services:    ["DBKL complaints system", "Monthly", "Sep 2026"],
   floods:      ["DBKL and JPS incident log", "Monthly", "Sep 2026"],
   mobility:    ["Prasarana GTFS feeds and DOSM", "Quarterly", "Jun 2026"],
@@ -817,15 +826,12 @@ const BM = {
   "Fewer people": "Kurang orang", "More people": "Lebih ramai orang", "{n} people": "{n} orang",
   "Biggest hotspots": "Kawasan panas terbesar", "Hotspots in {area}": "Kawasan panas di {area}",
   "Pick-ups in JKM operations": "Pengambilan dalam operasi JKM",
-  "2023–25": "2023–25",
+
   "Real data": "Data sebenar", "under 1%": "kurang 1%", "Dec 2025": "Dis 2025",
   "Homeless pick-ups": "Pengambilan gelandangan",
-  "pick-ups in JKM operations, 2023–25": "pengambilan dalam operasi JKM, 2023–25",
-  "People picked up in JKM WPKL operations against begging and rough sleeping, 2023 to 2025. This is real data. It counts where operations ran, so it shows where JKM looks as well as where people are.": "Orang yang diambil dalam operasi JKM WPKL terhadap pengemis dan gelandangan, 2023 hingga 2025. Ini data sebenar. Ia mengira lokasi operasi dijalankan, jadi ia menunjukkan tempat JKM mencari, bukan sahaja tempat orang berada.",
+
   "JKM WPKL rescue-operation records": "Rekod operasi menyelamat JKM WPKL",
   "Are we picking up the same people again and again?": "Adakah kita menyelamatkan orang yang sama berulang kali?",
-  "JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from 2023 to 2025. <strong>{r} people</strong> were picked up more than once, and they account for a third of all pick-ups.": "Operasi JKM di KL membuat <strong>{n} pengambilan</strong> melibatkan <strong>{p} orang</strong> dari 2023 hingga 2025. <strong>{r} orang</strong> diambil lebih daripada sekali, dan mereka mewakili satu pertiga daripada semua pengambilan.",
-  "JKM operations made <strong>{n} pick-ups</strong> in {area} from 2023 to 2025, {p} of KL's total.": "Operasi JKM membuat <strong>{n} pengambilan</strong> di {area} dari 2023 hingga 2025, {p} daripada jumlah KL.",
   "{b} were of someone JKM had already picked up before.": "{b} melibatkan orang yang pernah diambil JKM sebelum ini.",
   "That's too few to say how many were repeats.": "Jumlah ini terlalu kecil untuk menentukan berapa yang berulang.",
   "Pick-ups": "Pengambilan",
@@ -840,12 +846,10 @@ const BM = {
   "too few to say": "terlalu sedikit untuk dinilai",
   "Pick-ups each year": "Pengambilan setiap tahun",
   "{area}. Each year's operations targeted different groups, so changes say more about the operations than the street.": "{area}. Operasi setiap tahun menyasarkan kumpulan berbeza, jadi perubahan lebih mencerminkan operasi daripada keadaan di jalanan.",
-  "Pick-ups 2023 to 2025 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.": "Pengambilan 2023 hingga 2025 di setiap kerusi. {n} pengambilan tiada kerusi direkodkan. Pilih kawasan untuk melihatnya.",
   "People": "Orang",
   "{a} of {b} people were picked up more than once": "{a} daripada {b} orang diambil lebih daripada sekali",
   "{a} of {b} pick-ups were of those {r} people": "{a} daripada {b} pengambilan melibatkan {r} orang tersebut",
   "Picked up again and again": "Diambil berulang kali",
-  "Kuala Lumpur, 2023 to 2025. People are matched across operations by ID number, then by name and birth year.": "Kuala Lumpur, 2023 hingga 2025. Individu dipadankan merentas operasi melalui nombor pengenalan, kemudian nama dan tahun lahir.",
   "Times each person was picked up": "Bilangan kali setiap orang diambil",
   "{n} people were picked up once. The most for one person was {m} times.": "{n} orang diambil sekali. Paling banyak bagi seorang ialah {m} kali.",
   "Time until the next pick-up": "Tempoh sebelum pengambilan seterusnya",
@@ -856,7 +860,6 @@ const BM = {
   "Over a year": "Lebih setahun",
   "Half came back within {d} days.": "Separuh kembali dalam {d} hari.",
   "What happened after a pick-up, and who came back": "Apa yang berlaku selepas pengambilan, dan siapa yang kembali",
-  "Share of pick-ups followed by another pick-up of the same person, by what JKM did that time. Kuala Lumpur, 2023 to 2025.": "Peratus pengambilan yang diikuti pengambilan lain bagi orang yang sama, mengikut tindakan JKM pada kali itu. Kuala Lumpur, 2023 hingga 2025.",
   "{a} of {n}": "{a} daripada {n}",
   "* Usually deportation, so a low return rate here doesn't mean it worked. Pick-ups late in 2025 have had less time to be followed by another.": "* Biasanya pengusiran, jadi kadar kembali yang rendah di sini tidak bermakna ia berjaya. Pengambilan lewat 2025 mempunyai masa yang lebih singkat untuk diikuti pengambilan lain.",
   "Released": "Dilepaskan",
@@ -875,17 +878,17 @@ const BM = {
   "Referred to AADK (drugs)": "Dirujuk ke AADK",
   "Referred to hospital": "Dirujuk ke hospital",
   "Where people are picked up": "Lokasi orang diambil",
-  "Heat shows where JKM operations picked people up, 2023 to 2025. {n} pick-ups recorded only as \"Kuala Lumpur\" or at small sites aren't shown. Hover over a hotspot to see its count.": "Haba menunjukkan lokasi operasi JKM mengambil orang, 2023 hingga 2025. {n} pengambilan yang direkodkan hanya sebagai \"Kuala Lumpur\" atau di lokasi kecil tidak ditunjukkan. Halakan tetikus pada kawasan panas untuk melihat jumlahnya.",
+  "Heat shows where JKM operations picked people up, January 2023 to September 2026. {n} pick-ups aren't shown: {c} were recorded only as \"Bandar Kuala Lumpur\", mostly in 2025, and the rest were at small sites. Hover over a hotspot to see its count.": "Haba menunjukkan lokasi pengambilan dalam operasi JKM, Januari 2023 hingga September 2026. {n} pengambilan tidak ditunjukkan: {c} hanya direkodkan sebagai \"Bandar Kuala Lumpur\", kebanyakannya pada 2025, dan selebihnya di lokasi kecil. Halakan tetikus pada kawasan tumpuan untuk melihat bilangannya.",
   "Fewer pick-ups": "Kurang pengambilan",
   "More pick-ups": "Lebih banyak pengambilan",
   "{n} pick-ups": "{n} pengambilan",
   "Homeless pick-up hotspots": "Kawasan panas pengambilan gelandangan",
   "Sized by number of pick-ups": "Saiz mengikut bilangan pengambilan",
-  "Pick-ups in JKM operations, repeat pick-ups, what happened after (real data)": "Pengambilan dalam operasi JKM, pengambilan berulang, tindakan selepasnya (data sebenar)",
+  "Pick-ups in JKM operations, repeat pick-ups, who comes back and what happened after (real data)": "Pengambilan dalam operasi JKM, pengambilan berulang, siapa yang kembali dan tindakan selepasnya (data sebenar)",
   "JKM WPKL": "JKM WPKL",
   "Yearly": "Tahunan",
-  "Every figure on it is sample data made up to show the design, except the Homelessness topic. That uses real JKM WPKL operation records from 2023 to 2025, reduced to totals so no one can be identified.": "Setiap angka di dalamnya ialah data contoh yang direka untuk menunjukkan reka bentuk, kecuali topik Gelandangan. Topik itu menggunakan rekod operasi sebenar JKM WPKL dari 2023 hingga 2025, diringkaskan kepada jumlah supaya tiada sesiapa dapat dikenal pasti.",
-  "An ID number on every JKM pick-up record, and an honest first-time or repeat field, so repeat pick-ups can be counted properly.": "Nombor pengenalan pada setiap rekod pengambilan JKM, dan medan kali pertama atau berulang yang tepat, supaya pengambilan berulang dapat dikira dengan betul.",
+  "Every figure on it is sample data made up to show the design, except the Homelessness topic. That uses real JKM WPKL operation records from January 2023 to September 2026, reduced to totals so no one can be identified.": "Setiap angka di dalamnya ialah data contoh yang direka untuk menunjukkan reka bentuk, kecuali topik Gelandangan. Topik itu menggunakan rekod operasi sebenar JKM WPKL dari Januari 2023 hingga September 2026, diringkaskan kepada jumlah supaya tiada sesiapa dapat dikenal pasti.",
+  "A shared register of people picked up by JKM, DBKL and JWP, with one reference number per person, so repeat pick-ups are counted properly. Every agency that takes a referral reports back on what happened.": "Daftar bersama individu yang diambil oleh JKM, DBKL dan JWP, dengan satu nombor rujukan bagi setiap orang, supaya pengambilan berulang dikira dengan betul. Setiap agensi yang menerima rujukan melaporkan hasilnya.",
   "All figures are sample data for illustration, except Homelessness, which uses real JKM records.": "Semua angka ialah data contoh untuk ilustrasi, kecuali Gelandangan, yang menggunakan rekod sebenar JKM.",
   "Boundaries: DOSM electoral boundaries for KL's 11 parliamentary seats. Figures: sample data, except homeless pick-ups (JKM WPKL).": "Sempadan: sempadan pilihan raya DOSM bagi 11 kerusi parlimen KL. Angka: data contoh, kecuali pengambilan gelandangan (JKM WPKL).",
   "Clear area filter": "Kosongkan penapis kawasan",
@@ -908,7 +911,6 @@ const BM = {
   "These are only the repeats this data can see. Missing ID numbers and pick-ups before 2023 hide more, below.": "Ini hanya pengambilan berulang yang dapat dilihat dalam data ini. Nombor pengenalan yang tiada dan pengambilan sebelum 2023 menyembunyikan lebih banyak lagi, di bawah.",
   "JKM's own records called <strong>{p}</strong> of repeat pick-ups a first pick-up.": "Rekod JKM sendiri menyatakan <strong>{p}</strong> pengambilan berulang sebagai kali pertama.",
   "JKM's records miss most repeat pick-ups": "Rekod JKM terlepas kebanyakan pengambilan berulang",
-  "Out of every 10 pick-ups of someone JKM had already picked up before. Kuala Lumpur, 2023 to 2025.": "Daripada setiap 10 pengambilan orang yang pernah diambil JKM sebelum ini. Kuala Lumpur, 2023 hingga 2025.",
   "{n} in 10": "{n} daripada 10",
   "JKM's records say": "Menurut rekod JKM",
   "In reality": "Hakikatnya",
@@ -917,13 +919,85 @@ const BM = {
   "Picked up before": "Pernah diambil",
   "<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, yet JKM's form marked them as a first pick-up.": "<b>{a} daripada {b} pengambilan berulang</b> melibatkan orang yang sudah diambil dalam operasi terdahulu, namun borang JKM menandakannya sebagai kali pertama.",
   "Anyone counting repeats from JKM's own records would see only about {k} in 10 of them, and conclude the same people are picked up far less often than they are.": "Sesiapa yang mengira pengambilan berulang daripada rekod JKM sendiri hanya akan melihat kira-kira {k} daripada 10, dan menyimpulkan bahawa orang yang sama jauh lebih jarang diambil berbanding hakikatnya.",
-  "The real share is likely closer to 1 in 5": "Peratus sebenar mungkin lebih hampir kepada 1 daripada 5",
+  "Kuala Lumpur, January 2023 to September 2026. People are matched across operations by ID number, other documents, then by name and birth year.": "Kuala Lumpur, Januari 2023 hingga September 2026. Individu dipadankan merentas operasi melalui nombor pengenalan, dokumen lain, kemudian nama dan tahun lahir.",
+  "The {r} people picked up more than once were picked up {n} times between them. {t} were picked up three times or more.": "{r} orang yang diambil lebih daripada sekali telah diambil sebanyak {n} kali kesemuanya. {t} orang diambil tiga kali atau lebih.",
+  "Gap between one pick-up and the next for the same person. Half came back within {d} days, about three months.": "Tempoh antara satu pengambilan dengan pengambilan seterusnya bagi orang yang sama. Separuh kembali dalam {d} hari, kira-kira tiga bulan.",
+  "Out of every 10 pick-ups of someone JKM had already picked up before. Kuala Lumpur, January 2023 to September 2026.": "Daripada setiap 10 pengambilan orang yang pernah diambil JKM sebelum ini. Kuala Lumpur, Januari 2023 hingga September 2026.",
+  "all {b} had been picked up before, found by matching ID number, documents or name and birth year": "kesemua {b} pernah diambil sebelum ini, ditemui dengan memadankan nombor pengenalan, dokumen atau nama dan tahun lahir",
+  "<b>{a} of {b} repeat pick-ups ({p})</b> were of someone already picked up in an earlier operation, yet JKM's form marked them as a first pick-up.": "<b>{a} daripada {b} pengambilan berulang ({p})</b> melibatkan orang yang sudah diambil dalam operasi terdahulu, namun borang JKM menandakannya sebagai kali pertama.",
+  "<b>It isn't only missing paperwork.</b> In 2026, {i} of records had an ID number, yet {a} of {b} repeat pick-ups were still marked as first.": "<b>Ini bukan semata-mata masalah dokumen.</b> Pada 2026, {i} rekod mempunyai nombor pengenalan, namun {a} daripada {b} pengambilan berulang masih ditanda sebagai kali pertama.",
+  "<b>The gap is growing.</b> From 2025 to September 2026, JKM marked only {a} people as repeat cases. Matching found at least {b}.": "<b>Jurang ini semakin besar.</b> Dari 2025 hingga September 2026, JKM menanda hanya {a} orang sebagai kes berulang. Padanan data menemui sekurang-kurangnya {b}.",
+  "More repeats go unrecorded each year": "Semakin banyak kes berulang tidak direkodkan setiap tahun",
+  "Share of repeat pick-ups that JKM marked as a first pick-up.": "Peratus pengambilan berulang yang ditanda JKM sebagai kali pertama.",
+  "* 2026 is January to September.": "* 2026 ialah Januari hingga September.",
+  "More of each operation is people picked up before": "Semakin ramai dalam setiap operasi pernah diambil sebelum ini",
+  "Share of pick-ups of someone already picked up in an earlier operation.": "Peratus pengambilan orang yang sudah diambil dalam operasi terdahulu.",
+  "2023 is undercounted because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.": "2023 terkurang kerana tiada data 2022. Dalam {o} operasi KL Strike Force sejak 2025, {a} pengambilan melibatkan orang yang pernah diambil, meningkat kepada {b} pada 2026.",
+  "JKM's own records": "Rekod JKM sendiri",
+  "Matching people across operations": "Padanan individu merentas operasi",
+  "Either of the two": "Salah satu daripada kedua-duanya",
+  "At least 1 in 4 people was picked up more than once": "Sekurang-kurangnya 1 daripada 4 orang diambil lebih daripada sekali",
+  "People picked up more than once, by how they were found. Kuala Lumpur, January 2023 to September 2026.": "Individu yang diambil lebih daripada sekali, mengikut cara mereka dikenal pasti. Kuala Lumpur, Januari 2023 hingga September 2026.",
+  "<b>{c} people, not {j}.</b> JKM's records count {j} people as repeat cases. Matching found {m} more that JKM never marked, so the real number is at least {c} ({p}).": "<b>{c} orang, bukan {j}.</b> Rekod JKM mengira {j} orang sebagai kes berulang. Padanan data menemui {m} lagi yang tidak pernah ditanda JKM, maka angka sebenar sekurang-kurangnya {c} ({p}).",
+  "<b>Pick-ups before 2023.</b> JKM marked {n} people as repeats who appear only once here. Most were likely picked up before 2023, which this data doesn't cover.": "<b>Pengambilan sebelum 2023.</b> JKM menanda {n} orang sebagai berulang walaupun mereka hanya muncul sekali di sini. Kebanyakannya mungkin diambil sebelum 2023, yang tidak diliputi data ini.",
+  "<b>Missing ID numbers.</b> {n} people had no ID number or document recorded, mostly in 2023 and 2024. They can only be matched by name, so their returns mostly go unseen: {a} of them show up as repeats, against {b} of people with an ID. Even {c} is a minimum.": "<b>Nombor pengenalan tiada.</b> {n} orang tiada nombor pengenalan atau dokumen direkodkan, kebanyakannya pada 2023 dan 2024. Mereka hanya boleh dipadankan melalui nama, jadi kebanyakan pengambilan semula mereka tidak kelihatan: hanya {a} daripada mereka dikesan berulang, berbanding {b} bagi yang mempunyai pengenalan. Angka {c} itu sendiri ialah had bawah.",
+  "The most vulnerable are picked up again most often": "Golongan paling rentan paling kerap diambil semula",
+  "Share of people in each group picked up more than once, found by matching. The dashed line is everyone ({p}).": "Peratus individu dalam setiap kumpulan yang diambil lebih daripada sekali, melalui padanan data. Garis putus-putus ialah semua individu ({p}).",
+  "A person can be in more than one group. Paler bars rest on fewer than 30 repeat cases, so read them with care. Drug use isn't recorded for 77% of pick-ups, and mental health mostly only since 2026, so both groups are undercounted.": "Seorang individu boleh tergolong dalam lebih daripada satu kumpulan. Bar yang lebih pudar berdasarkan kurang daripada 30 kes berulang, jadi tafsir dengan berhati-hati. Penggunaan dadah tidak direkod bagi 77% pengambilan, dan kesihatan mental kebanyakannya hanya sejak 2026, jadi kedua-dua kumpulan ini terkurang.",
+  "Share of pick-ups followed by another pick-up of the same person, by what JKM did that time. Actions from 2023 to 2025, followed up to September 2026.": "Peratus pengambilan yang diikuti pengambilan lain bagi orang yang sama, mengikut tindakan JKM pada masa itu. Tindakan 2023 hingga 2025, dijejak sehingga September 2026.",
+  "<b>Released is the most common outcome:</b> {a} of {b} pick-ups ({p}). JKM hasn't defined what \"released\" means, and its briefing figures differ from the raw records.": "<b>Dilepaskan ialah tindakan paling lazim:</b> {a} daripada {b} pengambilan ({p}). JKM belum mentakrifkan maksud \"dilepaskan\", dan angka taklimatnya berbeza daripada rekod mentah.",
+  "<b>Short-term help sees the most returns:</b> NGO care centres ({n}) and DBKL's homeless centre ({d}) give food and a place to stay, but no case management is recorded.": "<b>Bantuan jangka pendek mencatat kadar kembali tertinggi:</b> pusat jagaan NGO ({n}) dan Pusat Khidmat Gelandangan DBKL ({d}) memberi makanan dan tempat transit, tetapi tiada pengurusan kes yang dicatat.",
+  "<b>No one reports back.</b> Once someone is referred, the receiving agency takes over, and none of them tell JKM what happened next.": "<b>Tiada laporan balik.</b> Selepas rujukan, agensi penerima mengambil alih, dan tiada satu pun melaporkan hasilnya kepada JKM.",
+  "* Usually deportation, so a low return rate here doesn't mean it worked. The action wasn't recorded for {n} pick-ups, almost all in 2023.": "* Biasanya pengusiran, jadi kadar kembali yang rendah di sini tidak bermakna ia berkesan. Tindakan tidak direkod bagi {n} pengambilan, hampir semuanya pada 2023.",
+  "A shared register of people": "Daftar individu bersama",
+  "One fixed reference number for each person across JKM, DBKL and JWP, checked at the operation site.": "Satu nombor rujukan tetap bagi setiap individu merentas JKM, DBKL dan JWP, disemak di lokasi operasi.",
+  "3 months": "3 bulan",
+  "Outcome reports": "Laporan hasil",
+  "AADK, KKM, Immigration, YKN, DBKL and NGOs report back to JKM on everyone referred, after 30 and 90 days.": "AADK, KKM, Imigresen, YKN, DBKL dan NGO melaporkan status setiap individu yang dirujuk kepada JKM selepas 30 dan 90 hari.",
+  "6 months": "6 bulan",
+  "Case plans for the core group": "Pelan kes bagi kumpulan teras",
+  "A case plan for the {n} people picked up three times or more, with drug and mental health screening, in line with JKM's \"one homeless person, one case manager\" proposal.": "Pelan kes bagi {n} individu yang diambil tiga kali atau lebih, dengan saringan dadah dan kesihatan mental, selari dengan cadangan JKM \"Seorang Gelandangan, Seorang Pengurus Kes\".",
+  "Quarterly report to the Minister": "Laporan suku tahunan kepada YB Menteri",
+  "New faces, returning faces and people who came back after each operation, from the first quarter of 2027.": "Bilangan muka baharu, muka lama dan yang kembali selepas setiap operasi, bermula suku pertama 2027.",
+  "From Q1 2027": "Mulai S1 2027",
+  "What would fix this": "Apa yang boleh membetulkannya",
+  "Recommendations from the 14 October 2026 briefing. London, Houston and Singapore all track each person across agencies, not just a count per operation.": "Syor daripada pembentangan 14 Oktober 2026. London, Houston dan Singapura menjejak setiap individu merentas agensi, bukan sekadar mengira bilangan dalam setiap operasi.",
+  "JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. JKM's records count <strong>{j} people</strong> as repeat cases, but the real number is at least <strong>{c} ({cp})</strong> once people are matched across operations.": "Operasi JKM di KL membuat <strong>{n} pengambilan</strong> melibatkan <strong>{p} orang</strong> dari Januari 2023 hingga September 2026. Rekod JKM mengira <strong>{j} orang</strong> sebagai kes berulang, tetapi angka sebenar sekurang-kurangnya <strong>{c} ({cp})</strong> apabila individu dipadankan merentas operasi.",
+  "The share of pick-ups of someone picked up before is rising, from {a} in 2025 to <strong>{b}</strong> in 2026.": "Peratus pengambilan orang yang pernah diambil semakin meningkat, daripada {a} pada 2025 kepada <strong>{b}</strong> pada 2026.",
+  "JKM operations made <strong>{n} pick-ups</strong> in {area} from January 2023 to September 2026, {p} of KL's total.": "Operasi JKM membuat <strong>{n} pengambilan</strong> di {area} dari Januari 2023 hingga September 2026, {p} daripada jumlah KL.",
+  "Jan 2023 to Sep 2026": "Jan 2023 hingga Sep 2026",
+  "At least {p}": "Sekurang-kurangnya {p}",
+  "{c} people. JKM's records count {j}.": "{c} orang. Rekod JKM mengira {j}.",
+  "Share of KL total": "Peratus jumlah KL",
+  "{area}. 2026 is January to September. Each year's operations targeted different groups, so changes say more about the operations than the street.": "{area}. 2026 ialah Januari hingga September. Operasi setiap tahun menyasarkan kumpulan berbeza, jadi perubahan lebih mencerminkan operasi berbanding keadaan di jalanan.",
+  "Malaysians picked up, by year": "Warganegara yang diambil, mengikut tahun",
+  "Share of pick-ups who were Malaysian citizens. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025.": "Peratus pengambilan yang merupakan warganegara Malaysia. Operasi beralih daripada pengemis bukan warganegara kepada gelandangan warganegara pada 2025.",
+  "By area": "Mengikut kawasan",
+  "Pick-ups from January 2023 to September 2026 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.": "Pengambilan dari Januari 2023 hingga September 2026 di setiap kawasan. {n} pengambilan tiada kawasan direkodkan. Pilih kawasan untuk melihatnya.",
+  "People picked up in JKM WPKL operations against begging and rough sleeping, January 2023 to September 2026. This is real data. It counts where operations ran, so it shows where JKM looks as well as where people are.": "Individu yang diambil dalam operasi JKM WPKL terhadap pengemis dan gelandangan, Januari 2023 hingga September 2026. Ini data sebenar. Ia mengira lokasi operasi dijalankan, jadi ia menunjukkan di mana JKM mencari dan juga di mana orang berada.",
+  "2023–Sep 2026": "2023–Sep 2026",
+  "pick-ups in JKM operations, 2023–Sep 2026": "pengambilan dalam operasi JKM, 2023–Sep 2026",
+  "UNHCR card holders": "Pemegang kad UNHCR",
+  "People with disabilities (OKU)": "OKU",
+  "Unwell or other illness": "Tidak sihat / penyakit lain",
+  "Mental health problems": "Masalah kesihatan mental",
+  "Aged 60 and over": "Warga emas (60 tahun ke atas)",
+  "Drug users (current or past)": "Pengguna dadah (sedang atau bekas)",
+  "Women": "Wanita",
+  "Non-citizens": "Bukan warganegara",
+  "Children (under 18)": "Kanak-kanak (bawah 18 tahun)",
+  "Referred to KKM, hospital or clinic": "Dirujuk ke KKM, hospital atau klinik",
+  "Referred to YKN (Anjung Singgah)": "Dirujuk ke YKN (Anjung Singgah)",
+  "Rumah Seri Kenangan (court order)": "Rumah Seri Kenangan (perintah mahkamah)",
+  "Desa Bina Diri (court order)": "Desa Bina Diri (perintah mahkamah)",
+  "DBKL homeless centre (PKG)": "Pusat Khidmat Gelandangan DBKL (PKG)",
+
   "Share of people picked up more than once, by whether JKM recorded an ID number": "Peratus individu yang diambil lebih daripada sekali, mengikut sama ada JKM merekodkan nombor pengenalan",
   "<b>Missing ID numbers.</b> {n} people had no ID number recorded, mostly non-citizens. They can only be matched by name, which is spelled differently each time, so their returns go unseen. If they came back as often as everyone else, about {e} more people would be repeats.": "<b>Nombor pengenalan tiada.</b> {n} orang tiada nombor pengenalan direkodkan, kebanyakannya bukan warganegara. Mereka hanya boleh dipadankan melalui nama, yang dieja berbeza setiap kali, jadi pengambilan semula mereka tidak kelihatan. Jika mereka kembali sekerap orang lain, kira-kira {e} lagi orang akan dikira berulang.",
   "<b>Pick-ups before 2023.</b> JKM's own records say {n} people seen only once here had been picked up before, most likely before 2023, which this data doesn't cover.": "<b>Pengambilan sebelum 2023.</b> Rekod JKM sendiri menyatakan {n} orang yang dilihat sekali sahaja di sini pernah diambil sebelum ini, kemungkinan besar sebelum 2023, yang tidak diliputi data ini.",
   "People picked up more than once. {n} people were picked up once. The most for one person was {m} times.": "Individu yang diambil lebih daripada sekali. {n} orang diambil sekali. Paling banyak bagi seorang ialah {m} kali.",
   "Gap between one pick-up and the next for the same person. Half came back within {d} days.": "Jarak antara satu pengambilan dengan yang seterusnya bagi orang yang sama. Separuh kembali dalam {d} hari.",
-  "Share of people picked up more than once, by whether JKM recorded an ID number. Missing records hide repeats, so 15% is a minimum.": "Peratus individu yang diambil lebih daripada sekali, mengikut sama ada JKM merekodkan nombor pengenalan. Rekod yang tiada menyembunyikan pengambilan berulang, jadi 15% ialah angka minimum.",
+
 };
 const MISSING = new Set();
 function tr(s, v) {
@@ -1096,6 +1170,12 @@ function catRows(rows, fmt, keyPrefix) {
 }
 
 /* ---------- homelessness: repeat pick-ups and what happened after ---------- */
+const JKM_YEARS = JKM.years.map(y => y === 2026 ? "2026*" : y);
+const pc = (a, b) => Math.round(a / b * 100) + "%";
+function outRows(rows, key, opts = {}) {
+  const max = opts.max || Math.max(...rows.map(r => r[1] / r[2]));
+  return `<div class="outs">${rows.map(([k, a, b, muted], i) => { const sc = (a / b / max).toFixed(4); return `<div class="out-row${muted ? " muted" : ""}"><span class="nm">${k}</span><span class="bv">${pc(a, b)}<small>${tr("{a} of {n}", { a: int(a), n: int(b) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="${key}-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span>${opts.ref ? `<span class="ref" style="left:${(opts.ref / max * 100).toFixed(2)}%"></span>` : ""}</span></div>`; }).join("")}</div>`;
+}
 function revolvingPanel() {
   const shares = [[tr("of people"), JKM.repeaters, JKM.people, tr("{a} of {b} people", { a: int(JKM.repeaters), b: int(JKM.people) })],
     [tr("of pick-ups"), JKM.repPickups, JKM.pickups, tr("{a} of {b} pick-ups", { a: int(JKM.repPickups), b: int(JKM.pickups) })]];
@@ -1111,20 +1191,20 @@ function revolvingPanel() {
     </svg>`;
   };
   const times = JKM.times.slice(1), tmax = Math.max(...times);
-  return `<div class="panel wide rev-hero"><h3>${tr("Picked up again and again")}</h3><p class="sub">${tr("Kuala Lumpur, 2023 to 2025. People are matched across operations by ID number, then by name and birth year.")}</p>
+  return `<div class="panel wide rev-hero"><h3>${tr("Picked up again and again")}</h3><p class="sub">${tr("Kuala Lumpur, January 2023 to September 2026. People are matched across operations by ID number, other documents, then by name and birth year.")}</p>
     <div class="rev-hero-body">
       <div class="rev-hero-text">
-        <p class="rev-lead">${tr("<b>{p}</b> of people were picked up more than once, but they make up <b>{q}</b> of all pick-ups.", { p: Math.round(JKM.repeaters / JKM.people * 100) + "%", q: Math.round(JKM.repPickups / JKM.pickups * 100) + "%" })}</p>
-        <p class="rev-cap">${tr("The {r} people picked up more than once were picked up {n} times between them, about {e} times each.", { r: int(JKM.repeaters), n: int(JKM.repPickups), e: Math.round(JKM.repPickups / JKM.repeaters) })}</p>
+        <p class="rev-lead">${tr("<b>{p}</b> of people were picked up more than once, but they make up <b>{q}</b> of all pick-ups.", { p: pc(JKM.repeaters, JKM.people), q: pc(JKM.repPickups, JKM.pickups) })}</p>
+        <p class="rev-cap">${tr("The {r} people picked up more than once were picked up {n} times between them. {t} were picked up three times or more.", { r: int(JKM.repeaters), n: int(JKM.repPickups), t: int(JKM.threePlus) })}</p>
         <div class="rev-key"><span><i class="once"></i>${tr("Picked up once")}</span><span><i class="again"></i>${tr("Picked up more than once")}</span></div>
       </div>
       <div class="donuts">${shares.map(([k, a, b, note], i) => `<figure class="rev-donut">${donut(a, b, i)}<figcaption><b>${k}</b><span>${note}</span></figcaption></figure>`).join("")}</div>
-    </div></div>` +
+    </div></div>` + mislabelPanel() + undercount() + trendPanels() +
     panel(tr("Times each person was picked up"), tr("People picked up more than once. {n} people were picked up once. The most for one person was {m} times.", { n: int(JKM.times[0]), m: JKM.maxTimes }),
       `<div class="months rev-times">${times.map((v, i) => `<div><b>${int(v)}</b><i style="height:${v / tmax * 100}%"></i><span>${i === 4 ? "6+" : i + 2}</span></div>`).join("")}</div>`) +
-    panel(tr("Time until the next pick-up"), tr("Gap between one pick-up and the next for the same person. Half came back within {d} days.", { d: JKM.medianGap }),
+    panel(tr("Time until the next pick-up"), tr("Gap between one pick-up and the next for the same person. Half came back within {d} days, about three months.", { d: JKM.medianGap }),
       `<div class="rev-gaps">${catRows(JKM.gaps, v => int(v), "gap")}</div>`) +
-    mislabelPanel() + undercount();
+    groupsPanel();
 }
 // JKM's own first-time/repeat field vs. the repeat pick-ups found by matching people across operations
 function mislabelPanel() {
@@ -1132,36 +1212,64 @@ function mislabelPanel() {
   const fig = on => `<svg class="wf${on ? " on" : ""}" viewBox="0 0 20 32" aria-hidden="true"><circle cx="10" cy="6.5" r="5"/><path d="M1.5 30v-9.5A7.5 7.5 0 0 1 9 13h2a7.5 7.5 0 0 1 7.5 7.5V30a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 30z"/></svg>`;
   const row = (label, n, note) => `<div class="wf-row"><div class="wf-lab"><span>${label}</span><b>${tr("{n} in 10", { n })}</b></div>
     <div class="wf-figs" role="img" aria-label="${tr("{n} in 10", { n })}">${Array.from({ length: 10 }, (_, i) => fig(i < n)).join("")}</div><small>${note}</small></div>`;
-  return `<div class="panel wide"><h3>${tr("JKM's records miss most repeat pick-ups")}</h3><p class="sub">${tr("Out of every 10 pick-ups of someone JKM had already picked up before. Kuala Lumpur, 2023 to 2025.")}</p>
+  return `<div class="panel wide"><h3>${tr("JKM's records miss most repeat pick-ups")}</h3><p class="sub">${tr("Out of every 10 pick-ups of someone JKM had already picked up before. Kuala Lumpur, January 2023 to September 2026.")}</p>
     <div class="rev-why"><div class="wf">
       ${row(tr("JKM's records say"), k, tr("{a} of {b} marked as picked up before", { a: int(ok), b: int(JKM.returns) }))}
-      ${row(tr("In reality"), 10, tr("all {b} had been picked up before, found by matching ID number or name and birth year", { b: int(JKM.returns) }))}
+      ${row(tr("In reality"), 10, tr("all {b} had been picked up before, found by matching ID number, documents or name and birth year", { b: int(JKM.returns) }))}
       <div class="rev-key"><span><i class="again"></i>${tr("Picked up before")}</span><span><i class="once"></i>${tr("Recorded as first pick-up")}</span></div>
     </div>
     <ul class="rev-reasons">
-      <li>${tr("<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, yet JKM's form marked them as a first pick-up.", { a: int(JKM.jkmMissed), b: int(JKM.returns) })}</li>
-      <li>${tr("Anyone counting repeats from JKM's own records would see only about {k} in 10 of them, and conclude the same people are picked up far less often than they are.", { k })}</li>
-      <li>${tr("These are only the repeats this data can see. Missing ID numbers and pick-ups before 2023 hide more, below.")}</li>
+      <li>${tr("<b>{a} of {b} repeat pick-ups ({p})</b> were of someone already picked up in an earlier operation, yet JKM's form marked them as a first pick-up.", { a: int(JKM.jkmMissed), b: int(JKM.returns), p: pc(JKM.jkmMissed, JKM.returns) })}</li>
+      <li>${tr("<b>It isn't only missing paperwork.</b> In 2026, {i} of records had an ID number, yet {a} of {b} repeat pick-ups were still marked as first.", { i: Math.round(JKM.id2026 * 100) + "%", a: int(JKM.yearMissed[3]), b: int(JKM.yearBefore[3]) })}</li>
+      <li>${tr("<b>The gap is growing.</b> From 2025 to September 2026, JKM marked only {a} people as repeat cases. Matching found at least {b}.", { a: int(JKM.recentJkm), b: int(JKM.recentFound) })}</li>
     </ul>
   </div></div>`;
+}
+function trendPanels() {
+  const yrs = JKM_YEARS, sf = JKM.klsf;
+  return panel(tr("More repeats go unrecorded each year"), tr("Share of repeat pick-ups that JKM marked as a first pick-up."),
+      outRows(JKM.yearMissed.map((a, i) => [yrs[i], a, JKM.yearBefore[i]]), "miss", { max: 1 }) + `<p class="rev-cap">${tr("* 2026 is January to September.")}</p>`) +
+    panel(tr("More of each operation is people picked up before"), tr("Share of pick-ups of someone already picked up in an earlier operation."),
+      outRows(JKM.yearBefore.map((a, i) => [yrs[i], a, JKM.yearPickups[i]]), "before", { max: 0.4 }) +
+      `<p class="rev-cap">${tr("2023 is undercounted because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.", { o: sf[4], a: pc(sf[0], sf[1]), b: pc(sf[2], sf[3]) })}</p>`);
 }
 function undercount() {
-  const rows = [[tr("ID number on record"), JKM.idRepeat, JKM.idPeople], [tr("No ID number recorded"), JKM.noIdRepeat, JKM.noIdPeople]];
-  const max = Math.max(...rows.map(r => r[1] / r[2]));
-  return `<div class="panel wide"><h3>${tr("The real share is likely closer to 1 in 5")}</h3><p class="sub">${tr("Share of people picked up more than once, by whether JKM recorded an ID number. Missing records hide repeats, so 15% is a minimum.")}</p>
-    <div class="rev-why"><div>
-      <div class="outs">${rows.map(([k, a, b], i) => { const sc = (a / b / max).toFixed(4); return `<div class="out-row${i ? " muted" : ""}"><span class="nm">${k}</span><span class="bv">${Math.round(a / b * 100)}%<small>${tr("{a} of {n}", { a: int(a), n: int(b) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="why-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span></span></div>`; }).join("")}</div></div>
+  const rows = [[tr("JKM's own records"), JKM.jkmPeople, JKM.people, true], [tr("Matching people across operations"), JKM.repeaters, JKM.people, true], [tr("Either of the two"), JKM.combined, JKM.people]];
+  return `<div class="panel wide"><h3>${tr("At least 1 in 4 people was picked up more than once")}</h3><p class="sub">${tr("People picked up more than once, by how they were found. Kuala Lumpur, January 2023 to September 2026.")}</p>
+    <div class="rev-why"><div>${outRows(rows, "why")}</div>
     <ul class="rev-reasons">
-      <li>${tr("<b>Missing ID numbers.</b> {n} people had no ID number recorded, mostly non-citizens. They can only be matched by name, which is spelled differently each time, so their returns go unseen. If they came back as often as everyone else, about {e} more people would be repeats.", { n: int(JKM.noIdPeople), e: Math.round(JKM.noIdPeople * JKM.idRepeat / JKM.idPeople - JKM.noIdRepeat) })}</li>
-      <li>${tr("<b>Pick-ups before 2023.</b> JKM's own records say {n} people seen only once here had been picked up before, most likely before 2023, which this data doesn't cover.", { n: int(JKM.jkmPriorOnce) })}</li>
+      <li>${tr("<b>{c} people, not {j}.</b> JKM's records count {j} people as repeat cases. Matching found {m} more that JKM never marked, so the real number is at least {c} ({p}).", { c: int(JKM.combined), j: int(JKM.jkmPeople), m: int(JKM.combined - JKM.jkmPeople), p: pc(JKM.combined, JKM.people) })}</li>
+      <li>${tr("<b>Pick-ups before 2023.</b> JKM marked {n} people as repeats who appear only once here. Most were likely picked up before 2023, which this data doesn't cover.", { n: int(JKM.jkmOnly) })}</li>
+      <li>${tr("<b>Missing ID numbers.</b> {n} people had no ID number or document recorded, mostly in 2023 and 2024. They can only be matched by name, so their returns mostly go unseen: {a} of them show up as repeats, against {b} of people with an ID. Even {c} is a minimum.", { n: int(JKM.noIdPeople), a: pc(JKM.noIdRepeat, JKM.noIdPeople), b: pc(JKM.idRepeat, JKM.idPeople), c: int(JKM.combined) })}</li>
     </ul>
   </div></div>`;
 }
+function groupsPanel() {
+  const all = JKM.repeaters / JKM.people, rows = JKM.groups.map(([k, n, a]) => [tr(k), a, n, a < 30]);
+  return `<div class="panel wide"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once, found by matching. The dashed line is everyone ({p}).", { p: Math.round(all * 100) + "%" })}</p>
+    ${outRows(rows, "grp", { ref: all })}
+    <p class="rev-cap">${tr("A person can be in more than one group. Paler bars rest on fewer than 30 repeat cases, so read them with care. Drug use isn't recorded for 77% of pick-ups, and mental health mostly only since 2026, so both groups are undercounted.")}</p>
+  </div>`;
+}
 function outcomePanel() {
-  const rows = JKM.outcomes.filter(o => o[1] >= 15 && o[0] !== "Other"), max = Math.max(...rows.map(o => o[2] / o[1]));
-  return panel(tr("What happened after a pick-up, and who came back"), tr("Share of pick-ups followed by another pick-up of the same person, by what JKM did that time. Kuala Lumpur, 2023 to 2025."),
-    `<div class="outs">${rows.map(([k, n, a]) => { const sc = (a / n / max).toFixed(4); return `<div class="out-row${k === "Not recorded" ? " muted" : ""}"><span class="nm">${tr(k)}${k === "Handed to Immigration" ? "*" : ""}</span><span class="bv">${Math.round(a / n * 100)}%<small>${tr("{a} of {n}", { a: int(a), n: int(n) })}</small></span><span class="bar-track"><span class="bar-fill" data-k="out-${k}" data-s="${sc}" style="transform:scaleX(${sc})"></span></span></div>`; }).join("")}</div>
-    <p class="rev-cap">${tr("* Usually deportation, so a low return rate here doesn't mean it worked. Pick-ups late in 2025 have had less time to be followed by another.")}</p>`);
+  const rows = JKM.outcomes.filter(o => o[1] >= 15 && o[0] !== "Other").map(([k, n, a]) => [tr(k) + (k === "Handed to Immigration" ? "*" : ""), a, n, k === "Not recorded"]);
+  return `<div class="panel wide"><h3>${tr("What happened after a pick-up, and who came back")}</h3><p class="sub">${tr("Share of pick-ups followed by another pick-up of the same person, by what JKM did that time. Actions from 2023 to 2025, followed up to September 2026.")}</p>
+    <div class="rev-why"><div>${outRows(rows, "out")}</div>
+    <ul class="rev-reasons">
+      <li>${tr("<b>Released is the most common outcome:</b> {a} of {b} pick-ups ({p}). JKM hasn't defined what \"released\" means, and its briefing figures differ from the raw records.", { a: int(JKM.released), b: int(JKM.pickups), p: pc(JKM.released, JKM.pickups) })}</li>
+      <li>${tr("<b>Short-term help sees the most returns:</b> NGO care centres ({n}) and DBKL's homeless centre ({d}) give food and a place to stay, but no case management is recorded.", { n: pc(...JKM.outcomes.find(o => o[0] === "Placed in NGO care").slice(1).reverse()), d: pc(...JKM.outcomes.find(o => o[0] === "DBKL homeless centre (PKG)").slice(1).reverse()) })}</li>
+      <li>${tr("<b>No one reports back.</b> Once someone is referred, the receiving agency takes over, and none of them tell JKM what happened next.")}</li>
+      <li>${tr("* Usually deportation, so a low return rate here doesn't mean it worked. The action wasn't recorded for {n} pick-ups, almost all in 2023.", { n: int(JKM.notRecorded) })}</li>
+    </ul>
+  </div></div>`;
+}
+function fixPanel() {
+  const recs = [[tr("A shared register of people"), tr("One fixed reference number for each person across JKM, DBKL and JWP, checked at the operation site."), tr("3 months")],
+    [tr("Outcome reports"), tr("AADK, KKM, Immigration, YKN, DBKL and NGOs report back to JKM on everyone referred, after 30 and 90 days."), tr("6 months")],
+    [tr("Case plans for the core group"), tr("A case plan for the {n} people picked up three times or more, with drug and mental health screening, in line with JKM's \"one homeless person, one case manager\" proposal.", { n: int(JKM.threePlus) }), tr("6 months")],
+    [tr("Quarterly report to the Minister"), tr("New faces, returning faces and people who came back after each operation, from the first quarter of 2027."), tr("From Q1 2027")]];
+  return `<div class="panel wide"><h3>${tr("What would fix this")}</h3><p class="sub">${tr("Recommendations from the 14 October 2026 briefing. London, Houston and Singapore all track each person across agencies, not just a count per operation.")}</p>
+    <ol class="fixes">${recs.map(([h, d, t]) => `<li><div><b>${h}</b><p>${d}</p></div><span>${t}</span></li>`).join("")}</ol></div>`;
 }
 
 /* ---------- topic pages ---------- */
@@ -1194,13 +1302,16 @@ const RENDER = {
     const n = val("homeless"), pct = (a, b) => a && a / b < 0.005 ? tr("under 1%") : Math.round(a / b * 100) + "%";
     const seat = state.area !== "KL" && JKM.seats[state.area], enough = seat && seat.total >= 50;
     return { q: tr("Are we picking up the same people again and again?"),
-      summary: !seat ? tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from 2023 to 2025. <strong>{r} people</strong> were picked up more than once, and they account for a third of all pick-ups.", { n: int(n), p: int(JKM.people), r: int(JKM.repeaters) }) + " " + tr("The real number is likely higher: among people with an ID number on record, <strong>1 in 5</strong> was picked up again.") + " " + tr("JKM's own records called <strong>{p}</strong> of repeat pick-ups a first pick-up.", { p: Math.round(JKM.jkmMissed / JKM.returns * 100) + "%" })
-        : tr("JKM operations made <strong>{n} pick-ups</strong> in {area} from 2023 to 2025, {p} of KL's total.", { n: int(n), area: areaLabel(), p: pct(n, JKM.pickups) }) + " " + (enough ? tr("{b} were of someone JKM had already picked up before.", { b: pct(seat.before, seat.total) }) : tr("That's too few to say how many were repeats.")),
-      stats: !seat ? [[tr("Pick-ups"), int(n), tr("2023 to 2025")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), pct(JKM.repeaters, JKM.people), tr("{n} people confirmed. Likely about 1 in 5.", { n: int(JKM.repeaters) })]]
-        : [[tr("Pick-ups"), int(n), tr("2023 to 2025")], [tr("Share of KL total"), pct(n, JKM.pickups), tr("of {n} pick-ups", { n: int(JKM.pickups) })], [tr("Already picked up before"), enough ? pct(seat.before, seat.total) : "–", enough ? tr("of pick-ups here") : tr("too few to say")]],
-      charts: [heatPanel(), revolvingPanel(), outcomePanel(),
-        panel(tr("Pick-ups each year"), tr("{area}. Each year's operations targeted different groups, so changes say more about the operations than the street.", { area: areaLabel() }), lineChart(series("homeless"), { zero: true, years: JKM.years, fmt: v => int(v) })),
-        `<div class="panel wide"><h3>${tr("By area")}</h3><p class="sub">${tr("Pick-ups 2023 to 2025 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.", { n: int(JKM.noSeat) })}</p>${seatBars("homeless")}</div>`] };
+      summary: !seat ? tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. JKM's records count <strong>{j} people</strong> as repeat cases, but the real number is at least <strong>{c} ({cp})</strong> once people are matched across operations.", { n: int(n), p: int(JKM.people), j: int(JKM.jkmPeople), c: int(JKM.combined), cp: pct(JKM.combined, JKM.people) }) + " " + tr("The share of pick-ups of someone picked up before is rising, from {a} in 2025 to <strong>{b}</strong> in 2026.", { a: pct(JKM.yearBefore[2], JKM.yearPickups[2]), b: pct(JKM.yearBefore[3], JKM.yearPickups[3]) })
+        : tr("JKM operations made <strong>{n} pick-ups</strong> in {area} from January 2023 to September 2026, {p} of KL's total.", { n: int(n), area: areaLabel(), p: pct(n, JKM.pickups) }) + " " + (enough ? tr("{b} were of someone JKM had already picked up before.", { b: pct(seat.before, seat.total) }) : tr("That's too few to say how many were repeats.")),
+      stats: !seat ? [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), tr("At least {p}", { p: pct(JKM.combined, JKM.people) }), tr("{c} people. JKM's records count {j}.", { c: int(JKM.combined), j: int(JKM.jkmPeople) })]]
+        : [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Share of KL total"), pct(n, JKM.pickups), tr("of {n} pick-ups", { n: int(JKM.pickups) })], [tr("Already picked up before"), enough ? pct(seat.before, seat.total) : "–", enough ? tr("of pick-ups here") : tr("too few to say")]],
+      charts: [heatPanel(), ...(seat ? [] : [revolvingPanel(), outcomePanel()]),
+        ...(seat ? [] : [panel(tr("Malaysians picked up, by year"), tr("Share of pick-ups who were Malaysian citizens. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025."),
+          outRows(JKM.yearCitizens.map((a, i) => [JKM_YEARS[i], a, JKM.yearPickups[i]]), "cit", { max: 1 }) + `<p class="rev-cap">${tr("* 2026 is January to September.")}</p>`)]),
+        panel(tr("Pick-ups each year"), tr("{area}. 2026 is January to September. Each year's operations targeted different groups, so changes say more about the operations than the street.", { area: areaLabel() }), lineChart(series("homeless"), { zero: true, years: JKM_YEARS, fmt: v => int(v) })).replace('class="panel"', seat ? 'class="panel wide"' : 'class="panel"'),
+        `<div class="panel wide"><h3>${tr("By area")}</h3><p class="sub">${tr("Pick-ups from January 2023 to September 2026 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.", { n: int(JKM.noSeat) })}</p>${seatBars("homeless")}</div>`,
+        ...(seat ? [] : [fixPanel()])] };
   },
   services() {
     const c = val("complaints"), d = val("resolveDays"), within = Math.max(55, Math.min(97, 120 - d * 9));
@@ -1272,17 +1383,17 @@ function topicHTML(id) {
 }
 
 function aboutHTML() {
-  const rows = [["Housing", "PPR waiting list, rent, rent-to-income", "DBKL Housing Management", "Monthly"], ["Homelessness", "Pick-ups in JKM operations, repeat pick-ups, what happened after (real data)", "JKM WPKL", "Yearly"], ["City services", "Complaints, days to fix, share fixed in 5 days", "DBKL complaints system", "Monthly"], ["Floods", "Incidents, hotspots and project status", "DBKL, JPS", "Monthly"], ["Getting around", "Transit coverage, bus waits, rail trips", "Prasarana, DOSM", "Quarterly"], ["Environment", "Green space per person, air quality days", "DBKL Landscape, DOE", "Yearly / daily"], ["City budget", "Spending by category and area, income sources", "DBKL", "Yearly"], ["People", "Population, income, age", "DOSM", "Yearly"]];
+  const rows = [["Housing", "PPR waiting list, rent, rent-to-income", "DBKL Housing Management", "Monthly"], ["Homelessness", "Pick-ups in JKM operations, repeat pick-ups, who comes back and what happened after (real data)", "JKM WPKL", "Yearly"], ["City services", "Complaints, days to fix, share fixed in 5 days", "DBKL complaints system", "Monthly"], ["Floods", "Incidents, hotspots and project status", "DBKL, JPS", "Monthly"], ["Getting around", "Transit coverage, bus waits, rail trips", "Prasarana, DOSM", "Quarterly"], ["Environment", "Green space per person, air quality days", "DBKL Landscape, DOE", "Yearly / daily"], ["City budget", "Spending by category and area, income sources", "DBKL", "Yearly"], ["People", "Population, income, age", "DOSM", "Yearly"]];
   return `<div class="page about">
     <div class="page-h"><div><div class="eyebrow">${icon("info", "sm")}${tr("About this data")}</div><h1>${tr("How KL in Numbers works")}</h1><p class="q">${tr("A public page anyone can open, with no login, showing how Kuala Lumpur is doing.")}</p></div></div>
     <p>${tr("Each number on this site would come from the agency that collects it, with its source and the date it was last updated shown beside it. Every area page follows KL's 11 parliamentary seats, so residents and their representatives can see their own part of the city.")}</p>
-    <p><strong>${tr("This is a prototype.")}</strong> ${tr("Every figure on it is sample data made up to show the design, except the Homelessness topic. That uses real JKM WPKL operation records from 2023 to 2025, reduced to totals so no one can be identified.")}</p>
+    <p><strong>${tr("This is a prototype.")}</strong> ${tr("Every figure on it is sample data made up to show the design, except the Homelessness topic. That uses real JKM WPKL operation records from January 2023 to September 2026, reduced to totals so no one can be identified.")}</p>
     <h2>${tr("What each topic covers")}</h2>
     <div class="tbl-wrap"><table><thead><tr><th>${tr("Topic")}</th><th>${tr("Measures")}</th><th>${tr("Would come from")}</th><th>${tr("Updated")}</th></tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${tr(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
     <h2>${tr("What agencies would need to publish")}</h2>
     <ul class="asks">
       <li>${tr("A yearly count of people sleeping rough in KL, run on one night with a fixed method.")}</li>
-      <li>${tr("An ID number on every JKM pick-up record, and an honest first-time or repeat field, so repeat pick-ups can be counted properly.")}</li>
+      <li>${tr("A shared register of people picked up by JKM, DBKL and JWP, with one reference number per person, so repeat pick-ups are counted properly. Every agency that takes a referral reports back on what happened.")}</li>
       <li>${tr("DBKL complaint figures each month: how many, what type, and how long each took to fix.")}</li>
       <li>${tr("One PPR waiting-list figure, defined the same way every time and published quarterly.")}</li>
       <li>${tr("DBKL's budget, tabled on time, with spending broken down by area where it can be.")}</li>
@@ -1402,7 +1513,7 @@ function hydrate(root, animate = true) {
 function heatPanel() {
   const inSeat = state.area !== "KL";
   const list = SPOTS.filter(p => !inSeat || p[4] === state.area).sort((a, b) => b[3] - a[3]).slice(0, inSeat ? 6 : 8), max = Math.max(...SPOTS.map(p => p[3]));
-  return `<div class="panel wide"><h3>${tr("Where people are picked up")}</h3><p class="sub">${tr("Heat shows where JKM operations picked people up, 2023 to 2025. {n} pick-ups recorded only as \"Kuala Lumpur\" or at small sites aren't shown. Hover over a hotspot to see its count.", { n: int(JKM.unplaced) })}</p>
+  return `<div class="panel wide"><h3>${tr("Where people are picked up")}</h3><p class="sub">${tr("Heat shows where JKM operations picked people up, January 2023 to September 2026. {n} pick-ups aren't shown: {c} were recorded only as \"Bandar Kuala Lumpur\", mostly in 2025, and the rest were at small sites. Hover over a hotspot to see its count.", { n: int(JKM.unplaced), c: int(JKM.cityOnly) })}</p>
     <div class="heat">
       <div class="heat-cv"><canvas data-heat data-area="${state.area}" aria-label="${tr("Where people are picked up")}" role="img"></canvas><span class="heat-ring"></span><div class="heat-tip"></div></div>
       <div class="heat-side">
