@@ -335,6 +335,25 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .rev-why .outs { gap: 16px; }
 .rev-reasons { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; font-size: 13px; color: var(--ink-3); line-height: 1.6; max-width: 62ch; }
 .rev-reasons b { font-weight: 500; color: var(--ink); }
+.wf { display: grid; gap: 22px; }
+.wf-row { display: grid; gap: 8px; }
+.wf-lab { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13px; }
+.wf-lab b { font-family: var(--f-data); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); }
+.wf-figs { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; max-width: 360px; }
+.wf-figs svg { width: 100%; height: auto; fill: var(--neutral-soft); stroke: var(--line); stroke-width: 1; animation: wf-in var(--t-slow) var(--ease) both; }
+.wf-figs svg.on { fill: var(--accent); stroke: none; }
+.wf-figs svg:nth-child(2) { animation-delay: 30ms; }
+.wf-figs svg:nth-child(3) { animation-delay: 60ms; }
+.wf-figs svg:nth-child(4) { animation-delay: 90ms; }
+.wf-figs svg:nth-child(5) { animation-delay: 120ms; }
+.wf-figs svg:nth-child(6) { animation-delay: 150ms; }
+.wf-figs svg:nth-child(7) { animation-delay: 180ms; }
+.wf-figs svg:nth-child(8) { animation-delay: 210ms; }
+.wf-figs svg:nth-child(9) { animation-delay: 240ms; }
+.wf-figs svg:nth-child(10) { animation-delay: 270ms; }
+.wf-row small { font-size: 12px; color: var(--muted); }
+@keyframes wf-in { from { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .wf-figs svg { animation: none; } }
 @media (max-width: 860px) { .rev-why { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
 .out-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 13px; }
 .out-row .bar-track { grid-column: 1 / -1; display: block; background: var(--neutral-soft); border-radius: 3px; }
@@ -884,16 +903,20 @@ const BM = {
   "{n} people confirmed. Likely about 1 in 5.": "{n} orang disahkan. Mungkin kira-kira 1 daripada 5.",
   "ID number on record": "Nombor pengenalan direkodkan",
   "No ID number recorded": "Tiada nombor pengenalan direkodkan",
-  "Most repeat pick-ups are recorded as first-timers": "Kebanyakan pengambilan berulang direkodkan sebagai kali pertama",
-  "Repeat pick-ups found by matching people across operations, by what JKM's own record said. Kuala Lumpur, 2023 to 2025.": "Pengambilan berulang yang ditemui dengan memadankan individu merentas operasi, mengikut apa yang dicatat dalam rekod JKM sendiri. Kuala Lumpur, 2023 hingga 2025.",
-  "<b>{p}</b> of repeat pick-ups were recorded by JKM as the person's first.": "<b>{p}</b> pengambilan berulang direkodkan oleh JKM sebagai kali pertama orang itu.",
   "{a} of {b}": "{a} daripada {b}",
   "Recorded as first pick-up": "Direkodkan sebagai kali pertama",
-  "Recorded as repeat": "Direkodkan sebagai berulang",
-  "<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, matched by ID number or by name and birth year, yet JKM's form marked them as a first pick-up.": "<b>{a} daripada {b} pengambilan berulang</b> melibatkan orang yang sudah diambil dalam operasi terdahulu, dipadankan melalui nombor pengenalan atau nama dan tahun lahir, namun borang JKM menandakannya sebagai kali pertama.",
-  "Only {n} were recorded as repeats. Anyone counting repeats from JKM's own field would see fewer than half of them.": "Hanya {n} direkodkan sebagai berulang. Sesiapa yang mengira pengambilan berulang daripada medan JKM sendiri akan melihat kurang daripada separuh.",
   "These are only the repeats this data can see. Missing ID numbers and pick-ups before 2023 hide more, below.": "Ini hanya pengambilan berulang yang dapat dilihat dalam data ini. Nombor pengenalan yang tiada dan pengambilan sebelum 2023 menyembunyikan lebih banyak lagi, di bawah.",
   "JKM's own records called <strong>{p}</strong> of repeat pick-ups a first pick-up.": "Rekod JKM sendiri menyatakan <strong>{p}</strong> pengambilan berulang sebagai kali pertama.",
+  "JKM's records miss most repeat pick-ups": "Rekod JKM terlepas kebanyakan pengambilan berulang",
+  "Out of every 10 pick-ups of someone JKM had already picked up before. Kuala Lumpur, 2023 to 2025.": "Daripada setiap 10 pengambilan orang yang pernah diambil JKM sebelum ini. Kuala Lumpur, 2023 hingga 2025.",
+  "{n} in 10": "{n} daripada 10",
+  "JKM's records say": "Menurut rekod JKM",
+  "In reality": "Hakikatnya",
+  "{a} of {b} marked as picked up before": "{a} daripada {b} ditanda pernah diambil",
+  "all {b} had been picked up before, found by matching ID number or name and birth year": "kesemua {b} pernah diambil sebelum ini, ditemui dengan memadankan nombor pengenalan atau nama dan tahun lahir",
+  "Picked up before": "Pernah diambil",
+  "<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, yet JKM's form marked them as a first pick-up.": "<b>{a} daripada {b} pengambilan berulang</b> melibatkan orang yang sudah diambil dalam operasi terdahulu, namun borang JKM menandakannya sebagai kali pertama.",
+  "Anyone counting repeats from JKM's own records would see only about {k} in 10 of them, and conclude the same people are picked up far less often than they are.": "Sesiapa yang mengira pengambilan berulang daripada rekod JKM sendiri hanya akan melihat kira-kira {k} daripada 10, dan menyimpulkan bahawa orang yang sama jauh lebih jarang diambil berbanding hakikatnya.",
   "The real share is likely closer to 1 in 5": "Peratus sebenar mungkin lebih hampir kepada 1 daripada 5",
   "Share of people picked up more than once, by whether JKM recorded an ID number": "Peratus individu yang diambil lebih daripada sekali, mengikut sama ada JKM merekodkan nombor pengenalan",
   "<b>Missing ID numbers.</b> {n} people had no ID number recorded, mostly non-citizens. They can only be matched by name, which is spelled differently each time, so their returns go unseen. If they came back as often as everyone else, about {e} more people would be repeats.": "<b>Nombor pengenalan tiada.</b> {n} orang tiada nombor pengenalan direkodkan, kebanyakannya bukan warganegara. Mereka hanya boleh dipadankan melalui nama, yang dieja berbeza setiap kali, jadi pengambilan semula mereka tidak kelihatan. Jika mereka kembali sekerap orang lain, kira-kira {e} lagi orang akan dikira berulang.",
@@ -1105,16 +1128,19 @@ function revolvingPanel() {
 }
 // JKM's own first-time/repeat field vs. the repeat pick-ups found by matching people across operations
 function mislabelPanel() {
-  const miss = JKM.jkmMissed, ok = JKM.returns - miss, p = Math.round(miss / JKM.returns * 100) + "%";
-  return `<div class="panel wide"><h3>${tr("Most repeat pick-ups are recorded as first-timers")}</h3><p class="sub">${tr("Repeat pick-ups found by matching people across operations, by what JKM's own record said. Kuala Lumpur, 2023 to 2025.")}</p>
-    <div class="rev-why"><div>
-      <p class="rev-lead">${tr("<b>{p}</b> of repeat pick-ups were recorded by JKM as the person's first.", { p })}</p>
-      <div class="stack" role="img" aria-label="${tr("{a} of {b}", { a: int(miss), b: int(JKM.returns) })}"><div style="flex:${miss};background:var(--accent)" title="${tr("Recorded as first pick-up")}: ${int(miss)}"></div><div style="flex:${ok};background:var(--neutral-soft)" title="${tr("Recorded as repeat")}: ${int(ok)}"></div></div>
-      <div class="rev-key"><span><i class="again"></i>${tr("Recorded as first pick-up")} · ${int(miss)}</span><span><i class="once"></i>${tr("Recorded as repeat")} · ${int(ok)}</span></div>
+  const ok = JKM.returns - JKM.jkmMissed, k = Math.round(ok / JKM.returns * 10);
+  const fig = on => `<svg class="wf${on ? " on" : ""}" viewBox="0 0 20 32" aria-hidden="true"><circle cx="10" cy="6.5" r="5"/><path d="M1.5 30v-9.5A7.5 7.5 0 0 1 9 13h2a7.5 7.5 0 0 1 7.5 7.5V30a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 30z"/></svg>`;
+  const row = (label, n, note) => `<div class="wf-row"><div class="wf-lab"><span>${label}</span><b>${tr("{n} in 10", { n })}</b></div>
+    <div class="wf-figs" role="img" aria-label="${tr("{n} in 10", { n })}">${Array.from({ length: 10 }, (_, i) => fig(i < n)).join("")}</div><small>${note}</small></div>`;
+  return `<div class="panel wide"><h3>${tr("JKM's records miss most repeat pick-ups")}</h3><p class="sub">${tr("Out of every 10 pick-ups of someone JKM had already picked up before. Kuala Lumpur, 2023 to 2025.")}</p>
+    <div class="rev-why"><div class="wf">
+      ${row(tr("JKM's records say"), k, tr("{a} of {b} marked as picked up before", { a: int(ok), b: int(JKM.returns) }))}
+      ${row(tr("In reality"), 10, tr("all {b} had been picked up before, found by matching ID number or name and birth year", { b: int(JKM.returns) }))}
+      <div class="rev-key"><span><i class="again"></i>${tr("Picked up before")}</span><span><i class="once"></i>${tr("Recorded as first pick-up")}</span></div>
     </div>
     <ul class="rev-reasons">
-      <li>${tr("<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, matched by ID number or by name and birth year, yet JKM's form marked them as a first pick-up.", { a: int(miss), b: int(JKM.returns) })}</li>
-      <li>${tr("Only {n} were recorded as repeats. Anyone counting repeats from JKM's own field would see fewer than half of them.", { n: int(ok) })}</li>
+      <li>${tr("<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, yet JKM's form marked them as a first pick-up.", { a: int(JKM.jkmMissed), b: int(JKM.returns) })}</li>
+      <li>${tr("Anyone counting repeats from JKM's own records would see only about {k} in 10 of them, and conclude the same people are picked up far less often than they are.", { k })}</li>
       <li>${tr("These are only the repeats this data can see. Missing ID numbers and pick-ups before 2023 hide more, below.")}</li>
     </ul>
   </div></div>`;
