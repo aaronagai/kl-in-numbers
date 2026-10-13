@@ -836,7 +836,6 @@ const BM = {
   "6–12 months": "6–12 bulan",
   "Over a year": "Lebih setahun",
   "Half came back within {d} days.": "Separuh kembali dalam {d} hari.",
-  "JKM's own records marked {a} of these {b} returns as the person's first pick-up. Missing ID numbers and spelling differences hide more, so all of these numbers are a minimum.": "Rekod JKM sendiri menandakan {a} daripada {b} pengambilan berulang ini sebagai kali pertama. Nombor pengenalan yang tiada dan ejaan yang berbeza menyembunyikan lebih banyak lagi, jadi semua angka ini ialah angka minimum.",
   "What happened after a pick-up, and who came back": "Apa yang berlaku selepas pengambilan, dan siapa yang kembali",
   "Share of pick-ups followed by another pick-up of the same person, by what JKM did that time. Kuala Lumpur, 2023 to 2025.": "Peratus pengambilan yang diikuti pengambilan lain bagi orang yang sama, mengikut tindakan JKM pada kali itu. Kuala Lumpur, 2023 hingga 2025.",
   "{a} of {n}": "{a} daripada {n}",
@@ -885,11 +884,20 @@ const BM = {
   "{n} people confirmed. Likely about 1 in 5.": "{n} orang disahkan. Mungkin kira-kira 1 daripada 5.",
   "ID number on record": "Nombor pengenalan direkodkan",
   "No ID number recorded": "Tiada nombor pengenalan direkodkan",
+  "Most repeat pick-ups are recorded as first-timers": "Kebanyakan pengambilan berulang direkodkan sebagai kali pertama",
+  "Repeat pick-ups found by matching people across operations, by what JKM's own record said. Kuala Lumpur, 2023 to 2025.": "Pengambilan berulang yang ditemui dengan memadankan individu merentas operasi, mengikut apa yang dicatat dalam rekod JKM sendiri. Kuala Lumpur, 2023 hingga 2025.",
+  "<b>{p}</b> of repeat pick-ups were recorded by JKM as the person's first.": "<b>{p}</b> pengambilan berulang direkodkan oleh JKM sebagai kali pertama orang itu.",
+  "{a} of {b}": "{a} daripada {b}",
+  "Recorded as first pick-up": "Direkodkan sebagai kali pertama",
+  "Recorded as repeat": "Direkodkan sebagai berulang",
+  "<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, matched by ID number or by name and birth year, yet JKM's form marked them as a first pick-up.": "<b>{a} daripada {b} pengambilan berulang</b> melibatkan orang yang sudah diambil dalam operasi terdahulu, dipadankan melalui nombor pengenalan atau nama dan tahun lahir, namun borang JKM menandakannya sebagai kali pertama.",
+  "Only {n} were recorded as repeats. Anyone counting repeats from JKM's own field would see fewer than half of them.": "Hanya {n} direkodkan sebagai berulang. Sesiapa yang mengira pengambilan berulang daripada medan JKM sendiri akan melihat kurang daripada separuh.",
+  "These are only the repeats this data can see. Missing ID numbers and pick-ups before 2023 hide more, below.": "Ini hanya pengambilan berulang yang dapat dilihat dalam data ini. Nombor pengenalan yang tiada dan pengambilan sebelum 2023 menyembunyikan lebih banyak lagi, di bawah.",
+  "JKM's own records called <strong>{p}</strong> of repeat pick-ups a first pick-up.": "Rekod JKM sendiri menyatakan <strong>{p}</strong> pengambilan berulang sebagai kali pertama.",
   "The real share is likely closer to 1 in 5": "Peratus sebenar mungkin lebih hampir kepada 1 daripada 5",
   "Share of people picked up more than once, by whether JKM recorded an ID number": "Peratus individu yang diambil lebih daripada sekali, mengikut sama ada JKM merekodkan nombor pengenalan",
   "<b>Missing ID numbers.</b> {n} people had no ID number recorded, mostly non-citizens. They can only be matched by name, which is spelled differently each time, so their returns go unseen. If they came back as often as everyone else, about {e} more people would be repeats.": "<b>Nombor pengenalan tiada.</b> {n} orang tiada nombor pengenalan direkodkan, kebanyakannya bukan warganegara. Mereka hanya boleh dipadankan melalui nama, yang dieja berbeza setiap kali, jadi pengambilan semula mereka tidak kelihatan. Jika mereka kembali sekerap orang lain, kira-kira {e} lagi orang akan dikira berulang.",
   "<b>Pick-ups before 2023.</b> JKM's own records say {n} people seen only once here had been picked up before, most likely before 2023, which this data doesn't cover.": "<b>Pengambilan sebelum 2023.</b> Rekod JKM sendiri menyatakan {n} orang yang dilihat sekali sahaja di sini pernah diambil sebelum ini, kemungkinan besar sebelum 2023, yang tidak diliputi data ini.",
-  "<b>JKM's first-time field.</b> JKM marked {a} of the {b} returns found here as the person's first pick-up, so its own count of repeats is too low as well.": "<b>Medan kali pertama JKM.</b> JKM menandakan {a} daripada {b} pengambilan berulang yang ditemui di sini sebagai kali pertama, jadi kiraan berulang JKM sendiri juga terlalu rendah.",
   "People picked up more than once. {n} people were picked up once. The most for one person was {m} times.": "Individu yang diambil lebih daripada sekali. {n} orang diambil sekali. Paling banyak bagi seorang ialah {m} kali.",
   "Gap between one pick-up and the next for the same person. Half came back within {d} days.": "Jarak antara satu pengambilan dengan yang seterusnya bagi orang yang sama. Separuh kembali dalam {d} hari.",
   "Share of people picked up more than once, by whether JKM recorded an ID number. Missing records hide repeats, so 15% is a minimum.": "Peratus individu yang diambil lebih daripada sekali, mengikut sama ada JKM merekodkan nombor pengenalan. Rekod yang tiada menyembunyikan pengambilan berulang, jadi 15% ialah angka minimum.",
@@ -1093,7 +1101,23 @@ function revolvingPanel() {
       `<div class="months rev-times">${times.map((v, i) => `<div><b>${int(v)}</b><i style="height:${v / tmax * 100}%"></i><span>${i === 4 ? "6+" : i + 2}</span></div>`).join("")}</div>`) +
     panel(tr("Time until the next pick-up"), tr("Gap between one pick-up and the next for the same person. Half came back within {d} days.", { d: JKM.medianGap }),
       `<div class="rev-gaps">${catRows(JKM.gaps, v => int(v), "gap")}</div>`) +
-    undercount();
+    mislabelPanel() + undercount();
+}
+// JKM's own first-time/repeat field vs. the repeat pick-ups found by matching people across operations
+function mislabelPanel() {
+  const miss = JKM.jkmMissed, ok = JKM.returns - miss, p = Math.round(miss / JKM.returns * 100) + "%";
+  return `<div class="panel wide"><h3>${tr("Most repeat pick-ups are recorded as first-timers")}</h3><p class="sub">${tr("Repeat pick-ups found by matching people across operations, by what JKM's own record said. Kuala Lumpur, 2023 to 2025.")}</p>
+    <div class="rev-why"><div>
+      <p class="rev-lead">${tr("<b>{p}</b> of repeat pick-ups were recorded by JKM as the person's first.", { p })}</p>
+      <div class="stack" role="img" aria-label="${tr("{a} of {b}", { a: int(miss), b: int(JKM.returns) })}"><div style="flex:${miss};background:var(--accent)" title="${tr("Recorded as first pick-up")}: ${int(miss)}"></div><div style="flex:${ok};background:var(--neutral-soft)" title="${tr("Recorded as repeat")}: ${int(ok)}"></div></div>
+      <div class="rev-key"><span><i class="again"></i>${tr("Recorded as first pick-up")} · ${int(miss)}</span><span><i class="once"></i>${tr("Recorded as repeat")} · ${int(ok)}</span></div>
+    </div>
+    <ul class="rev-reasons">
+      <li>${tr("<b>{a} of {b} repeat pick-ups</b> were of someone already picked up in an earlier operation, matched by ID number or by name and birth year, yet JKM's form marked them as a first pick-up.", { a: int(miss), b: int(JKM.returns) })}</li>
+      <li>${tr("Only {n} were recorded as repeats. Anyone counting repeats from JKM's own field would see fewer than half of them.", { n: int(ok) })}</li>
+      <li>${tr("These are only the repeats this data can see. Missing ID numbers and pick-ups before 2023 hide more, below.")}</li>
+    </ul>
+  </div></div>`;
 }
 function undercount() {
   const rows = [[tr("ID number on record"), JKM.idRepeat, JKM.idPeople], [tr("No ID number recorded"), JKM.noIdRepeat, JKM.noIdPeople]];
@@ -1104,7 +1128,6 @@ function undercount() {
     <ul class="rev-reasons">
       <li>${tr("<b>Missing ID numbers.</b> {n} people had no ID number recorded, mostly non-citizens. They can only be matched by name, which is spelled differently each time, so their returns go unseen. If they came back as often as everyone else, about {e} more people would be repeats.", { n: int(JKM.noIdPeople), e: Math.round(JKM.noIdPeople * JKM.idRepeat / JKM.idPeople - JKM.noIdRepeat) })}</li>
       <li>${tr("<b>Pick-ups before 2023.</b> JKM's own records say {n} people seen only once here had been picked up before, most likely before 2023, which this data doesn't cover.", { n: int(JKM.jkmPriorOnce) })}</li>
-      <li>${tr("<b>JKM's first-time field.</b> JKM marked {a} of the {b} returns found here as the person's first pick-up, so its own count of repeats is too low as well.", { a: int(JKM.jkmMissed), b: int(JKM.returns) })}</li>
     </ul>
   </div></div>`;
 }
@@ -1145,7 +1168,7 @@ const RENDER = {
     const n = val("homeless"), pct = (a, b) => a && a / b < 0.005 ? tr("under 1%") : Math.round(a / b * 100) + "%";
     const seat = state.area !== "KL" && JKM.seats[state.area], enough = seat && seat.total >= 50;
     return { q: tr("Are we picking up the same people again and again?"),
-      summary: !seat ? tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from 2023 to 2025. <strong>{r} people</strong> were picked up more than once, and they account for a third of all pick-ups.", { n: int(n), p: int(JKM.people), r: int(JKM.repeaters) }) + " " + tr("The real number is likely higher: among people with an ID number on record, <strong>1 in 5</strong> was picked up again.")
+      summary: !seat ? tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from 2023 to 2025. <strong>{r} people</strong> were picked up more than once, and they account for a third of all pick-ups.", { n: int(n), p: int(JKM.people), r: int(JKM.repeaters) }) + " " + tr("The real number is likely higher: among people with an ID number on record, <strong>1 in 5</strong> was picked up again.") + " " + tr("JKM's own records called <strong>{p}</strong> of repeat pick-ups a first pick-up.", { p: Math.round(JKM.jkmMissed / JKM.returns * 100) + "%" })
         : tr("JKM operations made <strong>{n} pick-ups</strong> in {area} from 2023 to 2025, {p} of KL's total.", { n: int(n), area: areaLabel(), p: pct(n, JKM.pickups) }) + " " + (enough ? tr("{b} were of someone JKM had already picked up before.", { b: pct(seat.before, seat.total) }) : tr("That's too few to say how many were repeats.")),
       stats: !seat ? [[tr("Pick-ups"), int(n), tr("2023 to 2025")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), pct(JKM.repeaters, JKM.people), tr("{n} people confirmed. Likely about 1 in 5.", { n: int(JKM.repeaters) })]]
         : [[tr("Pick-ups"), int(n), tr("2023 to 2025")], [tr("Share of KL total"), pct(n, JKM.pickups), tr("of {n} pick-ups", { n: int(JKM.pickups) })], [tr("Already picked up before"), enough ? pct(seat.before, seat.total) : "–", enough ? tr("of pick-ups here") : tr("too few to say")]],
