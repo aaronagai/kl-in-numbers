@@ -947,7 +947,6 @@ const BM = {
   "{t} people were picked up three times or more. Half of repeat pick-ups came within {d} days of the last one.": "{t} orang diambil tiga kali atau lebih. Separuh pengambilan berulang berlaku dalam {d} hari selepas pengambilan sebelumnya.",
   "2023 is lower partly because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.": "2023 lebih rendah sebahagiannya kerana tiada data 2022. Dalam {o} operasi KL Strike Force sejak 2025, {a} pengambilan melibatkan orang yang pernah diambil, meningkat kepada {b} pada 2026.",
   "Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).": "Peratus individu dalam setiap kumpulan yang diambil lebih daripada sekali dalam tempoh ini. Garis putus-putus ialah semua individu ({p}).",
-  "A person can be in more than one group. Shares based on fewer than 30 repeat cases should be read with care.": "Seorang individu boleh tergolong dalam lebih daripada satu kumpulan. Peratus berdasarkan kurang daripada 30 kes berulang perlu ditafsir dengan berhati-hati.",
   "<b>Released is the most common outcome:</b> {a} of {b} pick-ups ({p}), and more than a quarter of those released were picked up again.": "<b>Dilepaskan ialah tindakan paling lazim:</b> {a} daripada {b} pengambilan ({p}), dan lebih satu perempat daripada mereka yang dilepaskan diambil semula.",
   "* Usually deportation, so a low return rate here doesn't mean it worked.": "* Biasanya pengusiran, jadi kadar kembali yang rendah di sini tidak bermakna ia berkesan.",
   "JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. At least <strong>{c} people ({cp})</strong> were picked up more than once.": "Operasi JKM di KL membuat <strong>{n} pengambilan</strong> melibatkan <strong>{p} orang</strong> dari Januari 2023 hingga September 2026. Sekurang-kurangnya <strong>{c} orang ({cp})</strong> diambil lebih daripada sekali.",
@@ -1185,7 +1184,6 @@ function groupsPanel() {
   };
   return `<div class="panel wide vuln${imagined ? " split" : ""}"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).", { p: Math.round(all * 100) + "%" })}</p>
     <div class="vuln-grid"><div class="outs hov vuln-chart">${rows.map(row).join("")}</div><aside class="vuln-story" id="vuln-story" aria-live="polite">${imagined ? storyHTML(imagined) : ""}</aside></div>
-    <p class="rev-cap">${tr("A person can be in more than one group. Shares based on fewer than 30 repeat cases should be read with care.")}</p>
   </div>`;
 }
 function storyHTML(k) {
