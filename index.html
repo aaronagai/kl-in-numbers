@@ -345,7 +345,28 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .out-row.muted { color: var(--muted); }
 .outs + .rev-cap { margin-top: 14px; }
 .outs.hov .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
-.outs.hov .out-row:hover .bar-fill { background: var(--accent); }
+.outs.hov .out-row:hover .bar-fill, .outs.hov .out-row.on .bar-fill { background: var(--accent); }
+.vrow { all: unset; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 13px; cursor: pointer; border-radius: 4px; }
+.vrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.imag-hint { margin-left: 10px; font-size: 12px; color: var(--accent); opacity: .75; transition: opacity var(--t-fast) var(--ease); }
+.vrow:hover .imag-hint, .vrow.on .imag-hint { opacity: 1; }
+.vuln-grid { display: grid; align-items: start; grid-template-columns: minmax(0, 1fr) minmax(0, 0fr); column-gap: 0; transition: grid-template-columns 360ms var(--ease), column-gap 360ms var(--ease); }
+.vuln.split .vuln-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
+.vuln-story { min-width: 0; overflow: hidden; }
+.story-in { opacity: 0; transform: translateX(16px); transition: opacity 160ms var(--ease), transform 160ms var(--ease); }
+.vuln.split .story-in { opacity: 1; transform: none; transition-duration: 320ms; transition-delay: 120ms; }
+.story-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.story-h .eyebrow { font-family: var(--f-data); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.story-lead { margin: 0 0 18px; font-size: 18px; line-height: 1.45; color: var(--ink-3); max-width: 34ch; text-wrap: pretty; }
+.story-lead b { color: var(--ink); font-weight: 500; }
+.people { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px 8px; max-width: 320px; }
+.people svg { width: 100%; height: auto; fill: var(--neutral-soft); stroke: var(--line); stroke-width: 1; }
+.people svg.on { fill: var(--accent); stroke: none; }
+.vuln.split .people svg.on { animation: pp-in 240ms var(--ease) both; animation-delay: calc(200ms + var(--i) * 8ms); }
+@keyframes pp-in { from { fill: var(--neutral-soft); transform: scale(.8); } }
+.story-cap { margin: 16px 0 0; font-size: 14px; color: var(--ink-3); }
+@media (max-width: 860px) { .vuln-grid, .vuln.split .vuln-grid { grid-template-columns: minmax(0, 1fr); column-gap: 0; } .vuln-story { display: none; } .vuln.split .vuln-story { display: block; margin-top: 24px; } }
+@media (prefers-reduced-motion: reduce) { .vuln-grid, .story-in { transition: none; } .vuln.split .people svg.on { animation: none; } }
 .out-row.muted .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
 @media (max-width: 860px) { .rev { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
 .stack { display: flex; height: 24px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
@@ -934,6 +955,9 @@ const BM = {
   "Heat shows where JKM operations picked people up, January 2023 to September 2026. {n} pick-ups without a specific location aren't shown. Hover over a hotspot to see its count.": "Haba menunjukkan lokasi pengambilan dalam operasi JKM, Januari 2023 hingga September 2026. {n} pengambilan tanpa lokasi khusus tidak ditunjukkan. Halakan tetikus pada kawasan tumpuan untuk melihat bilangannya.",
   "{n} times": "{n} kali",
   "Times each action was taken after a pick-up from 2023 to 2025, and in brackets the share of those picked up again by September 2026.": "Bilangan kali setiap tindakan diambil selepas pengambilan dari 2023 hingga 2025, dan dalam kurungan peratus mereka yang diambil semula sehingga September 2026.",
+  "Imagine this": "Bayangkan",
+  "Imagine <b>100 UNHCR card holders</b> picked up by JKM. <b>{n}</b> of them are picked up again.": "Bayangkan <b>100 pemegang kad UNHCR</b> diambil oleh JKM. <b>{n}</b> daripada mereka diambil semula.",
+  "That's almost half, about four football teams.": "Itu hampir separuh, kira-kira empat pasukan bola sepak.",
 };
 const MISSING = new Set();
 function tr(s, v) {
@@ -1148,12 +1172,39 @@ function risingPanel() {
     outRows(JKM.yearBefore.map((a, i) => [JKM_YEARS[i], a, JKM.yearPickups[i]]), "before", { max: 0.4, unit: "{n} pick-ups" }) +
     `<p class="rev-cap">${tr("2023 is lower partly because there's no data from 2022. In the {o} KL Strike Force operations since 2025, {a} of pick-ups were of someone picked up before, rising to {b} in 2026.", { o: sf[4], a: pc(sf[0], sf[1]), b: pc(sf[2], sf[3]) })}</p>`);
 }
+// "Imagine this": a group's share shown as 100 people. Only groups with a story can be opened.
+const STORIES = { "UNHCR card holders": { lead: "Imagine <b>100 UNHCR card holders</b> picked up by JKM. <b>{n}</b> of them are picked up again.", cap: "That's almost half, about four football teams." } };
+let imagined = null;
 function groupsPanel() {
-  const all = JKM.repeaters / JKM.people, rows = JKM.groups.map(([k, n, a]) => [tr(k), a, n]).sort((x, y) => y[1] / y[2] - x[1] / x[2]);
-  return `<div class="panel wide"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).", { p: Math.round(all * 100) + "%" })}</p>
-    ${outRows(rows, "grp", { ref: all, cls: "hov", unit: "{n} people" })}
+  const all = JKM.repeaters / JKM.people, max = Math.max(...JKM.groups.map(g => g[2] / g[1]));
+  const rows = JKM.groups.slice().sort((x, y) => y[2] / y[1] - x[2] / x[1]);
+  const row = ([k, n, a], i) => {
+    const sc = (a / n / max).toFixed(4), story = STORIES[k], on = imagined === k;
+    const inner = `<span class="nm">${tr(k)}${story ? `<span class="imag-hint">${tr("Imagine this")} →</span>` : ""}</span><span class="bv">${tr("{n} people", { n: int(a) })}<small>(${pc(a, n)})</small></span><span class="bar-track"><span class="bar-fill" data-k="grp-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span><span class="ref" style="left:${(all / max * 100).toFixed(2)}%"></span></span>`;
+    return story ? `<button type="button" class="out-row vrow${on ? " on" : ""}" data-imagine="${esc(k)}" aria-expanded="${on}" aria-controls="vuln-story">${inner}</button>` : `<div class="out-row">${inner}</div>`;
+  };
+  return `<div class="panel wide vuln${imagined ? " split" : ""}"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}).", { p: Math.round(all * 100) + "%" })}</p>
+    <div class="vuln-grid"><div class="outs hov vuln-chart">${rows.map(row).join("")}</div><aside class="vuln-story" id="vuln-story" aria-live="polite">${imagined ? storyHTML(imagined) : ""}</aside></div>
     <p class="rev-cap">${tr("A person can be in more than one group. Shares based on fewer than 30 repeat cases should be read with care.")}</p>
   </div>`;
+}
+function storyHTML(k) {
+  const [, n, a] = JKM.groups.find(g => g[0] === k), hits = Math.round(a / n * 100), st = STORIES[k];
+  const fig = (on, i) => `<svg class="pp${on ? " on" : ""}" style="--i:${i}" viewBox="0 0 20 32" aria-hidden="true"><circle cx="10" cy="6.5" r="5"/><path d="M1.5 30v-9.5A7.5 7.5 0 0 1 9 13h2a7.5 7.5 0 0 1 7.5 7.5V30a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 30z"/></svg>`;
+  return `<div class="story-in">
+    <div class="story-h"><span class="eyebrow">${tr("Imagine this")}</span><button type="button" class="x" data-imagine-close aria-label="${tr("Close")}">${icon("close", "sm")}</button></div>
+    <p class="story-lead">${tr(st.lead, { n: hits })}</p>
+    <div class="people" role="img" aria-label="${tr("{a} of {b}", { a: hits, b: 100 })}">${Array.from({ length: 100 }, (_, i) => fig(i < hits, i < hits ? i : 0)).join("")}</div>
+    <p class="story-cap">${tr(st.cap)}</p>
+  </div>`;
+}
+function imagine(k) {
+  const panel = document.querySelector(".vuln"); if (!panel) return;
+  imagined = k && imagined !== k ? k : null;
+  panel.querySelectorAll("[data-imagine]").forEach(b => { const on = b.dataset.imagine === imagined; b.classList.toggle("on", on); b.setAttribute("aria-expanded", on); });
+  const story = panel.querySelector(".vuln-story");
+  if (imagined) story.innerHTML = storyHTML(imagined);
+  panel.classList.toggle("split", !!imagined);
 }
 function outcomePanel() {
   const rows = JKM.outcomes.filter(o => o[1] >= 15 && o[0] !== "Other").sort((x, y) => y[1] - x[1]), max = rows[0][1];
@@ -1826,6 +1877,8 @@ function closeNav() { document.getElementById("app").classList.remove("nav-open"
 
   document.addEventListener("click", e => {
     const t = e.target;
+    const im = t.closest("[data-imagine]"); if (im) return imagine(im.dataset.imagine);
+    if (t.closest("[data-imagine-close]")) return imagine(null);
     const v = t.closest("[data-view]"); if (v) return go(v.dataset.view);
     const a = t.closest("[data-area]"); if (a) { closeNav(); if ((state.view === "about" || state.view === "overview")) go("map"); return setArea(a.dataset.area); }
     const g = t.closest("[data-go]"); if (g) { if (g.classList.contains("bc") && state.area !== "KL") setArea("KL"); return go(g.dataset.go); }
