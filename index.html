@@ -914,7 +914,6 @@ const BM = {
   "The share of pick-ups of someone picked up before is rising, from {a} in 2025 to <strong>{b}</strong> in 2026.": "Peratus pengambilan orang yang pernah diambil semakin meningkat, daripada {a} pada 2025 kepada <strong>{b}</strong> pada 2026.",
   "JKM operations made <strong>{n} pick-ups</strong> in {area} from January 2023 to September 2026, {p} of KL's total.": "Operasi JKM membuat <strong>{n} pengambilan</strong> di {area} dari Januari 2023 hingga September 2026, {p} daripada jumlah KL.",
   "Jan 2023 to Sep 2026": "Jan 2023 hingga Sep 2026",
-  "At least {p}": "Sekurang-kurangnya {p}",
   "Share of KL total": "Peratus jumlah KL",
   "{area}. 2026 is January to September. Each year's operations targeted different groups, so changes say more about the operations than the street.": "{area}. 2026 ialah Januari hingga September. Operasi setiap tahun menyasarkan kumpulan berbeza, jadi perubahan lebih mencerminkan operasi berbanding keadaan di jalanan.",
   "Malaysians picked up, by year": "Warganegara yang diambil, mengikut tahun",
@@ -1226,7 +1225,7 @@ const RENDER = {
     return { q: tr("Are we picking up the same people again and again?"),
       summary: !seat ? tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. At least <strong>{c} people ({cp})</strong> were picked up more than once.", { n: int(n), p: int(JKM.people), c: int(JKM.combined), cp: pct(JKM.combined, JKM.people) }) + " " + tr("The share of pick-ups of someone picked up before is rising, from {a} in 2025 to <strong>{b}</strong> in 2026.", { a: pct(JKM.yearBefore[2], JKM.yearPickups[2]), b: pct(JKM.yearBefore[3], JKM.yearPickups[3]) })
         : tr("JKM operations made <strong>{n} pick-ups</strong> in {area} from January 2023 to September 2026, {p} of KL's total.", { n: int(n), area: areaLabel(), p: pct(n, JKM.pickups) }) + " " + (enough ? tr("{b} were of someone JKM had already picked up before.", { b: pct(seat.before, seat.total) }) : tr("That's too few to say how many were repeats.")),
-      stats: !seat ? [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), tr("At least {p}", { p: pct(JKM.combined, JKM.people) }), tr("{c} people", { c: int(JKM.combined) })]]
+      stats: !seat ? [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), "~" + pct(JKM.combined, JKM.people), tr("{c} people", { c: int(JKM.combined) })]]
         : [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Share of KL total"), pct(n, JKM.pickups), tr("of {n} pick-ups", { n: int(JKM.pickups) })], [tr("Already picked up before"), enough ? pct(seat.before, seat.total) : "–", enough ? tr("of pick-ups here") : tr("too few to say")]],
       charts: [heatPanel(), ...(seat ? [] : [revolvingPanel(), outcomePanel()]),
         ...(seat ? [] : [risingPanel().replace('class="panel"', 'class="panel wide"'), panel(tr("Malaysians picked up, by year"), tr("Share of pick-ups who were Malaysian citizens. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025."),
