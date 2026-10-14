@@ -355,7 +355,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .vuln.split .vuln-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; }
 .vuln-story { min-width: 0; overflow: hidden; }
 .story-in { opacity: 0; transform: translateX(16px); transition: opacity 160ms var(--ease), transform 160ms var(--ease); }
-.vuln.split .story-in { opacity: 1; transform: none; transition-duration: 320ms; transition-delay: 120ms; }
+.vuln.split .vuln-story .story-in { opacity: 1; transform: none; transition-duration: 320ms; transition-delay: 120ms; }
 .story-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .story-h .eyebrow { font-family: var(--f-data); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
 .story-lead { margin: 0 0 22px; font-size: 20px; line-height: 1.45; color: var(--ink-3); max-width: 34ch; text-wrap: pretty; }
@@ -363,10 +363,28 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .people { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 10px; max-width: 420px; }
 .people svg { width: 100%; height: auto; fill: var(--neutral-soft); stroke: var(--line); stroke-width: 1; }
 .people svg.on { fill: var(--accent); stroke: none; }
-.vuln.split .people svg.on { animation: pp-in 240ms var(--ease) both; animation-delay: calc(200ms + var(--i) * 60ms); }
+.vuln.split .vuln-story .people svg.on, .story-row.open .people svg.on { animation: pp-in 240ms var(--ease) both; animation-delay: calc(200ms + var(--i) * 60ms); }
 @keyframes pp-in { from { fill: var(--neutral-soft); transform: scale(.8); } }
-@media (max-width: 860px) { .vuln-grid, .vuln.split .vuln-grid { grid-template-columns: minmax(0, 1fr); column-gap: 0; } .vuln-story { display: none; } .vuln.split .vuln-story { display: block; margin-top: 24px; } }
-@media (prefers-reduced-motion: reduce) { .vuln-grid, .story-in { transition: none; } .vuln.split .people svg.on { animation: none; } }
+.vrow .chev { display: none; }
+.story-row { display: none; }
+/* Phones: the story opens as an accordion under the tapped row, not beside the list */
+@media (max-width: 860px) {
+  .vuln-grid, .vuln.split .vuln-grid { grid-template-columns: minmax(0, 1fr); column-gap: 0; }
+  .vuln-grid > .vuln-story, .imag-hint { display: none; }
+  .vrow { padding: 2px 0; -webkit-tap-highlight-color: transparent; }
+  .outs.hov .out-row:hover .bar-fill, .outs.hov .out-row.on .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
+  .outs.hov .vrow.top .bar-fill { background: var(--accent); }
+  .vrow .chev { display: inline-grid; place-items: center; vertical-align: -3px; margin-left: 6px; color: var(--muted); transition: transform var(--x-mod) var(--ease), color var(--t-fast) linear; }
+  .vrow.on .chev { transform: rotate(180deg); color: var(--accent); transition-duration: var(--t-mod); }
+  .story-row { display: grid; grid-template-rows: 0fr; margin-top: -10px; transition: grid-template-rows var(--x-slow) var(--ease); }
+  .story-row.open { grid-template-rows: 1fr; transition-duration: 320ms; }
+  .story-row > .story-in { min-height: 0; overflow: hidden; transform: translateY(-6px); }
+  .story-row.open > .story-in { opacity: 1; transform: none; transition-duration: 320ms; transition-delay: 60ms; }
+  .story-body { margin: 10px 0 4px; padding: 14px 16px 18px; border-radius: 10px; background: var(--accent-soft); }
+  .story-lead { font-size: 17px; margin-bottom: 16px; }
+  .people { gap: 6px; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { .vuln-grid, .story-in, .story-row { transition: none; } .vuln.split .people svg.on, .story-row.open .people svg.on { animation: none; } }
 .out-row.muted .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
 @media (max-width: 860px) { .rev { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
 .stack { display: flex; height: 24px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
@@ -1196,8 +1214,8 @@ function groupsPanel() {
   const rows = JKM.groups.slice().sort((x, y) => y[2] / y[1] - x[2] / x[1]);
   const row = ([k, n, a], i) => {
     const sc = (a / n / max).toFixed(4), story = STORIES[k], on = imagined === k;
-    const inner = `<span class="nm">${tr(k)}${story ? `<span class="imag-hint">${tr("Imagine this")} →</span>` : ""}</span><span class="bv">${tr("{n} people", { n: int(a) })}<small>(${pc(a, n)})</small></span><span class="bar-track"><span class="bar-fill" data-k="grp-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span><span class="ref" style="left:${(all / max * 100).toFixed(2)}%"></span></span>`;
-    return story ? `<button type="button" class="out-row vrow${on ? " on" : ""}" data-imagine="${esc(k)}" aria-expanded="${on}" aria-controls="vuln-story">${inner}</button>` : `<div class="out-row">${inner}</div>`;
+    const inner = `<span class="nm">${tr(k)}${story ? `<span class="imag-hint">${tr("Imagine this")} →</span>` : ""}</span><span class="bv">${tr("{n} people", { n: int(a) })}<small>(${pc(a, n)})</small>${story ? `<span class="chev">${icon("chevron", "sm")}</span>` : ""}</span><span class="bar-track"><span class="bar-fill" data-k="grp-${i}" data-s="${sc}" style="transform:scaleX(${sc})"></span><span class="ref" style="left:${(all / max * 100).toFixed(2)}%"></span></span>`;
+    return story ? `<button type="button" class="out-row vrow${on ? " on" : ""}${i < 3 ? " top" : ""}" data-imagine="${esc(k)}" aria-expanded="${on}" aria-controls="vuln-story">${inner}</button>${on ? storyRow(k, true) : ""}` : `<div class="out-row">${inner}</div>`;
   };
   return `<div class="panel wide vuln${imagined ? " split" : ""}"><h3>${tr("The most vulnerable are picked up again most often")}</h3><p class="sub">${tr("Share of people in each group picked up more than once within this period. The dashed line is everyone ({p}). Select a group to imagine it.", { p: Math.round(all * 100) + "%" })}</p>
     <div class="vuln-grid"><div class="outs hov vuln-chart">${rows.map(row).join("")}</div><aside class="vuln-story" id="vuln-story" aria-live="polite">${imagined ? storyHTML(imagined) : ""}</aside></div>
@@ -1206,12 +1224,14 @@ function groupsPanel() {
 function storyHTML(k) {
   const [, n, a] = JKM.groups.find(g => g[0] === k), st = STORIES[k], total = st.count || 10, hits = st.count || Math.round(a / n * 10);
   const fig = (on, i) => `<svg class="pp${on ? " on" : ""}" style="--i:${i}" viewBox="0 0 20 32" aria-hidden="true"><circle cx="10" cy="6.5" r="5"/><path d="M1.5 30v-9.5A7.5 7.5 0 0 1 9 13h2a7.5 7.5 0 0 1 7.5 7.5V30a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 30z"/></svg>`;
-  return `<div class="story-in">
+  return `<div class="story-in"><div class="story-body">
     <div class="story-h"><span class="eyebrow">${tr("Imagine this")}</span><button type="button" class="x" data-imagine-close aria-label="${tr("Close")}">${icon("close", "sm")}</button></div>
     <p class="story-lead">${tr(st.lead)}</p>
     <div class="people" role="img" aria-label="${tr("{a} of {b}", { a: hits, b: total })}">${Array.from({ length: total }, (_, i) => fig(i < hits, i < hits ? i : 0)).join("")}</div>
-  </div>`;
+  </div></div>`;
 }
+// The phone layout: the same story, opened in place under its row.
+function storyRow(k, open) { return `<div class="story-row${open ? " open" : ""}" aria-live="polite">${storyHTML(k)}</div>`; }
 function imagine(k) {
   const panel = document.querySelector(".vuln"); if (!panel) return;
   imagined = k && imagined !== k ? k : null;
@@ -1219,6 +1239,12 @@ function imagine(k) {
   const story = panel.querySelector(".vuln-story");
   if (imagined) story.innerHTML = storyHTML(imagined);
   panel.classList.toggle("split", !!imagined);
+  panel.querySelectorAll(".story-row").forEach(r => { r.classList.remove("open"); setTimeout(() => r.remove(), 200); });
+  if (!imagined) return;
+  const btn = [...panel.querySelectorAll("[data-imagine]")].find(b => b.dataset.imagine === imagined);
+  btn.insertAdjacentHTML("afterend", storyRow(imagined, false));
+  const row = btn.nextElementSibling; row.offsetHeight; row.classList.add("open");
+  if (matchMedia("(max-width: 860px)").matches) setTimeout(() => row.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }), 340);
 }
 function outcomePanel() {
   const rows = JKM.outcomes.filter(o => o[1] >= 15 && o[0] !== "Other").sort((x, y) => y[1] - x[1]), max = rows[0][1];
