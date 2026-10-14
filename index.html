@@ -344,6 +344,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .out-row .bv small { color: var(--muted); font-size: 11px; margin-left: 8px; }
 .out-row.muted { color: var(--muted); }
 .outs + .rev-cap { margin-top: 14px; }
+.rev-h { margin: 0 0 12px; font-size: 13px; font-weight: 400; color: var(--ink); }
+.outs.under .out-row:first-child .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
 .outs.hov .bar-fill { background: color-mix(in oklab, var(--accent) 38%, var(--ramp-base)); }
 .outs.hov .out-row:hover .bar-fill, .outs.hov .out-row.on .bar-fill { background: var(--accent); }
 .vrow { all: unset; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-size: 13px; cursor: pointer; border-radius: 4px; }
@@ -939,7 +941,14 @@ const BM = {
   "Malaysians picked up, by year": "Warganegara yang diambil, mengikut tahun",
   "Share of pick-ups who were Malaysian citizens. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025.": "Peratus pengambilan yang merupakan warganegara Malaysia. Operasi beralih daripada pengemis bukan warganegara kepada gelandangan warganegara pada 2025.",
   "By area": "Mengikut kawasan",
-  "Pick-ups from January 2023 to September 2026 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.": "Pengambilan dari Januari 2023 hingga September 2026 di setiap kawasan. {n} pengambilan tiada kawasan direkodkan. Pilih kawasan untuk melihatnya.",
+  "Pick-ups from January 2023 to September 2026 in each seat. {n} pick-ups had no seat recorded.": "Pengambilan dari Januari 2023 hingga September 2026 di setiap kawasan. {n} pengambilan tiada kawasan direkodkan.",
+  "Higher than JKM's own records show": "Lebih tinggi daripada rekod JKM sendiri",
+  "People flagged as repeat cases in JKM's records, compared with people found by matching records across operations, January 2023 to September 2026.": "Individu yang ditanda sebagai kes berulang dalam rekod JKM, berbanding individu yang ditemui melalui padanan rekod merentas operasi, Januari 2023 hingga September 2026.",
+  "Flagged by JKM": "Ditanda oleh JKM",
+  "Found by matching records": "Ditemui melalui padanan rekod",
+  "Matching finds {n} people JKM didn't flag, and the gap is growing: for 2025 to September 2026, JKM flagged {a} people, while matching found at least {b}.": "Padanan menemui {n} individu yang tidak ditanda oleh JKM, dan jurang ini semakin besar: bagi 2025 hingga September 2026, JKM menanda {a} individu, sedangkan padanan menemui sekurang-kurangnya {b}.",
+  "Repeat pick-ups JKM marked as “first”": "Pengambilan berulang yang ditanda “Pertama” oleh JKM",
+  "This isn't only missing documents: in 2026, {p} of records had an ID number, yet {a} of {b} repeat pick-ups were still marked first.": "Ini bukan semata-mata masalah dokumen: pada 2026, {p} rekod mempunyai nombor pengenalan, namun {a} daripada {b} pengambilan berulang masih ditanda “Pertama”.",
   "People picked up in JKM WPKL operations against begging and rough sleeping, January 2023 to September 2026. This is real data. It counts where operations ran, so it shows where JKM looks as well as where people are.": "Individu yang diambil dalam operasi JKM WPKL terhadap pengemis dan gelandangan, Januari 2023 hingga September 2026. Ini data sebenar. Ia mengira lokasi operasi dijalankan, jadi ia menunjukkan di mana JKM mencari dan juga di mana orang berada.",
   "2023–Sep 2026": "2023–Sep 2026",
   "pick-ups in JKM operations, 2023–Sep 2026": "pengambilan dalam operasi JKM, 2023–Sep 2026",
@@ -1092,7 +1101,7 @@ function renderTopbar() {
   document.getElementById("crumb").innerHTML = `<span class="dim">${tr("KL in Numbers")}</span><span class="sep">/</span><span>${title}</span>`;
   document.getElementById("areaSel").value = state.area;
   document.querySelector(".area-select").classList.toggle("filtered", state.area !== "KL");
-  document.querySelector(".area-select").hidden = state.view === "overview";
+  document.querySelector(".area-select").hidden = UNSCOPED.includes(state.view);
 }
 
 /* ---------- charts ---------- */
@@ -1137,12 +1146,13 @@ function lineChart(vals, { fmt = shortNum, zero = false, gapLabel = tr("Not meas
   o += `<circle class="dot" cx="${x(li)}" cy="${y(vals[li])}" r="5"/><text class="ax-strong" x="${x(li) - 8}" y="${y(vals[li]) - 12}" text-anchor="end">${fmt(vals[li])}</text>`;
   return `<svg viewBox="0 0 ${W} ${H}" role="img">${o}</svg>`;
 }
-function seatBars(key, { fmt = v => int(v), refs = [], perCap = false } = {}) {
+function seatBars(key, { fmt = v => int(v), refs = [], perCap = false, pick = true } = {}) {
   const rows = SEATS.map(s => ({ s, v: perCap ? s[key] / s.pop * 1e4 : s[key] })).sort((a, b) => b.v - a.v);
   const max = Math.max(...rows.map(r => r.v), ...refs.map(r => r.v)) * 1.05;
   const refHtml = refs.map(r => `<span class="ref" style="left:${r.v / max * 100}%"></span>`).join("");
   const legend = refs.length ? `<div class="reflegend">${refs.map(r => `<span><i></i>${esc(r.label)}</span>`).join("")}</div>` : "";
-  return legend + `<div class="bars" data-fluid>${rows.map(r => { const s = (r.v / max).toFixed(4); return `<button type="button" class="bar-row${r.s.code === state.area ? " picked" : ""}" data-pick="${r.s.code}" aria-label="${esc(tr("Show {name}", { name: r.s.name }))}"><span class="nm">${esc(r.s.name)}</span><span class="bar-track"><span class="bar-fill" data-k="${key}-${r.s.code}" data-s="${s}" style="transform:scaleX(${s})"></span>${refHtml}</span><span class="bv">${fmt(r.v)}</span></button>`; }).join("")}</div>`;
+  const row = (r, inner) => pick ? `<button type="button" class="bar-row${r.s.code === state.area ? " picked" : ""}" data-pick="${r.s.code}" aria-label="${esc(tr("Show {name}", { name: r.s.name }))}">${inner}</button>` : `<div class="bar-row">${inner}</div>`;
+  return legend + `<div class="bars"${pick ? " data-fluid" : ""}>${rows.map(r => { const s = (r.v / max).toFixed(4); return row(r, `<span class="nm">${esc(r.s.name)}</span><span class="bar-track"><span class="bar-fill" data-k="${key}-${r.s.code}" data-s="${s}" style="transform:scaleX(${s})"></span>${refHtml}</span><span class="bv">${fmt(r.v)}</span>`); }).join("")}</div>`;
 }
 function stackBar(parts, total, fmt) {
   return `<div class="stack">${parts.map(p => `<div style="flex:${p[1]};background:${p[2]}" title="${esc(tr(p[0]))}"></div>`).join("")}</div>
@@ -1174,7 +1184,6 @@ function revolvingPanel() {
       <text class="d-big" x="60" y="62" text-anchor="middle">${Math.round(a / b * 100)}%</text>
     </svg>`;
   };
-  const times = JKM.times.slice(1), tmax = Math.max(...times);
   return `<div class="panel wide rev-hero"><h3>${tr("Picked up again and again")}</h3><p class="sub">${tr("Kuala Lumpur, January 2023 to September 2026. People are matched across operations by ID number, other documents, then by name and birth year, and include people picked up before 2023.")}</p>
     <div class="rev-hero-body">
       <div class="rev-hero-text">
@@ -1183,12 +1192,25 @@ function revolvingPanel() {
         <div class="rev-key"><span><i class="once"></i>${tr("Picked up once")}</span><span><i class="again"></i>${tr("Picked up more than once")}</span></div>
       </div>
       <div class="donuts">${shares.map(([k, a, b, note], i) => `<figure class="rev-donut">${donut(a, b, i)}<figcaption><b>${k}</b><span>${note}</span></figcaption></figure>`).join("")}</div>
-    </div></div>` +
-    panel(tr("Times each person was picked up"), tr("People picked up more than once. {n} people were picked up once. The most for one person was {m} times.", { n: int(JKM.times[0]), m: JKM.maxTimes }),
+    </div></div>`;
+}
+function timesPanel() {
+  const times = JKM.times.slice(1), tmax = Math.max(...times);
+  return panel(tr("Times each person was picked up"), tr("People picked up more than once. {n} people were picked up once. The most for one person was {m} times.", { n: int(JKM.times[0]), m: JKM.maxTimes }),
       `<div class="months rev-times">${times.map((v, i) => `<div><b>${int(v)}</b><i style="height:${v / tmax * 100}%"></i><span>${i === 4 ? "6+" : i + 2}</span></div>`).join("")}</div>`) +
     panel(tr("Time until the next pick-up"), tr("Gap between one pick-up and the next for the same person. Half came back within {d} days, about three months.", { d: JKM.medianGap }),
-      `<div class="rev-gaps">${catRows(JKM.gaps, v => int(v), "gap")}</div>`) +
-    groupsPanel();
+      `<div class="rev-gaps">${catRows(JKM.gaps, v => int(v), "gap")}</div>`);
+}
+// The report's first point: JKM's own repeat flags miss many of the people that matching finds.
+function undercountPanel() {
+  const last = JKM.years.length - 1;
+  return `<div class="panel wide"><h3>${tr("Higher than JKM's own records show")}</h3><p class="sub">${tr("People flagged as repeat cases in JKM's records, compared with people found by matching records across operations, January 2023 to September 2026.")}</p>
+    <div class="rev-why">
+      <div>${outRows([[tr("Flagged by JKM"), JKM.jkmPeople, JKM.people], [tr("Found by matching records"), JKM.combined, JKM.people]], "under", { unit: "{n} people", max: JKM.combined / JKM.people, cls: "under" })}
+        <p class="rev-cap">${tr("Matching finds {n} people JKM didn't flag, and the gap is growing: for 2025 to September 2026, JKM flagged {a} people, while matching found at least {b}.", { n: int(JKM.combined - JKM.jkmPeople), a: int(JKM.recentJkm), b: int(JKM.recentFound) })}</p></div>
+      <div><h4 class="rev-h">${tr("Repeat pick-ups JKM marked as “first”")}</h4>${outRows(JKM.yearMissed.map((a, i) => [JKM_YEARS[i], a, JKM.yearBefore[i]]), "first", { max: 1, unit: "{n} pick-ups" })}
+        <p class="rev-cap">${tr("This isn't only missing documents: in 2026, {p} of records had an ID number, yet {a} of {b} repeat pick-ups were still marked first.", { p: pc(JKM.id2026, 1), a: int(JKM.yearMissed[last]), b: int(JKM.yearBefore[last]) })}</p></div>
+    </div></div>`;
 }
 function risingPanel() {
   const sf = JKM.klsf;
@@ -1287,18 +1309,17 @@ const RENDER = {
       charts: [panel(tr("Waiting list over time"), tr("{area}, households waiting at year end", { area: areaLabel() }), lineChart(series("ppr"), { zero: true })), panel(tr("Waiting list by area"), tr("Households waiting. Select an area to view it."), seatBars("ppr"))] };
   },
   homeless() {
-    const n = val("homeless"), pct = (a, b) => a && a / b < 0.005 ? tr("under 1%") : Math.round(a / b * 100) + "%";
-    const seat = state.area !== "KL" && JKM.seats[state.area], enough = seat && seat.total >= 50;
+    const n = val("homeless"), pct = (a, b) => Math.round(a / b * 100) + "%";
     return { q: tr("Are we picking up the same people again and again?"),
-      summary: !seat ? tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. At least <strong>{c} people ({cp})</strong> were picked up more than once.", { n: int(n), p: int(JKM.people), c: int(JKM.combined), cp: pct(JKM.combined, JKM.people) }) + " " + tr("The share of pick-ups of someone picked up before is rising, from {a} in 2025 to <strong>{b}</strong> in 2026.", { a: pct(JKM.yearBefore[2], JKM.yearPickups[2]), b: pct(JKM.yearBefore[3], JKM.yearPickups[3]) })
-        : tr("JKM operations made <strong>{n} pick-ups</strong> in {area} from January 2023 to September 2026, {p} of KL's total.", { n: int(n), area: areaLabel(), p: pct(n, JKM.pickups) }) + " " + (enough ? tr("{b} were of someone JKM had already picked up before.", { b: pct(seat.before, seat.total) }) : tr("That's too few to say how many were repeats.")),
-      stats: !seat ? [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), "~" + pct(JKM.combined, JKM.people), tr("{c} people", { c: int(JKM.combined) })]]
-        : [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Share of KL total"), pct(n, JKM.pickups), tr("of {n} pick-ups", { n: int(JKM.pickups) })], [tr("Already picked up before"), enough ? pct(seat.before, seat.total) : "–", enough ? tr("of pick-ups here") : tr("too few to say")]],
-      charts: [heatPanel(), ...(seat ? [] : [revolvingPanel(), outcomePanel()]),
-        ...(seat ? [] : [risingPanel().replace('class="panel"', 'class="panel wide"'), panel(tr("Malaysians picked up, by year"), tr("Share of pick-ups who were Malaysian citizens. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025."),
-          outRows(JKM.yearCitizens.map((a, i) => [JKM_YEARS[i], a, JKM.yearPickups[i]]), "cit", { max: 1 }) + `<p class="rev-cap">${tr("* 2026 is January to September.")}</p>`)]),
-        panel(tr("Pick-ups each year"), tr("{area}. 2026 is January to September. Each year's operations targeted different groups, so changes say more about the operations than the street.", { area: areaLabel() }), lineChart(series("homeless"), { zero: true, years: JKM_YEARS, fmt: v => int(v) })).replace('class="panel"', seat ? 'class="panel wide"' : 'class="panel"'),
-        `<div class="panel wide"><h3>${tr("By area")}</h3><p class="sub">${tr("Pick-ups from January 2023 to September 2026 in each seat. {n} pick-ups had no seat recorded. Select an area to view it.", { n: int(JKM.noSeat) })}</p>${seatBars("homeless")}</div>`] };
+      summary: tr("JKM operations in KL made <strong>{n} pick-ups</strong> of <strong>{p} people</strong> from January 2023 to September 2026. At least <strong>{c} people ({cp})</strong> were picked up more than once.", { n: int(n), p: int(JKM.people), c: int(JKM.combined), cp: pct(JKM.combined, JKM.people) }) + " " + tr("The share of pick-ups of someone picked up before is rising, from {a} in 2025 to <strong>{b}</strong> in 2026.", { a: pct(JKM.yearBefore[2], JKM.yearPickups[2]), b: pct(JKM.yearBefore[3], JKM.yearPickups[3]) }),
+      stats: [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), "~" + pct(JKM.combined, JKM.people), tr("{c} people", { c: int(JKM.combined) })]],
+      // Follows the briefing: how big, undercounted, rising, how often, who, how it changed, where, what happened after. The map leads because it draws people in.
+      charts: [heatPanel(), revolvingPanel(), undercountPanel(), risingPanel().replace('class="panel"', 'class="panel wide"'), timesPanel(), groupsPanel(),
+        panel(tr("Malaysians picked up, by year"), tr("Share of pick-ups who were Malaysian citizens. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025."),
+          outRows(JKM.yearCitizens.map((a, i) => [JKM_YEARS[i], a, JKM.yearPickups[i]]), "cit", { max: 1 }) + `<p class="rev-cap">${tr("* 2026 is January to September.")}</p>`),
+        panel(tr("Pick-ups each year"), tr("{area}. 2026 is January to September. Each year's operations targeted different groups, so changes say more about the operations than the street.", { area: areaLabel() }), lineChart(series("homeless"), { zero: true, years: JKM_YEARS, fmt: v => int(v) })),
+        `<div class="panel wide"><h3>${tr("By area")}</h3><p class="sub">${tr("Pick-ups from January 2023 to September 2026 in each seat. {n} pick-ups had no seat recorded.", { n: int(JKM.noSeat) })}</p>${seatBars("homeless", { pick: false })}</div>`,
+        outcomePanel()] };
   },
   services() {
     const c = val("complaints"), d = val("resolveDays"), within = Math.max(55, Math.min(97, 120 - d * 9));
@@ -1355,7 +1376,10 @@ const RENDER = {
   },
 };
 
+// These pages always show all of KL, with no area filter.
+const UNSCOPED = ["overview", "homeless"];
 function topicHTML(id) {
+  if (id === "homeless" && state.area !== "KL") { const saved = state.area; state.area = "KL"; try { return topicHTML(id); } finally { state.area = saved; } }
   const t = TOPICS.find(x => x.id === id), r = RENDER[id](), st = status(t);
   const i = TOPICS.indexOf(t), prev = TOPICS[i - 1], next = TOPICS[i + 1];
   const [src, freq, upd] = SOURCES[id];
@@ -1853,7 +1877,7 @@ function go(v) {
   mountView(v, dir); renderTopbar(); syncNav();
 }
 function syncHash() {
-  const scoped = state.area !== "KL" && state.view !== "overview" && state.view !== "about";
+  const scoped = state.area !== "KL" && !UNSCOPED.includes(state.view) && state.view !== "about";
   try { history.replaceState(null, "", "#" + state.view + (scoped ? "/" + state.area.replace("P.", "P") : "")); } catch (e) {}
 }
 function setArea(code) {
