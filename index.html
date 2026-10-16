@@ -405,6 +405,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 860px) { .rev { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
 .stack { display: flex; height: 24px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
 .stack div { min-width: 3px; }
+.stack-legend em { white-space: nowrap; }
+.airyears + .rev-cap { margin-top: 12px; }
+.oku-people { grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 5px; max-width: 360px; margin: 6px 0 14px; }
+.rev-lead.oku-lead { font-size: 17px; margin: 0 0 8px; }
 .stack-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 14px; font-size: 12px; margin-bottom: 14px; }
 .stack-legend span { display: flex; gap: 6px; align-items: center; min-width: 0; }
 .stack-legend i { width: 10px; height: 10px; border-radius: 2px; flex: none; }
@@ -678,7 +682,17 @@ const SERIES = {
 /* Real data: JKM WPKL rescue-operation records, January 2023 to September 2026, reduced to totals by a script outside this repo.
    Figures match the analysis workbook and the 14 October 2026 briefing (Pembentangan Analisis Operasi Gelandangan).
    No names, ID numbers or individual records are published. Spots are [name, lon, lat, pick-ups]. */
-const JKM = {"pickups":2021,"people":1575,"repeaters":268,"repPickups":711,"threePlus":92,"maxTimes":9,"jkmPeople":262,"combined":410,"returns":443,"jkmMissed":289,"medianGap":96,"gaps":[["Within a month",116],["1–3 months",103],["3–6 months",80],["6–12 months",75],["Over a year",69]],"times":[1307,176,54,16,8,14],"years":[2023,2024,2025,2026],"yearPickups":[687,350,685,299],"yearCitizens":[201,83,479,251],"yearPeople":[580,275,582,284],"yearBefore":[106,115,141,81],"yearMissed":[49,58,105,77],"recentJkm":35,"recentFound":160,"klsf":[195,847,69,226,14],"seats":{"P.114":{"total":11,"years":[2,1,1,7],"before":0,"people":11},"P.115":{"total":10,"years":[7,1,1,1],"before":1,"people":10},"P.116":{"total":11,"years":[4,1,3,3],"before":1,"people":11},"P.117":{"total":65,"years":[56,8,0,1],"before":9,"people":61},"P.118":{"total":7,"years":[2,5,0,0],"before":1,"people":7},"P.119":{"total":769,"years":[100,176,479,14],"before":168,"people":663},"P.120":{"total":998,"years":[473,131,144,250],"before":237,"people":837},"P.121":{"total":58,"years":[18,21,4,15],"before":15,"people":57},"P.122":{"total":19,"years":[14,5,0,0],"before":1,"people":18},"P.123":{"total":17,"years":[9,1,5,2],"before":5,"people":17},"P.124":{"total":9,"years":[2,0,1,6],"before":1,"people":9}},"noSeat":47,"idPeople":1188,"idRepeat":257,"noIdPeople":387,"noIdRepeat":11,"jkmOnly":142,"id2026":0.896,"cityOnly":713,"cityOnly2025":602,"spots":[["Bukit Bintang",101.71081,3.1466,394,"P.120"],["Masjid India",101.6966,3.1515,76,"P.120"],["Masjid Jamek",101.69581,3.14901,24,"P.120"],["Chow Kit",101.69821,3.1636,184,"P.119"],["Jalan TAR",101.69599,3.15601,114,"P.120"],["Kota Raya and Lebuh Pudu",101.6983,3.1464,70,"P.120"],["Pasar Seni",101.6953,3.14259,34,"P.119"],["Dang Wangi",101.7006,3.1572,56,"P.120"],["Kampung Baru",101.704,3.16299,54,"P.119"],["Pudu",101.706,3.1395,29,"P.119"],["Masjid KLCC",101.7133,3.155,10,"P.120"],["Brickfields",101.6865,3.134,19,"P.121"],["Bangsar",101.671,3.13,37,"P.121"],["TTDI",101.6295,3.1395,40,"P.117"],["Jalan Kuching",101.687,3.174,46,"P.117"],["Sri Sentosa",101.6795,3.0935,11,"P.122"]],"unplaced":823,"outcomes":[["Released",707,192],["Not recorded",478,130],["Referred to JWP",114,23],["Handed to Immigration",110,12],["Placed in NGO care",62,27],["Referred to KKM, hospital or clinic",46,14],["Referred to YKN (Anjung Singgah)",35,5],["Handed to a protector",33,1],["Rumah Seri Kenangan (court order)",29,5],["Desa Bina Diri (court order)",27,4],["DBKL homeless centre (PKG)",22,9],["Referred to MKN",19,2],["Returned to family",18,3],["Referred to AADK (drugs)",17,3],["Other",4,0]],"released":831,"notRecorded":488,"groups":[["UNHCR card holders",58,25],["People with disabilities (OKU)",62,25],["Unwell or other illness",154,51],["Mental health problems",63,18],["Aged 60 and over",385,85],["Drug users (current or past)",44,8],["Women",530,95],["Non-citizens",766,126],["Children (under 18)",157,4]]};
+const JKM = {"pickups":2018,"people":1575,"repeaters":268,"repPickups":711,"threePlus":92,"maxTimes":9,"jkmPeople":262,"combined":410,"returns":443,"jkmMissed":289,"medianGap":96,"gaps":[["Within a month",116],["1–3 months",103],["3–6 months",80],["6–12 months",75],["Over a year",69]],"times":[1307,176,54,16,8,14],"years":[2023,2024,2025,2026],"yearPickups":[686,350,685,297],"yearCitizens":[201,83,479,249],"yearPeople":[580,275,582,284],"yearBefore":[106,115,141,81],"yearMissed":[49,58,105,77],"recentJkm":35,"recentFound":160,"klsf":[195,847,69,226,14],"seats":{"P.114":{"total":11,"years":[2,1,1,7],"before":0,"people":11},"P.115":{"total":10,"years":[7,1,1,1],"before":1,"people":10},"P.116":{"total":11,"years":[4,1,3,3],"before":1,"people":11},"P.117":{"total":65,"years":[56,8,0,1],"before":9,"people":61},"P.118":{"total":7,"years":[2,5,0,0],"before":1,"people":7},"P.119":{"total":769,"years":[100,176,479,14],"before":168,"people":663},"P.120":{"total":995,"years":[472,131,144,248],"before":237,"people":837},"P.121":{"total":58,"years":[18,21,4,15],"before":15,"people":57},"P.122":{"total":19,"years":[14,5,0,0],"before":1,"people":18},"P.123":{"total":17,"years":[9,1,5,2],"before":5,"people":17},"P.124":{"total":9,"years":[2,0,1,6],"before":1,"people":9}},"noSeat":47,"idPeople":1188,"idRepeat":257,"noIdPeople":387,"noIdRepeat":11,"jkmOnly":142,"id2026":0.896,"cityOnly":713,"cityOnly2025":602,"spots":[["Bukit Bintang",101.71081,3.1466,391,"P.120"],["Masjid India",101.6966,3.1515,76,"P.120"],["Masjid Jamek",101.69581,3.14901,24,"P.120"],["Chow Kit",101.69821,3.1636,184,"P.119"],["Jalan TAR",101.69599,3.15601,114,"P.120"],["Kota Raya and Lebuh Pudu",101.6983,3.1464,70,"P.120"],["Pasar Seni",101.6953,3.14259,34,"P.119"],["Dang Wangi",101.7006,3.1572,56,"P.120"],["Kampung Baru",101.704,3.16299,54,"P.119"],["Pudu",101.706,3.1395,29,"P.119"],["Masjid KLCC",101.7133,3.155,10,"P.120"],["Brickfields",101.6865,3.134,19,"P.121"],["Bangsar",101.671,3.13,37,"P.121"],["TTDI",101.6295,3.1395,40,"P.117"],["Jalan Kuching",101.687,3.174,46,"P.117"],["Sri Sentosa",101.6795,3.0935,11,"P.122"]],"unplaced":823,"outcomes":[["Released",707,192],["Not recorded",478,130],["Referred to JWP",114,23],["Handed to Immigration",110,12],["Placed in NGO care",62,27],["Referred to KKM, hospital or clinic",46,14],["Referred to YKN (Anjung Singgah)",35,5],["Handed to a protector",33,1],["Rumah Seri Kenangan (court order)",29,5],["Desa Bina Diri (court order)",27,4],["DBKL homeless centre (PKG)",22,9],["Referred to MKN",19,2],["Returned to family",18,3],["Referred to AADK (drugs)",17,3],["Other",4,0]],"released":829,"notRecorded":487,"groups":[["UNHCR card holders",58,25],["People with disabilities (OKU)",62,25],["Unwell or other illness",154,51],["Mental health problems",63,18],["Aged 60 and over",385,85],["Drug users (current or past)",44,8],["Women",530,95],["Non-citizens",766,126],["Children (under 18)",157,4]]};
+// Who was picked up, from the same workbook (Jadual 3, 7 and 9, and the OKU block). Year arrays run 2023 to 2026.
+Object.assign(JKM, {
+  citizenship: [["Malaysians", [201, 83, 479, 249]], ["Non-citizens", [483, 267, 205, 48]], ["Not recorded", [2, 0, 1, 0]]],
+  category: [["Begging (pengemis)", [658, 326, 73, 24]], ["Rough sleeping (gelandangan)", [18, 20, 544, 268]], ["Loitering (peleser)", [3, 2, 67, 1]], ["Not recorded", [7, 2, 1, 4]]],
+  // non-citizen actions; "other" is a protector (20), NGO care (6), family (5) and KKM (3)
+  foreign: [["Released", [150, 259, 67, 12]], ["Handed to Immigration or MKN", [0, 0, 127, 35]], ["Other action", [17, 6, 11, 0]], ["Not recorded", [316, 2, 0, 1]]],
+  foreignImm: 143, foreignMkn: 19,
+  oku: { people: 62, records: 68, older: 20, olderRecords: 21, olderPhysical: 12, unrecorded: 0.61 },
+  mental: { people: [["Men", 45], ["Women", 17], ["Not recorded", 1]], y2026: [["Men", 26, 237], ["Women", 11, 60]] }
+});
 SEATS.forEach(s => { s.homeless = JKM.seats[s.code].total; });
 const SUM_KEYS = ["pop", "ppr", "homeless", "complaints", "flood", "budget"];
 const KL_OVERRIDE = { budget: 3200, homeless: JKM.pickups };
@@ -733,6 +747,33 @@ const BIN_MIX = [14, 32, 52, 72, 92];
 
 /* ---------- language: English is the key, Bahasa Malaysia the translation ---------- */
 const BM = {
+  "Malaysians": "Warganegara",
+  "Begging (pengemis)": "Pengemis",
+  "Rough sleeping (gelandangan)": "Gelandangan",
+  "Loitering (peleser)": "Peleser",
+  "Handed to Immigration or MKN": "Diserahkan kepada Imigresen atau MKN",
+  "Other action": "Tindakan lain",
+  "Men": "Lelaki",
+  "Malaysians and non-citizens": "Warganegara dan bukan warganegara",
+  "Pick-ups by citizenship, each year. 2026 is January to September.": "Pengambilan mengikut kewarganegaraan, setiap tahun. 2026 ialah Januari hingga September.",
+  "Half were Malaysian and half were not. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025.": "Separuh warganegara dan separuh bukan warganegara. Operasi beralih daripada pengemis bukan warganegara kepada gelandangan warganegara pada 2025.",
+  "Begging, rough sleeping or loitering": "Pengemis, gelandangan atau peleser",
+  "Pick-ups by the category JKM recorded under the Destitute Persons Act 1977, each year.": "Pengambilan mengikut kategori yang direkod JKM di bawah Akta Orang-Orang Papa 1977, setiap tahun.",
+  "Most were recorded as begging or rough sleeping. Only {p} were recorded as loitering.": "Kebanyakan direkod sebagai pengemis atau gelandangan. Hanya {p} direkod sebagai peleser.",
+  "People with disabilities who are 60 or older": "OKU yang berumur 60 tahun ke atas",
+  "{n} people with disabilities (OKU) were picked up. Each figure is one person.": "{n} OKU telah diambil. Setiap rajah ialah seorang.",
+  "<b>{a} of {b}</b> ({p}) were aged 60 or over.": "<b>{a} daripada {b}</b> ({p}) berumur 60 tahun ke atas.",
+  "Most of them had a physical disability ({a} of {b} pick-ups). Disability wasn't recorded for {u} of pick-ups, mostly in 2023 and 2024, so the real number may be higher.": "Kebanyakannya OKU fizikal ({a} daripada {b} pengambilan). Status OKU tidak direkod bagi {u} pengambilan, terutamanya pada 2023 dan 2024, maka bilangan sebenar mungkin lebih tinggi.",
+  "Mental health problems, men and women": "Masalah kesihatan mental, lelaki dan wanita",
+  "People recorded with a mental health problem, January 2023 to September 2026. Health was rarely recorded before 2026, so the real number is higher.": "Individu yang direkod bermasalah kesihatan mental, Januari 2023 hingga September 2026. Status kesihatan jarang direkod sebelum 2026, maka bilangan sebenar lebih tinggi.",
+  "{n} people with a mental health problem": "{n} orang bermasalah kesihatan mental",
+  "Share of 2026 pick-ups with a mental health problem": "Peratus pengambilan 2026 yang bermasalah kesihatan mental",
+  "Most are men, because most people picked up are men. But a woman picked up in 2026 was more likely to have a mental health problem than a man.": "Kebanyakannya lelaki, kerana kebanyakan yang diambil ialah lelaki. Tetapi wanita yang diambil pada 2026 lebih berkemungkinan bermasalah kesihatan mental berbanding lelaki.",
+  "Non-citizens: released or handed to the authorities": "Bukan warganegara: dilepaskan atau diserahkan kepada pihak berkuasa",
+  "What happened after each pick-up of a non-citizen, each year. MKN is the National Security Council.": "Tindakan selepas setiap pengambilan bukan warganegara, setiap tahun. MKN ialah Majlis Keselamatan Negara.",
+  "<b>Most were released.</b> Where an action was recorded, {r} of non-citizens were released and {i} handed to Immigration.": "<b>Kebanyakannya dilepaskan.</b> Bagi rekod yang tindakannya dicatat, {r} bukan warganegara dilepaskan dan {i} diserahkan kepada Imigresen.",
+  "<b>Handovers only began in 2025.</b> Before that almost everyone was released: {a} of {b} non-citizens in 2024.": "<b>Penyerahan hanya bermula pada 2025.</b> Sebelum itu hampir semua dilepaskan: {a} daripada {b} bukan warganegara pada 2024.",
+  "<b>2023 is mostly unrecorded:</b> no action was written down for {n} pick-ups that year.": "<b>2023 kebanyakannya tidak direkod:</b> tiada tindakan dicatat bagi {n} pengambilan pada tahun itu.",
   "KL in Numbers": "KL Dalam Angka", "Overview": "Ringkasan", "Map": "Peta", "About this data": "Mengenai data ini",
   "Topics": "Topik", "Areas": "Kawasan", "All of Kuala Lumpur": "Seluruh Kuala Lumpur", "All of KL": "Seluruh KL",
   "Prototype": "Prototaip",
@@ -1264,9 +1305,10 @@ function groupsPanel() {
     <div class="vuln-grid"><div class="outs hov vuln-chart">${rows.map(row).join("")}</div><aside class="vuln-story" id="vuln-story" aria-live="polite">${imagined ? storyHTML(imagined) : ""}</aside></div>
   </div>`;
 }
+const personFig = (on, i) => `<svg class="pp${on ? " on" : ""}" style="--i:${i}" viewBox="0 0 20 32" aria-hidden="true"><circle cx="10" cy="6.5" r="5"/><path d="M1.5 30v-9.5A7.5 7.5 0 0 1 9 13h2a7.5 7.5 0 0 1 7.5 7.5V30a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 30z"/></svg>`;
 function storyHTML(k) {
   const [, n, a] = JKM.groups.find(g => g[0] === k), st = STORIES[k], total = st.each ? a : 10, hits = st.each ? a : Math.round(a / n * 10);
-  const fig = (on, i) => `<svg class="pp${on ? " on" : ""}" style="--i:${i}" viewBox="0 0 20 32" aria-hidden="true"><circle cx="10" cy="6.5" r="5"/><path d="M1.5 30v-9.5A7.5 7.5 0 0 1 9 13h2a7.5 7.5 0 0 1 7.5 7.5V30a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 30z"/></svg>`;
+  const fig = personFig;
   return `<div class="story-in"><div class="story-body">
     <div class="story-h"><span class="eyebrow">${tr("Imagine this")}</span><button type="button" class="x" data-imagine-close aria-label="${tr("Close")}">${icon("close", "sm")}</button></div>
     <p class="story-lead">${tr(st.lead, { n: int(a) })}</p>
@@ -1304,6 +1346,50 @@ function outcomePanel() {
   </div></div>`;
 }
 
+/* ---------- homelessness: who was picked up ---------- */
+const STACK_C = ["var(--accent)", "color-mix(in oklab, var(--accent) 45%, var(--sheet))", "var(--amber)", "color-mix(in oklab, var(--ink) 18%, var(--sheet))"];
+// One stacked bar per year, with each part's total and share in the legend. The last part is always "Not recorded" (grey).
+function yearStacks(parts) {
+  const cols = parts.map((p, i) => i === parts.length - 1 ? STACK_C[3] : STACK_C[i]);
+  const tot = JKM.years.map((_, y) => parts.reduce((a, p) => a + p[1][y], 0)), all = tot.reduce((a, b) => a + b, 0);
+  const legend = `<div class="stack-legend">${parts.map(([k, v], i) => { const n = v.reduce((a, b) => a + b, 0); return `<span><i style="background:${cols[i]}"></i>${tr(k)}<em>${int(n)} · ${n && n / all < 0.005 ? "<1%" : pc(n, all)}</em></span>`; }).join("")}</div>`;
+  return legend + `<div class="airyears">${JKM.years.map((_, y) => `<div class="yr"><span class="mono">${JKM_YEARS[y]}</span><div class="stack">${parts.map(([k, v], i) => v[y] ? `<div style="flex:${v[y]};background:${cols[i]}" title="${esc(tr(k))}: ${int(v[y])} (${pc(v[y], tot[y])})"></div>` : "").join("")}</div></div>`).join("")}</div>`;
+}
+function citizenPanel() {
+  return panel(tr("Malaysians and non-citizens"), tr("Pick-ups by citizenship, each year. 2026 is January to September."),
+    yearStacks(JKM.citizenship) + `<p class="rev-cap">${tr("Half were Malaysian and half were not. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025.")}</p>`);
+}
+function categoryPanel() {
+  return panel(tr("Begging, rough sleeping or loitering"), tr("Pick-ups by the category JKM recorded under the Destitute Persons Act 1977, each year."),
+    yearStacks(JKM.category) + `<p class="rev-cap">${tr("Most were recorded as begging or rough sleeping. Only {p} were recorded as loitering.", { p: pc(73, JKM.pickups) })}</p>`);
+}
+function okuPanel() {
+  const o = JKM.oku;
+  return panel(tr("People with disabilities who are 60 or older"), tr("{n} people with disabilities (OKU) were picked up. Each figure is one person.", { n: int(o.people) }),
+    `<div class="people oku-people" role="img" aria-label="${tr("{a} of {b}", { a: o.older, b: o.people })}">${Array.from({ length: o.people }, (_, i) => personFig(i < o.older, 0)).join("")}</div>
+    <p class="rev-lead oku-lead">${tr("<b>{a} of {b}</b> ({p}) were aged 60 or over.", { a: o.older, b: o.people, p: pc(o.older, o.people) })}</p>
+    <p class="rev-cap">${tr("Most of them had a physical disability ({a} of {b} pick-ups). Disability wasn't recorded for {u} of pick-ups, mostly in 2023 and 2024, so the real number may be higher.", { a: o.olderPhysical, b: o.olderRecords, u: pc(o.unrecorded, 1) })}</p>`);
+}
+function mentalPanel() {
+  const m = JKM.mental, total = m.people.reduce((a, r) => a + r[1], 0);
+  return `<div class="panel wide"><h3>${tr("Mental health problems, men and women")}</h3><p class="sub">${tr("People recorded with a mental health problem, January 2023 to September 2026. Health was rarely recorded before 2026, so the real number is higher.")}</p>
+    <div class="rev-why">
+      <div><h4 class="rev-h">${tr("{n} people with a mental health problem", { n: total })}</h4>${outRows(m.people.map(([k, n], i) => [tr(k), n, total, i === 2]), "mh", { max: 1, unit: "{a} of {b} people" })}</div>
+      <div><h4 class="rev-h">${tr("Share of 2026 pick-ups with a mental health problem")}</h4>${outRows(m.y2026.map(([k, a, b]) => [tr(k), a, b]), "mh26", { max: 0.25, unit: "{a} of {b} pick-ups" })}
+        <p class="rev-cap">${tr("Most are men, because most people picked up are men. But a woman picked up in 2026 was more likely to have a mental health problem than a man.")}</p></div>
+    </div></div>`;
+}
+function foreignPanel() {
+  const f = JKM.foreign, sum = v => v.reduce((a, b) => a + b, 0), rel = sum(f[0][1]), rec = sum(f.slice(0, 3).flatMap(p => p[1]));
+  return `<div class="panel wide"><h3>${tr("Non-citizens: released or handed to the authorities")}</h3><p class="sub">${tr("What happened after each pick-up of a non-citizen, each year. MKN is the National Security Council.")}</p>
+    <div class="rev-why"><div>${yearStacks(f)}</div>
+    <ul class="rev-reasons">
+      <li>${tr("<b>Most were released.</b> Where an action was recorded, {r} of non-citizens were released and {i} handed to Immigration.", { r: pc(rel, rec), i: pc(JKM.foreignImm, rec) })}</li>
+      <li>${tr("<b>Handovers only began in 2025.</b> Before that almost everyone was released: {a} of {b} non-citizens in 2024.", { a: f[0][1][1], b: JKM.citizenship[1][1][1] })}</li>
+      <li>${tr("<b>2023 is mostly unrecorded:</b> no action was written down for {n} pick-ups that year.", { n: f[3][1][0] })}</li>
+    </ul></div></div>`;
+}
+
 /* ---------- topic pages ---------- */
 function scopeBar() {
   if (state.area === "KL") return "";
@@ -1337,11 +1423,10 @@ const RENDER = {
       stats: [[tr("Pick-ups"), int(n), tr("Jan 2023 to Sep 2026")], [tr("Different people"), int(JKM.people), tr("matched across operations")], [tr("Picked up more than once"), "~" + pct(JKM.combined, JKM.people), tr("{c} people", { c: int(JKM.combined) })]],
       // Follows the briefing: how big, undercounted, rising, how often, who, how it changed, where, what happened after. The map leads because it draws people in.
       charts: [heatPanel(), revolvingPanel(), undercountPanel(), risingPanel().replace('class="panel"', 'class="panel wide"'), timesPanel(), groupsPanel(),
-        panel(tr("Malaysians picked up, by year"), tr("Share of pick-ups who were Malaysian citizens. The operations shifted from non-citizen beggars to Malaysian rough sleepers in 2025."),
-          outRows(JKM.yearCitizens.map((a, i) => [JKM_YEARS[i], a, JKM.yearPickups[i]]), "cit", { max: 1 }) + `<p class="rev-cap">${tr("* 2026 is January to September.")}</p>`),
         panel(tr("Pick-ups each year"), tr("{area}. 2026 is January to September. Each year's operations targeted different groups, so changes say more about the operations than the street.", { area: areaLabel() }), lineChart(series("homeless"), { zero: true, years: JKM_YEARS, fmt: v => int(v) })),
+        citizenPanel(), categoryPanel(), okuPanel(), mentalPanel(),
         `<div class="panel wide"><h3>${tr("By area")}</h3><p class="sub">${tr("Pick-ups from January 2023 to September 2026 in each seat. {n} pick-ups had no seat recorded.", { n: int(JKM.noSeat) })}</p>${seatBars("homeless", { pick: false })}</div>`,
-        outcomePanel()] };
+        outcomePanel(), foreignPanel()] };
   },
   services() {
     const c = val("complaints"), d = val("resolveDays"), within = Math.max(55, Math.min(97, 120 - d * 9));
